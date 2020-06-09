@@ -58,7 +58,7 @@ module.exports = function (app) {
       return;
     }
     await controller.update(req.body).then((entity) => {
-      if (entity[0] === 1) {
+      if (! Object.is(entity,null)) {
         res.redirect("/usuario/" + id);
       } else {
         res
