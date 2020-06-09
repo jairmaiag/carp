@@ -1,12 +1,5 @@
-const { Usuario, Pessoa } = require("../../../../../models");
-var UsuarioRepository = function (app) {
-  this.app = app;
-  this.sequelize = new app.src.app.config.dbConnection();
-  this.usuario = new app.src.app.model.usuario.entity.Usuario(this.sequelize);
-  this.pessoaRepository = new app.src.app.model.pessoa.repository.PessoaRepository(
-    app
-  );
-};
+const { Usuario, Pessoa } = require("../../../models");
+var UsuarioRepository = function (app) {};
 
 UsuarioRepository.prototype.findAll = async function (filter) {
   /* { raw: true } = Serve para exibir os dados sem a opção de inclusão, alteração ou exclusão */
@@ -16,7 +9,8 @@ UsuarioRepository.prototype.findAll = async function (filter) {
       { raw: true }
     );
     return result;
-  } finally {
+  } catch (e) {
+    throw e;
   }
 };
 
@@ -65,9 +59,7 @@ UsuarioRepository.prototype.update = async function (dados) {
     //console.log(retorno);
     return retorno;
   } catch (e) {
-    return new throws(e);
-  } finally {
-    this.sequelize.close();
+    throw e;
   }
 };
 
