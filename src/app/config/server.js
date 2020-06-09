@@ -39,6 +39,7 @@ consign({
   .then("./models/index.js")
   .then(caminho + "server")
   .then(caminho + "model")
+  .then(caminho + "repository")
   .then(caminho + "usecase")
   .then(caminho + "controller")
   .then(caminho + "route")
