@@ -1,38 +1,23 @@
-var UsuarioController = function (app) {
-  this.app = app;
-  this.repository = null;
-};
-
-UsuarioController.prototype.criarRepository = function () {
-  return (this.repository = new this.app.src.app.model.usuario.repository.UsuarioRepository(
-    this.app
-  ));
-};
-
-UsuarioController.prototype.index = async function (filter) {
-  this.repository = this.criarRepository();
-  return await this.repository.findAll(filter);
-};
-
-UsuarioController.prototype.findById = async function (id) {
-  this.repository = this.criarRepository();
-  return await this.repository.findById(id);
-};
-
-UsuarioController.prototype.insert = async function (dados) {
-  this.repository = this.criarRepository();
-  return await this.repository.insert(dados);
-};
-
-UsuarioController.prototype.update = async function (dados) {
-  this.repository = this.criarRepository();
-  return await this.repository.update(dados);
-};
-
-UsuarioController.prototype.delete = async function (id) {
-  this.repository = this.criarRepository();
-  return await this.repository.delete(id);
-};
+class UsuarioController {
+  constructor(app) {
+    this.casoUso = new app.src.app.usecase.UcUsuario(app);
+  }
+  async index(filter) {
+    return await this.casoUso.index(filter);
+  }
+  async findById(id) {
+    return await this.casoUso.findById(id);
+  }
+  async insert(dados) {
+    return await this.casoUso.insert(dados);
+  }
+  async update(dados) {
+    return await this.casoUso.update(dados);
+  }
+  async delete(id) {
+    return await this.casoUso.delete(id);
+  }
+}
 
 function retorno(app) {
   return new UsuarioController(app);
