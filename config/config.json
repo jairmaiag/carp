@@ -1,0 +1,29 @@
+{
+  "development": {
+    "username": "gcps",
+    "password": "gcps",
+    "database": "gcps",
+    "host": "localhost",
+    "dialect": "postgres",
+    "freezeTableName": true,
+    "timestamps": false
+  },
+  "test": {
+    "username": "root",
+    "password": "gcps",
+    "database": "gcps",
+    "host": "localhost",
+    "dialect": "postgres",
+    "freezeTableName": true,
+    "timestamps": false
+  },
+  "production": {
+    "username": "gcps",
+    "password": "gcps",
+    "database": "gcps",
+    "host": "localhost",
+    "dialect": "postgres",
+    "freezeTableName": true,
+    "timestamps": false
+  }
+}
