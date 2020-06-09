@@ -10,7 +10,7 @@
   O cliente não tem direitos de acesso ao conteúdo portanto o servidor está rejeitando dar a resposta. 
   Diferente do código 401, aqui a identidade do cliente é conhecida.
 */
-const { Pessoa } = require("../../../models");
+//const { Pessoa } = require("../../../models");
 module.exports = function (app) {
   var controller = new app.src.app.controller.pessoa.PessoaController(app);
   var util = new app.src.app.server.Util(app);
@@ -20,8 +20,20 @@ module.exports = function (app) {
         Estas requisição foi bem sucedida.
     */
     //await util.usuarioLogado(req);
-    const result = await controller.index(req.query.filter);
-    res.status(200).json(result);
+    controller.index(req.query.filter).then((entiys) => {
+      let total = entiys.length;
+      if (total > 0) {
+        res.status(200).json(entiys);
+      } else {
+        res
+          .status(404)
+          .json(
+            util.montarMensagemJson(
+              "Recurso não encontrado. " + total + " registros encontados."
+            )
+          );
+      }
+    });
   });
 
   app.get("/pessoa/:id", async function (req, res) {
