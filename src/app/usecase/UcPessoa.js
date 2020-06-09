@@ -4,7 +4,7 @@ class UcPessoa {
     this.repository = null;
   }
   criarRepository() {
-    return (this.repository = new this.app.src.app.model.pessoa.repository.PessoaRepository(
+    return (this.repository = new this.app.src.app.repository.PessoaRepository(
       this.app
     ));
   }
