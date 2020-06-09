@@ -1,7 +1,5 @@
 const { Usuario, Pessoa } = require("../../../models");
-var PessoaRepository = function (app) {
-  this.app = app;
-};
+var PessoaRepository = function (app) {};
 
 PessoaRepository.prototype.findAll = async function (filter) {
   /* { raw: true } = Serve para exibir os dados sem a opção de inclusão, alteração ou exclusão */
