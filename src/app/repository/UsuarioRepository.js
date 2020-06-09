@@ -31,7 +31,7 @@ UsuarioRepository.prototype.insert = async function (dados) {
   try {
     const result = await Pessoa.create({ nome: dados.login })
       .then((pessoa) => {
-        dados.pesid = pessoa.id;
+        dados.idPessoa = pessoa.id;
         return dados;
       })
       .then((usuario) => {
