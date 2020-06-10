@@ -12,10 +12,10 @@ API para controle de clientes, usuários, funcionários, produtos, geração de 
 6. Utilização
    1. Pessoa
       1. Recursos
-      2. [Exemplo JSON](exemplo-json)
+      2. [Exemplo JSON](#exemplo-json)
    2. Usuário
       1. Recursos
-      2. [Exemplo JSON](exemplo-json-1)
+      2. [Exemplo JSON](#exemplo-json-1)
 7. Dúvidas
 
 ## Iniciando
