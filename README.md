@@ -134,7 +134,7 @@ Nas listagens:
 #### Usuário
 O sistema utiliza uma tabela de usuario para dados dos usuáiros de acesso ao sistema.
 ##### Recursos
-Segue o mesmo padrão do recurso de pessoa, com a diferença de trocar a palavra pessoa por usuario como no exemplo: [http://localhost/usuario](http://localhost/usuario)
+Segue o mesmo padrão do recurso de [Pessoa](#pessoa), com a diferença de trocar a palavra pessoa por usuario como no exemplo: [http://localhost/usuario](http://localhost/usuario)
 ##### Exemplo JSON
 ```
 {
@@ -163,4 +163,4 @@ Segue o mesmo padrão do recurso de pessoa, com a diferença de trocar a palavra
         "updatedAt": "2020-06-10T12:55:31.202Z"
 }
 ```
-Segue o mesmo comportamento descrito na explicação de Pessoa.
+Segue o mesmo comportamento descrito na explicação de [Pessoa](#pessoa).
