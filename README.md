@@ -4,23 +4,26 @@ API para controle de clientes, usuários, funcionários, produtos, geração de 
 
 ## Índice
 
-1. Inciando
-2. Pré-rquisito
-3. Executando
-4. Banco de dados
-5. Migrations
-6. Utilização
-   1. Pessoa
-      1. Recursos
-      2. [Exemplo JSON](#exemplo-json)
-   2. Usuário
-      1. Recursos
-      2. [Exemplo JSON](#exemplo-json-1)
-7. Dúvidas
+- [Carp](#carp)
+  - [Índice](#índice)
+  - [Iniciando](#iniciando)
+    - [Pré-rquisito](#pré-rquisito)
+    - [Executando](#executando)
+    - [Banco de dados](#banco-de-dados)
+    - [Migrations](#migrations)
+    - [Utilização](#utilização)
+      - [Pessoa](#pessoa)
+        - [Recursos](#recursos)
+        - [Exemplo JSON](#exemplo-json)
+      - [Usuário](#usuário)
+        - [Recursos](#recursos-1)
+        - [Exemplo JSON](#exemplo-json-1)
+  - [Dúvidas](#dúvidas)
 
 ## Iniciando
 
 Segue as instruções de utilização da API.
+Voltar ao [Índice](#índice)
 
 ### Pré-rquisito
 
@@ -32,6 +35,7 @@ Ter os programas abaixo já instalados e rodando:
 4. [sequelize-cli](https://www.npmjs.com/package/sequelize-cli).
 5. [postman](https://www.postman.com/)
 
+Voltar ao [Índice](#índice)
 ### Executando
 
 Após baixar os fontes acesse a pasta da aplicação e execute o comando:
@@ -55,7 +59,7 @@ Servidor online na port: 80
 Acesse http://localhost
 Para criar o banco acesse http://localhost/criarbanco e siga as instruções.
 ```
-
+Voltar ao [Índice](#índice)
 ### Banco de dados
 
 Utilizando o [postman](https://www.postman.com/), acesse o endereço [http://localhost/criarbanco](http://localhost/criarbanco).
@@ -80,7 +84,7 @@ Onde:
 - senha - Senha do usuário de acesso ao banco padrão do postgres.
 
 Ao témino será criado um usuário com nome **carp** e um banco, também, de nome **carp**.
-
+Voltar ao [Índice](#índice)
 ### Migrations
 
 Já com o banco criado vamos criar o schema e as tabelas do sistema.
@@ -96,7 +100,7 @@ Isso não remove o banco de dados.
 ```
 sequelize-cli db:migrate:undo:all
 ```
-
+Voltar ao [Índice](#índice)
 ### Utilização
 
 Para utilizar a API, deve ser utilizado o programa [postman](https://www.postman.com/) para envio das requisições.
@@ -115,6 +119,7 @@ Abaixo uma lista com os recursos e seus métodos:
 4. Alterar [http://localhost/pessoa](http://localhost/pessoa) usando PUT, passando no corpo da requisição um JSON como do exemplo do final da lista.
 5. Excluir [http://localhost/pessoa/id](http://localhost/pessoa/id) usando DELETE, onde o **id** é o número de id da pessoa na tabela.
 
+Voltar ao [Índice](#índice)
 ##### Exemplo JSON
 
 Segue um exemplo no formato JSON que será retornado ou enviado pela API. Em caso de cadastro o campo ID não pode ser enviado, o mesmo será gerado automaticamente.
@@ -167,7 +172,7 @@ Nas listagens:
     "Usuario": null
 }
 ```
-
+Voltar ao [Índice](#índice)
 #### Usuário
 
 O sistema utiliza uma tabela de usuario para dados dos usuáiros de acesso ao sistema.
@@ -208,6 +213,9 @@ Segue o mesmo padrão do recurso de [Pessoa](#pessoa), com a diferença de troca
 
 Segue o mesmo comportamento descrito na explicação de [Pessoa](#pessoa).
 
+Voltar ao [Índice](#índice)
 ## Dúvidas
 
 Em caso de dúvidas entre em contato com [jairmaiag@gmail.com](jairmaiag@gmail.com)
+
+Voltar ao [Índice](#índice)
