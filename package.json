@@ -8,7 +8,8 @@
   ],
   "main": "gcps.js",
   "scripts": {
-    "start": "nodemon main",
+    "start": "node main",
+    "nodemon":"nodemon main",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jair Diniz",
