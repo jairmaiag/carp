@@ -34,12 +34,12 @@ module.exports = (sequelize, DataTypes) => {
       field: "usuexpirar",
       comment: "Data de expiração do usuáiro para acesso ao sistema.",
     },
-    inativo: {
+    ativo: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
-      field: "usuinativo",
-      comment: "Indica se o usuáiro está inativo para acesso ao sistema.",
+      field: "usuativo",
+      comment: "Indica se o usuáiro está ativo para acesso ao sistema.",
     },
     idPessoa: {
       allowNull: false,
