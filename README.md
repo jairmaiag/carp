@@ -2,12 +2,30 @@
 
 API para controle de clientes, usuários, funcionários, produtos, geração de orçamentos e ordens de serviços.
 
+## Índice
+
+1. Inciando
+2. Pré-rquisito
+3. Executando
+4. Banco de dados
+5. Migrations
+6. Utilização
+   1. Pessoa
+      1. Recursos
+      2. [Exemplo JSON](exemplo-json)
+   2. Usuário
+      1. Recursos
+      2. [Exemplo JSON](exemplo-json-1)
+7. Dúvidas
+
 ## Iniciando
 
 Segue as instruções de utilização da API.
 
 ### Pré-rquisito
+
 Ter os programas abaixo já instalados e rodando:
+
 1. Ter o **NodeJs**.
 2. Ter o **SGBD (Sistema de Gestão de Banco de Dados) Postgres**.
 3. Saber o usuário e senha padrão do Postgres.
@@ -52,42 +70,56 @@ Utilizando uma requisição POST passando no body da mesma, com o formato JSON a
 "senha":"senhaBanco"
 }
 ```
+
 Onde:
-* host - É o endereço ou IP de acesso ao banco padrão postgres.
-* porta - Porta de acesso ao banco (padrão 5432).
-* banco - Nome do banco padrão do postgres.
-* usuario - Usuário de acesso ao banco com permissão de criar bancos.
-* senha - Senha do usuário de acesso ao banco padrão do postgres.
+
+- host - É o endereço ou IP de acesso ao banco padrão postgres.
+- porta - Porta de acesso ao banco (padrão 5432).
+- banco - Nome do banco padrão do postgres.
+- usuario - Usuário de acesso ao banco com permissão de criar bancos.
+- senha - Senha do usuário de acesso ao banco padrão do postgres.
 
 Ao témino será criado um usuário com nome **carp** e um banco, também, de nome **carp**.
 
 ### Migrations
+
 Já com o banco criado vamos criar o schema e as tabelas do sistema.
 Pare a aplicação, acesse a pasta da mesma e execute o comando
+
 ```
 sequelize-cli db:migrate
 ```
+
 Para desfazer a Migrations (remover o schema e as tabelas).
 Isso não remove o banco de dados.
+
 ```
 sequelize-cli db:migrate:undo:all
 ```
 
 ### Utilização
+
 Para utilizar a API, deve ser utilizado o programa [postman](https://www.postman.com/) para envio das requisições.
 
 #### Pessoa
+
 O sistema utiliza uma tabela de pessoa para dados gerais de uma pessoa.
+
 ##### Recursos
+
 Abaixo uma lista com os recursos e seus métodos:
+
 1. Listagem [http://localhost/pessoa](http://localhost/pessoa), usando GET.
 2. Dados de uma pessoa [http://localhost/pessoa/id](http://localhost/pessoa/id) usando GET, onde o **id** é o número de id da pessoa na tabela.
 3. Cadastrar [http://localhost/pessoa](http://localhost/pessoa) usando POST, passando no corpo da requisição um JSON como do exemplo do final da lista.
 4. Alterar [http://localhost/pessoa](http://localhost/pessoa) usando PUT, passando no corpo da requisição um JSON como do exemplo do final da lista.
 5. Excluir [http://localhost/pessoa/id](http://localhost/pessoa/id) usando DELETE, onde o **id** é o número de id da pessoa na tabela.
+
 ##### Exemplo JSON
+
 Segue um exemplo no formato JSON que será retornado ou enviado pela API. Em caso de cadastro o campo ID não pode ser enviado, o mesmo será gerado automaticamente.
 Para um cadastro:
+
 ```
 {
 	"nome": "Fulano",
@@ -99,7 +131,9 @@ Para um cadastro:
 	"rg": null
 }
 ```
+
 Para uma alteração:
+
 ```
 {
 	"id": 1
@@ -113,7 +147,9 @@ Para uma alteração:
     "ativo": false
 }
 ```
+
 Nas listagens:
+
 ```
 {
     "id": 1,
@@ -131,11 +167,17 @@ Nas listagens:
     "Usuario": null
 }
 ```
+
 #### Usuário
+
 O sistema utiliza uma tabela de usuario para dados dos usuáiros de acesso ao sistema.
+
 ##### Recursos
+
 Segue o mesmo padrão do recurso de [Pessoa](#pessoa), com a diferença de trocar a palavra pessoa por usuario como no exemplo: [http://localhost/usuario](http://localhost/usuario)
+
 ##### Exemplo JSON
+
 ```
 {
     "id": 1,
@@ -163,4 +205,9 @@ Segue o mesmo padrão do recurso de [Pessoa](#pessoa), com a diferença de troca
         "updatedAt": "2020-06-10T12:55:31.202Z"
 }
 ```
+
 Segue o mesmo comportamento descrito na explicação de [Pessoa](#pessoa).
+
+## Dúvidas
+
+Em caso de dúvidas entre em contato com [jairmaiag@gmail.com](jairmaiag@gmail.com)
