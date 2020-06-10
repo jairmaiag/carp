@@ -28,7 +28,7 @@ module.exports = {
           comment: "Sobre Nome da pessoa cadastrada.",
         },
         nascimento: {
-          type: Sequelize.DATE,
+          type: Sequelize.DATEONLY,
           field: "pesnascimento",
           comment: "Data de nascimento da pessoa cadastrada.",
         },
@@ -54,12 +54,12 @@ module.exports = {
           field: "pescriacao",
           comment: "Data de criação da pessoa.",
         },
-        inativo: {
+        ativo: {
           type: Sequelize.BOOLEAN,
           allowNull: false,
-          defaultValue: true,
-          field: "pesinativo",
-          comment: "Indica se a pessoa está inativa para ser utilizada.",
+          defaultValue: false,
+          field: "pesativo",
+          comment: "Indica se a pessoa está ativa para ser utilizada.",
         },
         createdAt: {
           allowNull: false,
