@@ -1,29 +1,29 @@
 {
   "development": {
-    "username": "gcps",
-    "password": "gcps",
-    "database": "gcps",
+    "username": "carp",
+    "password": "carp",
+    "database": "carp",
     "host": "localhost",
     "dialect": "postgres",
     "freezeTableName": true,
-    "timestamps": false
+    "timestamps": true
   },
   "test": {
     "username": "root",
-    "password": "gcps",
-    "database": "gcps",
+    "password": "carp",
+    "database": "carp",
     "host": "localhost",
     "dialect": "postgres",
     "freezeTableName": true,
-    "timestamps": false
+    "timestamps": true
   },
   "production": {
-    "username": "gcps",
-    "password": "gcps",
-    "database": "gcps",
+    "username": "carp",
+    "password": "carp",
+    "database": "carp",
     "host": "localhost",
     "dialect": "postgres",
     "freezeTableName": true,
-    "timestamps": false
+    "timestamps": true
   }
 }
