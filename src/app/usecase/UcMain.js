@@ -33,7 +33,7 @@ class UcMain {
     cliente.query("select usename from pg_user;", (errusu, usus) => {
       let usubd = usus.rows.filter((usu) => usu.usename == "carp");
       if (usubd.length > 0) {
-        console.log("Usuário de banco já existe. Saindo da criação do usuario.");
+        console.log("Usuário de banco já existe. Saindo da criação do usuario. Aguarde a verificação do banco...");
         return;
       }
       const criarUsuario =
@@ -56,6 +56,7 @@ class UcMain {
       cliente.query(criarBanco, (errdb, db) => {
         console.log("Criando banco...");
         cliente.end();
+        console.log("Criação de banco concluida!");
       });
     });
     return null;
