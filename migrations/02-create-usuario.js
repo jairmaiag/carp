@@ -61,7 +61,7 @@ module.exports = {
         },
       },
       {
-        schema: "gcps", // default: public, PostgreSQL only.
+        schema: "carp", // default: public, PostgreSQL only.
         comment:
           "Tabela utilizada para armazenar os dados do usuário para acesso ao sistema.", // comment for table
       }
