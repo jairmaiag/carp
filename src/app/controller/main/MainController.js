@@ -6,6 +6,9 @@ class MainController {
   index(req, res) {
     this.casoUso.index(req, res);
   }
+  async criarBanco(dadosConexao) {
+    return await this.casoUso.criarBanco(dadosConexao);
+  }
 }
 function retorno(app) {
   return new MainController(app);
