@@ -51,12 +51,12 @@ module.exports = (sequelize, DataTypes) => {
       field: "pescriacao",
       comment: "Data de criação da pessoa.",
     },
-    inativo: {
+    ativo: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
-      field: "pesinativo",
-      comment: "Indica se a pessoa está inativa para ser utilizada.",
+      field: "pesativo",
+      comment: "Indica se a pessoa está ativa para ser utilizada.",
     },
   };
 
