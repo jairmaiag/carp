@@ -40,17 +40,29 @@ module.exports = function (app) {
     /* 204 No Content 
          Não há conteúdo para enviar para esta solicitação, mas os cabeçalhos podem ser úteis.
     */
-    await controller.findById(req.params.id).then((entity) => {
-      let isNull = Object.is(entity, null);
-      if (!isNull) {
-        res.status(201).json(entity);
-      } else {
-        res
-          .status(404)
-          .json(util.montarMensagemJson("Recurso não encontrado."));
-      }
-      return;
-    });
+   const entity = await controller.findById(req.params.id)
+   
+   let isNull = Object.is(entity, null);
+   if (!isNull) {
+     res.status(201).json(entity);
+   } else {
+     res
+       .status(404)
+       .json(util.montarMensagemJson("Recurso não encontrado."));
+   }
+   return;
+
+    // await controller.findById(req.params.id).then((entity) => {
+    //   let isNull = Object.is(entity, null);
+    //   if (!isNull) {
+    //     res.status(201).json(entity);
+    //   } else {
+    //     res
+    //       .status(404)
+    //       .json(util.montarMensagemJson("Recurso não encontrado."));
+    //   }
+    //   return;
+    // });
   });
 
   app.post("/pessoa", async function (req, res) {
@@ -77,19 +89,18 @@ module.exports = function (app) {
         .json(util.montarMensagemJson("Envio do campo Id é obrigatório."));
       return;
     }
-    await controller.update(req.body).then((entity) => {
-      if (entity[0] === 1) {
-        res.redirect("/pessoa/" + id);
-      } else {
-        res
-          .status(404)
-          .json(
-            util.montarMensagemJson(
-              "Recurso não encontrado para ser atualizado."
-            )
-          );
-      }
-    });
+    const entity = await controller.update(req.body)
+    if (entity[0] === 1) {
+      res.redirect("/pessoa/" + id);
+    } else {
+      res
+        .status(404)
+        .json(
+          util.montarMensagemJson(
+            "Recurso não encontrado para ser atualizado."
+          )
+        );
+    }
   });
 
   app.delete("/pessoa/:id", async function (req, res) {
