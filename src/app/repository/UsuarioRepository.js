@@ -72,6 +72,23 @@ UsuarioRepository.prototype.delete = async function (id) {
   }
 };
 
+UsuarioRepository.prototype.findByLoginSenha = async function (filter) {
+  try {
+    const result = await Usuario.findOne(
+      {
+        where: {
+          login: filter.login,
+          senha: filter.senha,
+        },
+      },
+      { raw: true }
+    );
+    return result;
+  } catch (e) {
+    throw e;
+  }
+};
+
 function retorno(app) {
   return new UsuarioRepository(app);
 }
