@@ -20,6 +20,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 /* Fazer os testes via Postman */
 app.use(bodyParser.json());
 
+/* Pre configurando as requisições e as respostas para evitar erros *
+/* Access-Control-Allow-Origin - para permitir que seja feita a resposta para qualquer cliente */
+app.use(function(req, res, next){
+  /* Habilita requisições cros domain, requisições de domínos diferentes */
+  res.setHeader("Access-Control-Allow-Origin","*");
+  /* Quais os métodos que a origem pode requisitar */
+  res.setHeader("Access-Control-Allow-Methods","GET, POST, PUT, DELETE");
+  /* Habilitar que a requisição feita pela origem tenha cabeçalhos reescritos */
+  res.setHeader("Access-Control-Allow-Headers","Content-type");
+  /*  */
+  res.setHeader("Access-Control-Allow-Credentials",true);
+  next();
+});
+
+
 /* Configuração da sessão */
 let configSession = {
   secret: "gcpssession", // Chave secreta
