@@ -12,6 +12,7 @@ class UcAcesso {
     this.repository = this.criarRepository();
     return await this.repository.findByLoginSenha(filter);
   }
+  async logout() {}
 }
 
 function retorno(app) {
