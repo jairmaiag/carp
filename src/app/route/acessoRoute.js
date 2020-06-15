@@ -4,7 +4,6 @@ module.exports = function (app) {
 
   app.post("/login", async function (req, res) {
     const filter = req.body;
-    console.log(filter);
     if (
       Object.is(filter.login, undefined) ||
       Object.is(filter.senha, undefined)
@@ -20,7 +19,12 @@ module.exports = function (app) {
     if (usuario == null) {
       res.status(404).json(util.montarMensagemJson("Recurso não encontrado."));
     } else {
+      req.session.usuario = usuario;
       res.status(200).json(usuario);
     }
+  });
+  app.get("/logout", async function (req, res) {
+    req.session.destroy();
+    res.status(200).json(util.montarMensagemJson("Usuário não logado."));
   });
 };
