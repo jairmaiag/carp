@@ -6,6 +6,7 @@ class AcessoController {
     return await this.casoUso.findByLoginSenha(filter);
   }
 }
+
 function retorno(app) {
   return new AcessoController(app);
 }
