@@ -1,6 +1,8 @@
 /* importar o módulo do framework express */
 var express = require("express");
 
+var cors = require("cors");
+
 /* importar o módulo do consign */
 var consign = require("consign");
 
@@ -31,22 +33,34 @@ app.use(session(configSession));
 
 /* Pre configurando as requisições e as respostas para evitar erros *
 /* Access-Control-Allow-Origin - para permitir que seja feita a resposta para qualquer cliente */
+
+/* Configurando a aplicação para receber requisições de outros domínio */
+app.use(cors());
+
 app.use(function (req, res, next) {
-  /* Habilita requisições cros domain, requisições de domínos diferentes */
+  /* Habilita requisições cros domain, requisições de domínos diferentes 
   res.setHeader("Access-Control-Allow-Origin", "*");
-  /* Quais os métodos que a origem pode requisitar */
+ */
+  /* Quais os métodos que a origem pode requisitar 
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  /* Habilitar que a requisição feita pela origem tenha cabeçalhos reescritos */
-  res.setHeader("Access-Control-Allow-Headers", "Content-type");
-  /*  */
+ */
+  /* Habilitar que a requisição feita pela origem tenha cabeçalhos reescritos 
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+    );
+   */
+
+  /*  
   res.setHeader("Access-Control-Allow-Credentials", true);
+ */
 
   /* Tratamento para acesso aos recuros
      Verifica se existe um usuário logado
      Para login e logout veja no arquivo acessoRoute.js
   */
   let urlOrigem = req.originalUrl;
-  if (urlOrigem === "/" || urlOrigem === "/login/") {
+  if (urlOrigem === "/" || urlOrigem === "/login") {
     next();
     return;
   }
