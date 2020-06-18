@@ -1,7 +1,11 @@
 /* importar o módulo do framework express */
 var express = require("express");
 
+/* Necessário para acesso de outros domínos */
 var cors = require("cors");
+
+/* Para configurar as variáveis de ambiente da aplicação */
+require("dotenv/config");
 
 /* importar o módulo do consign */
 var consign = require("consign");
@@ -59,16 +63,19 @@ app.use(function (req, res, next) {
      Verifica se existe um usuário logado
      Para login e logout veja no arquivo acessoRoute.js
   */
-  let urlOrigem = req.originalUrl;
-  if (urlOrigem === "/" || urlOrigem === "/login") {
-    next();
-    return;
-  }
-  if (req.session.usuario === undefined) {
-    res.status(401).json({
-      mensagem: "Não existe um usuário logado. Por favor tente fazer o login.",
-    });
-    return;
+  if (process.env.NODE_ENV === "production") {
+    let urlOrigem = req.originalUrl;
+    if (urlOrigem === "/" || urlOrigem === "/login") {
+      next();
+      return;
+    }
+    if (req.session.usuario === undefined) {
+      res.status(401).json({
+        mensagem:
+          "Não existe um usuário logado. Por favor tente fazer o login.",
+      });
+      return;
+    }
   }
   next();
 });

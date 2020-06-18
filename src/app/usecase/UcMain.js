@@ -5,9 +5,9 @@ class UcMain {
     this.app = app;
   }
   index(req, res) {
+    let porta = process.env.PORT == 80 ? "" : ":" + process.env.PORT;
     res.status(200).json({
-      mensagem:
-        "Sistema GCPS Ativo! Para criação de banco acesse /criarbanco usando o method POST.",
+      mensagem: `Sistema GCPS Ativo! Para criação de banco acesse http://localhsot${porta}/criarbanco usando o method POST.`,
     });
   }
   montarStringConexao(dadosConexaoPadrao) {
@@ -33,7 +33,9 @@ class UcMain {
     cliente.query("select usename from pg_user;", (errusu, usus) => {
       let usubd = usus.rows.filter((usu) => usu.usename == "carp");
       if (usubd.length > 0) {
-        console.log("Usuário de banco já existe. Saindo da criação do usuario. Aguarde a verificação do banco...");
+        console.log(
+          "Usuário de banco já existe. Saindo da criação do usuario. Aguarde a verificação do banco..."
+        );
         return;
       }
       const criarUsuario =
