@@ -8,6 +8,7 @@ API para controle de clientes, usuários, funcionários, produtos, geração de 
   - [Índice](#índice)
   - [Iniciando](#iniciando)
     - [Pré-rquisito](#pré-rquisito)
+    - [Variáveis de ambiente](#variáveis-de-ambiente)
     - [Executando](#executando)
     - [Banco de dados](#banco-de-dados)
     - [Migrations](#migrations)
@@ -37,6 +38,15 @@ Ter os programas abaixo já instalados e rodando:
 5. [postman](https://www.postman.com/)
 
 [Voltar ao Índice](#índice)
+
+### Variáveis de ambiente
+
+Para que o funcione em modo de desenvolvimento crie um arquivo **.env** na raiz da aplicação com algumas variáveis configuradas.
+
+Veja o conteúdo do arquivo **.env.example** que contem as variáveis utilizadas no sistema.
+
+[Voltar ao Índice](#índice)
+
 ### Executando
 
 Após baixar os fontes acesse a pasta da aplicação e execute o comando:
@@ -60,7 +70,9 @@ Servidor online na port: 80
 Acesse http://localhost
 Para criar o banco acesse http://localhost/criarbanco e siga as instruções.
 ```
+
 [Voltar ao Índice](#índice)
+
 ### Banco de dados
 
 Utilizando o [postman](https://www.postman.com/), acesse o endereço [http://localhost/criarbanco](http://localhost/criarbanco).
@@ -103,7 +115,9 @@ Isso não remove o banco de dados.
 ```
 sequelize-cli db:migrate:undo:all
 ```
+
 [Voltar ao Índice](#índice)
+
 ### Utilização
 
 Para utilizar a API, deve ser utilizado o programa [postman](https://www.postman.com/) para envio das requisições.
@@ -123,6 +137,7 @@ Abaixo uma lista com os recursos e seus métodos:
 5. Excluir [http://localhost/pessoa/id](http://localhost/pessoa/id) usando DELETE, onde o **id** é o número de id da pessoa na tabela.
 
 [Voltar ao Índice](#índice)
+
 ##### Exemplo JSON
 
 Segue um exemplo no formato JSON que será retornado ou enviado pela API. Em caso de cadastro o campo ID não pode ser enviado, o mesmo será gerado automaticamente.
@@ -168,14 +183,15 @@ Nas listagens:
     "sexo": "F",
     "cpf": null,
     "rg": null,
-    "ciracao": null,
     "ativo": true,
     "createdAt": "2020-06-10T12:55:04.771Z",
     "updatedAt": "2020-06-10T12:55:04.771Z",
     "Usuario": null
 }
 ```
+
 Voltar ao [Índice](#índice)
+
 #### Usuário
 
 O sistema utiliza uma tabela de usuario para dados dos usuáiros de acesso ao sistema.
@@ -217,6 +233,7 @@ Segue o mesmo padrão do recurso de [Pessoa](#pessoa), com a diferença de troca
 Segue o mesmo comportamento descrito na explicação de [Pessoa](#pessoa).
 
 [Voltar ao Índice](#índice)
+
 ## Dúvidas
 
 Em caso de dúvidas entre em contato com [jairmaiag@gmail.com](jairmaiag@gmail.com)
