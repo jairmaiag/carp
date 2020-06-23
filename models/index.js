@@ -9,7 +9,7 @@ const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.json")[env];
 config.username = process.env.DATABASEUSERNAME || config.username;
 config.password = process.env.DATABASEPASSWORD || config.password;
-config.database = process.env.carp || config.database;
+config.database = process.env.DATABASENAME || config.database;
 config.host = process.env.DATABASEHOST || config.host;
 
 const db = {};
