@@ -1,4 +1,5 @@
 var fs = require("fs");
+const PDFDocument = require("pdfmake");
 module.exports = function (app) {
   const controller = new app.src.app.controller.main.MainController(app);
   const validaCampos = function (dados) {
@@ -42,14 +43,37 @@ module.exports = function (app) {
       mensagem: "Verifique o console do nodejs para ver os resultados.",
     });
   });
-  app.get("/pdf", function (req, res) {
-    var tempFile = "./progit.pdf";
-    fs.readFile(tempFile, function (err, data) {
-      if (err) {
-        console.log(err);
-      }
-      res.contentType("application/pdf");
-      res.send(data);
-    });
+  app.get("/teste.pdf", function (req, res) {
+    var fonts = {
+      Roboto: {
+        normal: "fonts/Roboto-Regular.ttf",
+        bold: "fonts/Roboto-Medium.ttf",
+        italics: "fonts/Roboto-Italic.ttf",
+        bolditalics: "fonts/Roboto-MediumItalic.ttf",
+      },
+    };
+    var docDefinition = {
+      info: {
+        title: "Teste de geração de PDF",
+        author: "Jair",
+        subject: "Primeiro PDF",
+        keywords: "PDF",
+      },
+      content: [
+        "First paragraph",
+        "Second paragraph, this time a little bit longer",
+        { text: "Third paragraph, slightly bigger font size", fontSize: 20 },
+        { text: "Another paragraph using a named style", style: "header" },
+        { text: ["playing with ", "inlines"] },
+        { text: ["and ", { text: "restyling ", bold: true }, "them"] },
+      ],
+      styles: {
+        header: { fontSize: 30, bold: true },
+      },
+    };
+    const doc = new PDFDocument(fonts);
+    const pdfDoc = doc.createPdfKitDocument(docDefinition);
+    pdfDoc.pipe(res);
+    pdfDoc.end();
   });
 };
