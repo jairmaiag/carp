@@ -1,3 +1,5 @@
+var fs = require("fs");
+const PDFDocument = require("pdfmake");
 module.exports = function (app) {
   const controller = new app.src.app.controller.main.MainController(app);
   const validaCampos = function (dados) {
@@ -22,7 +24,11 @@ module.exports = function (app) {
     controller.index(req, res);
   });
   app.get("/criarbanco", function (req, res) {
-    res.status(200).send('Passe os dados utilizando o method POST, no formato json como abaixo: <br />{<br />"host":"enderecoBanco", <br />"porta":5432, <br />"banco":"postgres",<br />"usuario":"postgres", <br />"senha":"senhaBanco" <br />} <br />Substituindo os dados para a conexão com o banco padrão do Postgres.');
+    res
+      .status(200)
+      .send(
+        'Passe os dados utilizando o method POST, no formato json como abaixo: <br />{<br />"host":"enderecoBanco", <br />"porta":5432, <br />"banco":"postgres",<br />"usuario":"postgres", <br />"senha":"senhaBanco" <br />} <br />Substituindo os dados para a conexão com o banco padrão do Postgres.'
+      );
   });
   app.post("/criarbanco", async function (req, res) {
     if (!validaCampos(req.body)) {
@@ -36,5 +42,38 @@ module.exports = function (app) {
     res.status(200).json({
       mensagem: "Verifique o console do nodejs para ver os resultados.",
     });
+  });
+  app.get("/teste.pdf", function (req, res) {
+    var fonts = {
+      Roboto: {
+        normal: "fonts/Roboto-Regular.ttf",
+        bold: "fonts/Roboto-Medium.ttf",
+        italics: "fonts/Roboto-Italic.ttf",
+        bolditalics: "fonts/Roboto-MediumItalic.ttf",
+      },
+    };
+    var docDefinition = {
+      info: {
+        title: "Teste de geração de PDF",
+        author: "Jair",
+        subject: "Primeiro PDF",
+        keywords: "PDF",
+      },
+      content: [
+        "First paragraph",
+        "Second paragraph, this time a little bit longer",
+        { text: "Third paragraph, slightly bigger font size", fontSize: 20 },
+        { text: "Another paragraph using a named style", style: "header" },
+        { text: ["playing with ", "inlines"] },
+        { text: ["and ", { text: "restyling ", bold: true }, "them"] },
+      ],
+      styles: {
+        header: { fontSize: 30, bold: true },
+      },
+    };
+    const doc = new PDFDocument(fonts);
+    const pdfDoc = doc.createPdfKitDocument(docDefinition);
+    pdfDoc.pipe(res);
+    pdfDoc.end();
   });
 };
