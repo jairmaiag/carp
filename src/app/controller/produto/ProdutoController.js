@@ -1,16 +1,16 @@
-class UsuarioController {
+class ProdutoController {
   constructor(app) {
-    this.casoUso = new app.src.app.usecase.UsuarioUC(app)
+    this.casoUso = new app.src.app.usecase.ProdutoUC(app)
   }
-  
+
   async index (attributes, filter, order) {
     return await this.casoUso.index(attributes, filter, order)
   }
-  
+
   async findAndPaginate (attributes, filter, order, page) {
     return await this.casoUso.findAndPaginate(attributes, filter, order, page)
   }
-
+  
   async findByUUId (UUId) {
     return await this.casoUso.findByUUId(UUId)
   }
@@ -18,22 +18,22 @@ class UsuarioController {
   async findById(id) {
     return await this.casoUso.findById(id)
   }
-  
-  async insert(dados) {
+
+  async insert (dados) {
     return await this.casoUso.insert(dados)
   }
-  
-  async update(dados) {
+
+  async update (dados) {
     return await this.casoUso.update(dados)
   }
-  
-  async delete(UUId) {
+
+  async delete (UUId) {
     return await this.casoUso.delete(UUId)
   }
 }
 
 function retorno(app) {
-  return new UsuarioController(app)
+  return new ProdutoController(app)
 }
 
 module.exports = () => retorno

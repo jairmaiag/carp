@@ -3,8 +3,8 @@ var app = require("./src/app/config/server");
 
 /* parametrizar a porta de escuta */
 let port = 80;
+
 app.listen(port, function () {
-  //console.clear();
   console.log("Servidor online na port: " + port);
   console.log("Acesse http://localhost");
   console.log(

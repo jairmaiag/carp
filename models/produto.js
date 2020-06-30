@@ -1,130 +1,141 @@
-'use strict';
+'use strict'
+
+const BaseModel = require('./baseModel')
 
 module.exports = (sequelize, DataTypes) => {
-  const tabela = "produto";
-  const campos = {
-     UUId: {
-      field: "uuidProd",
-      allowNull: false,
-      type: DataTypes.UUID,
-      validate: {
-        notNull: true
-      }
-    },
-    id: {
-      field: "idProd",
-      primaryKey: true,
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-    },
-    codigo: {
-      field: "codigoProd",
-      allowNull: false,
-      type: DataTypes.STRING(16),
-    },
-    nome: {
-      field: "nomeProd",
-      allowNull: false,
-      type: DataTypes.STRING(200),
-    },
-    descricao: {
-      field: "descricaoProd",
-      type: DataTypes.TEXT,
-    },
-    codigoBarras: {
-      field: "codigoBarrasProd",
-      type: DataTypes.STRING(16),
-    },
-    referencia: {
-      field: "referenciaProd",
-      type: DataTypes.STRING(25),
-    },
-    status: {
-      field: "statusPod",
-      allowNull: false,
-      type: DataTypes.INTEGER,
-    },
-    imagem: {
-      field: "imagemProd",
-      type: DataTypes.STRING(250),
-    },
-    controleEstoque: {
-      field: "controleEstoqueProd",
-      allowNull: false,
-      type: DataTypes.INTEGER,
-    },
-    unidadeMedida: {
-      field: "unidadeMedidaProd",
-      allowNull: false,
-      type: DataTypes.STRING(3),
-    },
-    UnidadeCompra: {
-      field: "UnidadeCompraProd",
-      allowNull: false,
-      type: DataTypes.STRING(3),
-    },
-    fatorConversao: {
-      field: "fatorConversaoProd",
-      allowNull: false,
-      type: DataTypes.NUMERIC(16, 8),
-    },
-    pesoLiquido: {
-      field: "pesoLiquidoProd",
-      allowNull: false,
-      type: DataTypes.NUMERIC(9, 3),
-    },
-    pesoBruto: {
-      field: "pesoBrutoProd",
-      allowNull: false,
-      type: DataTypes.NUMERIC(9, 3),
-    },
-    margemLucro: {
-      field: "margemLucroProd",
-      allowNull: false,
-      type: DataTypes.NUMERIC(6, 2),
-    },
-    precoVenda: {
-      field: "precoVendaProd",
-      allowNull: false,
-      type: DataTypes.NUMERIC(16, 4),
-    },
-    saldoFinanceiro: {
-      field: "saldoFinanceiroProd",
-      allowNull: false,
-      type: DataTypes.NUMERIC(16, 6),
-    },
-    estoqueQuantidade: {
-      field: "estoqueQuantidadeProd",
-      allowNull: false,
-      type: DataTypes.NUMERIC(16, 6),
-    },
-    createdAt: {
-      field: "createAtProd",
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    updatedAt: {
-      field: "updatedAtProd",
-      allowNull: false,
-      type: DataTypes.DATE
-    }
-  };
+  class Produto extends BaseModel {}
 
-  const opcoes = {
-    tableName: tabela,
-    comment: "Tabela utilziada para armazenar os dados de um produto.", 
-  };
-
-  var produto = sequelize.define("Produto", campos, opcoes);
+  // module.exports = class Produto extends BaseModel {
+  //   constructor(sequelize, DataTypes) {
+  //     super()
+  //   }
   
-  // Produto.associate = function (models) {
-  // Produto.hasOne(models.Usuario, {
-  //     as: "Usuario",
-  //     foreignKey: "pesid",
-  //     targetKey: "pesid",
-  //     allowNull: true,
-  //   });
-  // };
+  //   static init() {
+  //     return super.init({
 
-  return produto;
-};
+  Produto.init({
+      UUId: {
+        field: 'UUIdPro',
+        allowNull: false,
+        type: DataTypes.UUID,
+        validate: {
+          notNull: true
+        }
+      },
+      id: {
+        field: 'idPro',
+        primaryKey: true,
+        autoIncrement: true,
+        type: DataTypes.INTEGER,
+      },
+      codigo: {
+        field: 'codigoPro',
+        allowNull: false,
+        type: DataTypes.STRING(16),
+      },
+      nome: {
+        field: 'nomePro',
+        allowNull: false,
+        type: DataTypes.STRING(200),
+      },
+      descricao: {
+        field: 'descricaoPro',
+        type: DataTypes.TEXT,
+      },
+      codigoBarras: {
+        field: 'codigoBarrasPro',
+        type: DataTypes.STRING(16),
+      },
+      referencia: {
+        field: 'referenciaPro',
+        type: DataTypes.STRING(25),
+        comment: 'Referencia do produto que pode vir do fornecedor.',
+      },
+      status: {
+        field: 'statusPro',
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        defaultValue: 1,
+        comment: '1 - Ativo, 2 - Inativo',
+      },
+      controleEstoque: {
+        field: 'controleEstoquePro',
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        defaultValue: 3,
+        comment: '1 - Não controlar, 2 - Controlar c/Saldo Negativo, 3 - Controlar',
+      },
+      unidadeMedida: {
+        field: 'unidadeMedidaPro',
+        allowNull: false,
+        type: DataTypes.STRING(3),
+        defaultValue: 'UN',
+      },
+      UnidadeCompra: {
+        field: 'UnidadeCompraPro',
+        allowNull: false,
+        type: DataTypes.STRING(3),
+        defaultValue: 'UN',
+      },
+      fatorConversao: {
+        field: 'fatorConversaoPro',
+        allowNull: false,
+        type: DataTypes.NUMERIC(16, 8),
+        defaultValue: 1,
+      },
+      pesoLiquido: {
+        field: 'pesoLiquidoPro',
+        allowNull: false,
+        type: DataTypes.NUMERIC(9, 3),
+        defaultValue: 0,
+      },
+      pesoBruto: {
+        field: 'pesoBrutoPro',
+        allowNull: false,
+        type: DataTypes.NUMERIC(9, 3),
+        defaultValue: 0,
+      },
+      margemLucro: {
+        field: 'margemLucroPro',
+        allowNull: false,
+        type: DataTypes.NUMERIC(6, 2),
+        defaultValue: 0,
+      },
+      precoVenda: {
+        field: 'precoVendaPro',
+        allowNull: false,
+        type: DataTypes.NUMERIC(16, 4),
+        defaultValue: 0,
+      },
+      saldoFinanceiro: {
+        field: 'saldoFinanceiroPro',
+        allowNull: false,
+        type: DataTypes.NUMERIC(16, 6),
+        defaultValue: 0,
+        comment: 'Quantidade x preco de venda',
+      },
+      estoqueQuantidade: {
+        field: 'estoqueQuantidadePro',
+        allowNull: false,
+        type: DataTypes.NUMERIC(16, 6),
+        defaultValue: 0,
+      },
+      createdAt: {
+        field: 'createAtPro',
+        allowNull: false,
+        type: DataTypes.DATE
+      },
+      updatedAt: {
+        field: 'updatedAtPro',
+        allowNull: false,
+        type: DataTypes.DATE
+      }
+    }, {
+      sequelize,
+      freezeTableName: true,
+      timestamps: true,
+      modelName: 'Produto',
+    })
+
+    return Produto
+  }

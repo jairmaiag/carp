@@ -1,12 +1,12 @@
-var Sequelize = require("sequelize");
-var connecPostgre = function () {
-  return new Sequelize("postgres://gcps:gcps@localhost:5432/gcps", {
+const Sequelize = require('sequelize')
+
+const connectPostgre = function () {
+  return new Sequelize('postgres://gcps:gcps@localhost:5432/gcps', {
     define: {
       freezeTableName: true,
-      timestamps: false,
+      timestamps: true,
     },
-  });
-};
-module.exports = function () {
-  return connecPostgre;
-};
+  })
+}
+
+module.exports = () => connectPostgre

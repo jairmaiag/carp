@@ -1,8 +1,8 @@
 module.exports = function (app) {
-  var controller = new app.src.app.controller.usuario.UsuarioController(app);
-  var util = new app.src.app.server.Util(app);
+  var controller = new app.src.app.controller.produto.ProdutoController(app)
+  var util = new app.src.app.server.Util(app)
 
-  app.get('/usuario', async function (req, res) {
+  app.get('/produto', async function (req, res) {
     const entitys = await controller.index(req.body.attributes, req.body.filter, req.body.order)
     
     if (entitys.length > 0 ) {
@@ -14,7 +14,7 @@ module.exports = function (app) {
     }
   })
 
-  app.get('/usuario/paginacao', async function (req, res) {
+  app.get('/produto/paginacao', async function (req, res) {
     const pageEntitys = await controller.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, req.body.page)
     
     if (pageEntitys.rows.length > 0 ) {
@@ -26,9 +26,9 @@ module.exports = function (app) {
     }
   })
 
-  app.get('/usuario/UUId/:UUId', async function (req, res) {
+  app.get('/produto/UUId/:UUId', async function (req, res) {
     const entity = await controller.findByUUId(req.params.UUId)
-
+    
     if (entity) {
       res.status(200).json(entity)
     } else {
@@ -36,7 +36,7 @@ module.exports = function (app) {
     }
   })
 
-  app.get('/usuario/:id', async function (req, res) {
+  app.get('/produto/:id', async function (req, res) {
     const entity = await controller.findById(req.params.id)
 
     if (entity) {
@@ -46,9 +46,9 @@ module.exports = function (app) {
     }
   })
 
-  app.post('/usuario', async function (req, res) {
+  app.post('/produto', async function (req, res) {
     const entity = await controller.insert(req.body)
-
+    
     if (entity) {
       res.status(201).json(entity)
     } else {
@@ -56,11 +56,11 @@ module.exports = function (app) {
     }
   })
 
-  app.put('/usuario', async function(req, res) {
+  app.put('/produto', async function(req, res) {
     const UUId = req.body.UUId
     if (UUId) {
       const entity = await controller.update(req.body)
-      
+
       if (entity) {
         res.status(200).json(entity)
       } else {
@@ -71,7 +71,7 @@ module.exports = function (app) {
     }
   })
 
-  app.delete('/usuario/UUId/:UUId', async function (req, res) {
+  app.delete('/produto/UUId/:UUId', async function (req, res) {
     const qtdRemovido = await controller.delete(req.params.UUId)
 
     if (qtdRemovido) {

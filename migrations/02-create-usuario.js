@@ -1,73 +1,76 @@
-"use strict";
+'use strict'
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      "usuario",
+      'Usuario', 
       {
-        id: {
+        UUId: {
+          field: 'UUIdUsu',
           allowNull: false,
-          autoIncrement: true,
+          type: Sequelize.UUID,
+          defaultValue: Sequelize.UUIDV4
+        },
+        id: {
+          field: 'idUsu',
           primaryKey: true,
+          autoIncrement: true,
           type: Sequelize.INTEGER,
-          field: "usuid",
-          comment: "Id na tabela, identificando registro único.",
+          comment: 'Id na tabela, identificando registro único.',
         },
         login: {
-          type: Sequelize.STRING(30),
+          field: 'loginUsu',
           allowNull: false,
-          field: "usulogin",
-          comment: "Login do usuáiro para acesso ao sistema.",
+          type: Sequelize.STRING(30),
+          comment: 'Login do usuáiro para acesso ao sistema.',
         },
         senha: {
-          type: Sequelize.STRING(64),
+          field: 'senhaUsu',
           allowNull: false,
-          field: "ususenha",
-          comment: "Senha do usuáiro para acesso ao sistema.",
-        },
-        ciracao: {
-          type: Sequelize.DATEONLY,
-          allowNull: true,
-          field: "usucriacao",
-          comment: "Data de criação do usuáiro para acesso ao sistema.",
+          type: Sequelize.STRING(64),
+          comment: 'Senha do usuáiro para acesso ao sistema.',
         },
         expira: {
-          type: Sequelize.DATEONLY,
+          field: 'expirarUsu',
           allowNull: true,
-          field: "usuexpirar",
-          comment: "Data de expiração do usuáiro para acesso ao sistema.",
+          type: Sequelize.DATEONLY,
+          comment: 'Data de expiração do usuáiro para acesso ao sistema.',
         },
         ativo: {
-          type: Sequelize.BOOLEAN,
+          field: 'ativoUsu',
           allowNull: false,
           defaultValue: false,
-          field: "usuativo",
-          comment: "Indica se o usuáiro está ativo para acesso ao sistema.",
+          type: Sequelize.BOOLEAN,
+          comment: 'Indica se o usuáiro está ativo para acesso ao sistema.',
         },
         idPessoa: {
+          field: 'idPes',
           allowNull: false,
           type: Sequelize.INTEGER,
-          field: "pesid",
-          comment: "Id da tabela Pessoa, onde este usuário pertence.",
+          comment: 'Id da tabela Pessoa, onde este usuário pertence.',
         },
         createdAt: {
+          field: 'createAtUsu',
           allowNull: false,
           type: Sequelize.DATE,
-          comment: "Data de criação do registro",
+          comment: 'Data de criação do registro',
         },
         updatedAt: {
+          field: 'updatedAtUsu',
           allowNull: false,
           type: Sequelize.DATE,
-          comment: "Data de alteração do registro",
+          comment: 'Data de alteração do registro',
         },
       },
       {
-        schema: "carp", // default: public, PostgreSQL only.
+        schema: 'carp', // default: public, PostgreSQL only.
         comment:
-          "Tabela utilizada para armazenar os dados do usuário para acesso ao sistema.", // comment for table
+          'Tabela utilizada para armazenar os dados do usuário para acesso ao sistema.',
       }
-    );
+    )
   },
+
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("usuario");
+    return queryInterface.dropTable('Usuario');
   },
-};
+}
