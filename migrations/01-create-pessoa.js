@@ -1,83 +1,81 @@
-"use strict";
+'use strict'
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      "pessoa",
+      'Pessoa', 
       {
         id: {
-          type: Sequelize.INTEGER,
-          field: "pesid",
+          field: 'idPes',
           primaryKey: true,
           autoIncrement: true,
-          comment: "Id na tabela, identificando registro único.",
+          type: Sequelize.INTEGER,
+          comment: 'Id na tabela, identificando registro único.',
         },
         nome: {
-          type: Sequelize.STRING(20),
-          field: "pesnome",
+          field: 'nomePes',
           allowNull: false,
-          comment: "Nome da pessoa cadastrada.",
-        },
-        nomemeio: {
           type: Sequelize.STRING(20),
-          field: "pesnomemeio",
-          comment: "Nome do meio da pessoa cadastrada.",
+          comment: 'Nome da pessoa cadastrada.',
+        },
+        nomeMeio: {
+          field: 'nomeMeioPes',
+          type: Sequelize.STRING(20),
+          comment: 'Nome do meio da pessoa cadastrada.',
         },
         sobrenome: {
+          field: 'sobrenomePes',
           type: Sequelize.STRING(20),
-          field: "pessobrenome",
-          comment: "Sobre Nome da pessoa cadastrada.",
+          comment: 'Sobre Nome da pessoa cadastrada.',
         },
         nascimento: {
+          field: 'nascimentoPes',
           type: Sequelize.DATEONLY,
-          field: "pesnascimento",
-          comment: "Data de nascimento da pessoa cadastrada.",
+          comment: 'Data de nascimento da pessoa cadastrada.',
         },
         sexo: {
+          field: 'sexoPes',
+          defaultValue: 'F',
           type: Sequelize.CHAR(1),
-          defaultValue: "F",
-          field: "pessexo",
-          comment: "Sexo da pessoa cadastrada podendo assumir valores F ou M.",
+          comment: 'Sexo da pessoa cadastrada podendo assumir valores F ou M.',
         },
         cpf: {
+          field: 'cpfPes',
           type: Sequelize.STRING(11),
-          field: "pescpf",
-          comment: "Número do CPF da pessoa cadastrada, somente números.",
+          comment: 'Número do CPF da pessoa cadastrada, somente números.',
         },
         rg: {
+          field: 'rgPes',
           type: Sequelize.STRING(9),
-          field: "pesrg",
-          comment: "Número do RG da pessoa cadastrada, somente números.",
-        },
-        ciracao: {
-          type: Sequelize.DATEONLY,
-          allowNull: true,
-          field: "pescriacao",
-          comment: "Data de criação da pessoa.",
+          comment: 'Número do RG da pessoa cadastrada, somente números.',
         },
         ativo: {
-          type: Sequelize.BOOLEAN,
+          field: 'ativoPes',
           allowNull: false,
           defaultValue: false,
-          field: "pesativo",
-          comment: "Indica se a pessoa está ativa para ser utilizada.",
+          type: Sequelize.BOOLEAN,
+          comment: 'Indica se a pessoa está ativa para ser utilizada.',
         },
         createdAt: {
+          field: 'createAtPes',
           allowNull: false,
           type: Sequelize.DATE,
         },
         updatedAt: {
+          field: 'updatedAtPes',
           allowNull: false,
           type: Sequelize.DATE,
         },
       },
       {
-        schema: "carp", // default: public, PostgreSQL only.
+        schema: 'carp', // default: public, PostgreSQL only.
         comment:
-          "Tabela utilizada para armazenar os dados de pessoas do sistema.", // comment for table
+          'Tabela utilizada para armazenar os dados de pessoas do sistema.',
       }
-    );
+    )
   },
+
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("pessoa");
+    return queryInterface.dropTable('Pessoa')
   },
-};
+}

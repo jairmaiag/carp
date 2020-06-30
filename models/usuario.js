@@ -1,68 +1,83 @@
-"use strict";
+'use strict'
+
+const BaseModel = require('./baseModel')
+
 module.exports = (sequelize, DataTypes) => {
-  const tabela = "usuario";
-  const campos = {
-    id: {
+  class Usuario extends BaseModel {}
+
+  Usuario.init({
+    UUId: {
+      field: 'UUIdUsu',
       allowNull: false,
-      autoIncrement: true,
+      type: DataTypes.UUID,
+      validate: {
+        notNull: true
+      }
+    },
+    id: {
+      field: 'idUsu',
       primaryKey: true,
+      autoIncrement: true,
       type: DataTypes.INTEGER,
-      field: "usuid",
-      comment: "Id na tabela, identificando registro único.",
+      comment: 'Id na tabela, identificando registro único.',
     },
     login: {
-      type: DataTypes.STRING(30),
+      field: 'loginUsu',
       allowNull: false,
-      field: "usulogin",
-      comment: "Login do usuáiro para acesso ao sistema.",
+      type: DataTypes.STRING(30),
+      comment: 'Login do usuáiro para acesso ao sistema.',
     },
     senha: {
-      type: DataTypes.STRING(64),
+      field: 'senhaUsu',
       allowNull: false,
-      field: "ususenha",
-      comment: "Senha do usuáiro para acesso ao sistema.",
-    },
-    ciracao: {
-      type: DataTypes.DATEONLY,
-      allowNull: true,
-      field: "usucriacao",
-      comment: "Data de criação do usuáiro para acesso ao sistema.",
+      type: DataTypes.STRING(64),
+      comment: 'Senha do usuáiro para acesso ao sistema.',
     },
     expira: {
-      type: DataTypes.DATEONLY,
+      field: 'expirarUsu',
       allowNull: true,
-      field: "usuexpirar",
-      comment: "Data de expiração do usuáiro para acesso ao sistema.",
+      type: DataTypes.DATEONLY,
+      comment: 'Data de expiração do usuáiro para acesso ao sistema.',
     },
     ativo: {
-      type: DataTypes.BOOLEAN,
+      field: 'ativoUsu',
       allowNull: false,
       defaultValue: true,
-      field: "usuativo",
-      comment: "Indica se o usuáiro está ativo para acesso ao sistema.",
+      type: DataTypes.BOOLEAN,
+      comment: 'Indica se o usuáiro está ativo para acesso ao sistema.',
     },
     idPessoa: {
+      field: 'idPes',
       allowNull: false,
       type: DataTypes.INTEGER,
-      field: "pesid",
-      comment: "Id da tabela Pessoa, onde este usuário pertence.",
+      comment: 'Id da tabela Pessoa, onde este usuário pertence.',
     },
-  };
-  /* Definição de opções da entidade (tabela) */
-  const opcoes = {
-    tableName: tabela,
-    comment:
-      "Tabela utilizada para armazenar os dados do usuário para acesso ao sistema.", // comment for table
-  };
+    createdAt: {
+      field: 'createAtUsu',
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      field: 'updatedAtUsu',
+      allowNull: false,
+      type: DataTypes.DATE
+    }
+  }, {
+    sequelize,
+    freezeTableName: true,
+    timestamps: true,
+    modelName: 'Usuario',
+    comment: 'Tabela utilizada para armazenar os dados do usuário para acesso ao sistema.'
+  })
 
-  const Usuario = sequelize.define("Usuario", campos, opcoes);
   Usuario.associate = function (models) {
     /* Usuário pertence a (belongsTo) Pessoa */
     Usuario.belongsTo(models.Pessoa, {
-      as: "Pessoa",
-      foreignKey: "pesid",
+      as: 'Pessoa',
+      foreignKey: 'idPes',
       allowNull: false,
     });
   };
-  return Usuario;
-};
+
+  return Usuario
+}

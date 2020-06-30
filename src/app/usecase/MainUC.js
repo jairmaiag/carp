@@ -1,9 +1,10 @@
-var Sequelize = require("sequelize"),
-  { Client } = require("pg");
-class UcMain {
+const  { Client } = require("pg");
+
+class MainUC {
   constructor(app) {
     this.app = app;
   }
+  
   index(req, res) {
     let porta = process.env.PORT == 80 ? "" : ":" + process.env.PORT;
     res.status(200).json({
@@ -66,9 +67,7 @@ class UcMain {
 }
 
 function retorno(app) {
-  return new UcMain(app);
+  return new MainUC(app);
 }
 
-module.exports = function () {
-  return retorno;
-};
+module.exports = () => retorno

@@ -1,5 +1,5 @@
 /* importar o módulo do framework express */
-var express = require("express");
+const express = require("express");
 
 /* Necessário para acesso de outros domínos */
 var cors = require("cors");
@@ -8,16 +8,16 @@ var cors = require("cors");
 require("dotenv/config");
 
 /* importar o módulo do consign */
-var consign = require("consign");
+const consign = require("consign");
 
 /* importar o módulo do body-parser */
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 
 /* importar o módulo do express-validator */
-var session = require("express-session");
+const session = require("express-session");
 
 /* iniciar o objeto do express */
-var app = express();
+const app = express();
 
 /* configurar o middleware body-parser */
 /* Configuração para receber dados via x-www-form-urlencoded*/
@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 /* Configuração da sessão */
-let configSession = {
+const configSession = {
   secret: "carpssession", // Chave secreta
   resave: false, // Se true, a sessão será regravada no servidor
   saveUninitialized: false, // Se true cria uma nova sessão sempre que a mesma for modificada.
@@ -44,20 +44,22 @@ app.use(cors());
 app.use(function (req, res, next) {
   /* Habilita requisições cros domain, requisições de domínos diferentes 
   res.setHeader("Access-Control-Allow-Origin", "*");
- */
+
+  */
   /* Quais os métodos que a origem pode requisitar 
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
- */
+  */
+
   /* Habilitar que a requisição feita pela origem tenha cabeçalhos reescritos 
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
     );
-   */
+  */
 
   /*  
   res.setHeader("Access-Control-Allow-Credentials", true);
- */
+  */
 
   /* Tratamento para acesso aos recuros
      Verifica se existe um usuário logado
@@ -81,7 +83,7 @@ app.use(function (req, res, next) {
 });
 
 /* efetua o autoload das rotas, dos models e dos controllers para o objeto app */
-var caminho = "./src/app/";
+const caminho = "./src/app/";
 /* Configuração do consign para utilização dos arquivos sem a necessidade de chamar a função require() */
 consign({
   locale: "pt-br",
@@ -97,7 +99,7 @@ consign({
 
 /* Configuração para endereços não existentes na aplicação */
 app.use(function (req, res, next) {
-  res.status(404).json({ mensagem: "Recurso não encontrado." });
+  res.status(404).json({ mensagem: "Rota não encontrada." });
   next();
 });
 

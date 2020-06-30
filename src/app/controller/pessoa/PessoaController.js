@@ -1,28 +1,31 @@
 class PessoaController {
   constructor(app) {
-    this.casoUso = new app.src.app.usecase.UcPessoa(app);
+    this.casoUso = new app.src.app.usecase.PessoaUC(app)
   }
-  async index(filter) {
-    return await this.casoUso.index(filter);
+
+  async index (attributes, filter, order) {
+    return await this.casoUso.index(attributes, filter, order)
   }
+
   async findById(id) {
-    return await this.casoUso.findById(id);
+    return await this.casoUso.findById(id)
   }
+
   async insert(dados) {
-    return await this.casoUso.insert(dados);
+    return await this.casoUso.insert(dados)
   }
+
   async update(dados) {
-    return await this.casoUso.update(dados);
+    return await this.casoUso.update(dados)
   }
+  
   async delete(id) {
-    return await this.casoUso.delete(id);
+    return await this.casoUso.delete(id)
   }
 }
 
 function retorno(app) {
-  return new PessoaController(app);
+  return new PessoaController(app)
 }
 
-module.exports = function (app) {
-  return retorno;
-};
+module.exports = () => retorno
