@@ -1,6 +1,7 @@
 const { Model, Op } = require('sequelize')
 
 class BaseModel extends Model {
+
   static async findAndPaginate(attributes, filter, order, page, include) {
     try {
       page.fieldName = page.fieldName || 'id'

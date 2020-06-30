@@ -44,20 +44,22 @@ app.use(cors());
 app.use(function (req, res, next) {
   /* Habilita requisições cros domain, requisições de domínos diferentes 
   res.setHeader("Access-Control-Allow-Origin", "*");
- */
+
+  */
   /* Quais os métodos que a origem pode requisitar 
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
- */
+  */
+
   /* Habilitar que a requisição feita pela origem tenha cabeçalhos reescritos 
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
     );
-   */
+  */
 
   /*  
   res.setHeader("Access-Control-Allow-Credentials", true);
- */
+  */
 
   /* Tratamento para acesso aos recuros
      Verifica se existe um usuário logado

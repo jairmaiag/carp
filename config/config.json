@@ -1,26 +1,26 @@
 {
   "development": {
-    "username": "teste",
-    "password": "teste",
-    "database": "teste",
+    "username": "carp",
+    "password": "carp",
+    "database": "carp",
     "host": "localhost",
     "dialect": "postgres",
     "freezeTableName": true,
     "timestamps": true
   },
   "test": {
-    "username": "teste",
-    "password": "teste",
-    "database": "teste",
+    "username": "root",
+    "password": "carp",
+    "database": "carp",
     "host": "localhost",
     "dialect": "postgres",
     "freezeTableName": true,
     "timestamps": true
   },
   "production": {
-    "username": "teste",
-    "password": "teste",
-    "database": "teste",
+    "username": "carp",
+    "password": "carp",
+    "database": "carp",
     "host": "localhost",
     "dialect": "postgres",
     "freezeTableName": true,
