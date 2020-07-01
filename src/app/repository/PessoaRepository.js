@@ -19,7 +19,15 @@ PessoaRepository.prototype.findAll = async function (attributes, filter, order) 
   }
 }
 
+PessoaRepository.prototype.findAndPaginate = async function (attributes, filter, order, page) {
+  try {
+    page = await Pessoa.findAndPaginate(attributes, filter, order, page)
 
+    return page
+  } catch (error) {
+    throw error
+  }
+}
 PessoaRepository.prototype.findById = async function (id) {
   try {
     const result = await Pessoa.findByPk(

@@ -27,6 +27,18 @@ module.exports = function (app) {
     }
   })
 
+  app.get('/pessoa/paginacao', async function (req, res) {
+    const pageEntitys = await controller.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, req.body.page)
+    
+    if (pageEntitys.rows.length > 0 ) {
+      res.status(200).json(pageEntitys)
+    } else {
+      res.status(400).json(util.montarMensagemJson(
+        'Recurso não encontrado. ' + pageEntitys.rows.length + ' registros encontrados.'
+      ))
+    }
+  })
+
   app.get('/pessoa/:id', async function (req, res) {
    const entity = await controller.findById(req.params.id)
 

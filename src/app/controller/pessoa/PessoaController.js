@@ -7,6 +7,10 @@ class PessoaController {
     return await this.casoUso.index(attributes, filter, order)
   }
 
+  async findAndPaginate (attributes, filter, order, page) {
+    return await this.casoUso.findAndPaginate(attributes, filter, order, page)
+  }
+
   async findById(id) {
     return await this.casoUso.findById(id)
   }
