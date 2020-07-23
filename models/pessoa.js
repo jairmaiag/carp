@@ -43,7 +43,7 @@ module.exports = (sequelize, DataTypes) => {
         field: "nascimentoPes",
         type: DataTypes.DATE,
         comment: "Data de nascimento da pessoa cadastrada.",
-      },sequelize-cli db:migrate:undo:all
+      },
       sexo: {
         field: "sexoPes",
         type: DataTypes.STRING,
