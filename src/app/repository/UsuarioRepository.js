@@ -72,14 +72,21 @@ UsuarioRepository.prototype.findById = async function (id) {
 
 UsuarioRepository.prototype.insert = async function (dados) {
   try {
+    nomePessoa = dados.login;
+    sobrenomePessoa = null;
+    if (dados.Pessoa) {
+      if (dados.Pessoa.nome) {
+        nomePessoa = dados.Pessoa.nome;
+      }
+      if (dados.Pessoa.sobrenome) {
+        sobrenomePessoa = dados.Pessoa.sobrenome;
+      }
+    }
+
     const dadosPessoa = {
-      nome:
-        dados.Pessoa != null
-          ? dados.Pessoa.nome
-            ? dados.Pessoa.nome
-            : dados.login
-          : dados.login,
+      nome: nomePessoa,
       ativo: dados.ativo,
+      sobrenome: sobrenomePessoa,
     };
     const pessoa = await Pessoa.create(dadosPessoa);
     dados.idPessoa = pessoa.id;
