@@ -1,3 +1,4 @@
+const UUIDGenerator = require("../util/UUIDGenerator");
 class PessoaUC {
   constructor(app) {
     this.app = app;
@@ -5,7 +6,9 @@ class PessoaUC {
   }
 
   criarRepository() {
-    return (this.repository = new this.app.src.app.repository.PessoaRepository(this.app));
+    return (this.repository = new this.app.src.app.repository.PessoaRepository(
+      this.app
+    ));
   }
 
   async index(attributes, filter, order) {
@@ -28,7 +31,15 @@ class PessoaUC {
     return await this.repository.findById(id);
   }
 
+  async findByUUId(UUId) {
+    this.repository = this.criarRepository();
+    return await this.repository.findByUUId(UUId);
+  }
+
   async insert(dados) {
+    if (!dados.UUId) {
+      dados.UUId = UUIDGenerator.getUUIDV4();
+    }
     this.repository = this.criarRepository();
     return await this.repository.insert(dados);
   }
