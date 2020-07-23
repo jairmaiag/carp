@@ -1,5 +1,5 @@
 const { Usuario, Pessoa } = require("../../../models");
-
+const { PessoaRepository } = require("./PessoaRepository");
 var UsuarioRepository = function (app) {};
 
 UsuarioRepository.prototype.findAll = async function (
@@ -72,23 +72,7 @@ UsuarioRepository.prototype.findById = async function (id) {
 
 UsuarioRepository.prototype.insert = async function (dados) {
   try {
-    nomePessoa = dados.login;
-    sobrenomePessoa = null;
-    if (dados.Pessoa) {
-      if (dados.Pessoa.nome) {
-        nomePessoa = dados.Pessoa.nome;
-      }
-      if (dados.Pessoa.sobrenome) {
-        sobrenomePessoa = dados.Pessoa.sobrenome;
-      }
-    }
-
-    const dadosPessoa = {
-      nome: nomePessoa,
-      ativo: dados.ativo,
-      sobrenome: sobrenomePessoa,
-    };
-    const pessoa = await Pessoa.create(dadosPessoa);
+    const pessoa = await Pessoa.create(dados.Pessoa);
     dados.idPessoa = pessoa.id;
     const result = await Usuario.create(dados);
 
@@ -101,9 +85,10 @@ UsuarioRepository.prototype.insert = async function (dados) {
 UsuarioRepository.prototype.update = async function (dados) {
   try {
     let retorno = null;
-
+    if (dados.Pessoa) {
+      PessoaRepository.update(dados.Pessoa);
+    }
     const result = await Usuario.update(dados, { where: { UUId: dados.UUId } });
-
     if (result[0] === 1) {
       retorno = await this.findByUUId(dados.UUId);
     }
