@@ -48,6 +48,16 @@ module.exports = function (app) {
      res.status(404).json(util.montarMensagemJson('Recurso não encontrado.'))
    }
   })
+  
+  app.get('/pessoa/UUId/:UUId', async function (req, res) {
+    const entity = await controller.findByUUId(req.params.UUId)
+
+    if (entity) {
+      res.status(200).json(entity)
+    } else {
+      res.status(404).json(util.montarMensagemJson('Recurso não encontrado.'))
+    }
+  })
 
   app.post('/pessoa', async function (req, res) {
     const entity = await controller.insert(req.body)
