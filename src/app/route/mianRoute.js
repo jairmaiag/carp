@@ -1,4 +1,3 @@
-var fs = require("fs");
 const PDFDocument = require("pdfmake");
 module.exports = function (app) {
   const controller = new app.src.app.controller.main.MainController(app);
@@ -38,7 +37,7 @@ module.exports = function (app) {
       });
       return;
     }
-    const retono = await controller.criarBanco(req.body);
+    const retorno = await controller.criarBanco(req.body);
     res.status(200).json({
       mensagem: "Verifique o console do nodejs para ver os resultados.",
     });
