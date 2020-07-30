@@ -1,13 +1,13 @@
 const { Produto } = require('../../../models')
 
-var ProdutoRepository = function(app) {}
+var ProdutoRepository = function (app) { }
 
 ProdutoRepository.prototype.findAll = async function (attributes, filter, order) {
   try {
-    const result  = await Produto.findAll({
-      attributes: attributes, 
+    const result = await Produto.findAll({
+      attributes: attributes,
       where: filter,
-      limit: filter? null : 10,
+      limit: filter ? null : 10,
       order: order || [['id', 'ASC']],
       raw: true
     })
@@ -66,7 +66,7 @@ ProdutoRepository.prototype.update = async function (dados) {
 
     const result = await Produto.update(
       dados,
-      {where: {UUId: dados.UUId}}
+      { where: { UUId: dados.UUId } }
     )
 
     if (result[0] === 1) {
@@ -79,10 +79,10 @@ ProdutoRepository.prototype.update = async function (dados) {
   }
 }
 
-ProdutoRepository.prototype.delete = async function(UUId) {
+ProdutoRepository.prototype.delete = async function (UUId) {
   try {
     const result = await Produto.destroy({
-      where: {UUId: UUId}
+      where: { UUId: UUId }
     })
 
     return result

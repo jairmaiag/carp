@@ -1,21 +1,21 @@
 const UUIDGenerator = require('../../util/UUIDGenerator')
 
 class ProdutoController {
-  
+
   constructor(app) {
     this.app = app
     this.repository = new this.app.src.app.repository.ProdutoRepository(this.app)
   }
 
-  async index(attributes, filter, order){
+  async index(attributes, filter, order) {
     return await this.repository.findAll(attributes, filter, order)
   }
 
-  async findAndPaginate (attributes, filter, order, page) {
+  async findAndPaginate(attributes, filter, order, page) {
     return await this.repository.findAndPaginate(attributes, filter, order, page)
   }
-  
-  async findByUUId (UUId) {
+
+  async findByUUId(UUId) {
     return await this.repository.findByUUId(UUId)
   }
 
@@ -23,18 +23,18 @@ class ProdutoController {
     return await this.repository.findById(id)
   }
 
-  async insert (dados) {
+  async insert(dados) {
     if (!dados.UUId) {
       dados.UUId = UUIDGenerator.getUUIDV4()
     }
     return await this.repository.insert(dados)
   }
 
-  async update (dados) {
+  async update(dados) {
     return await this.repository.update(dados)
   }
 
-  async delete (UUId) {
+  async delete(UUId) {
     return await this.repository.delete(UUId)
   }
 }
