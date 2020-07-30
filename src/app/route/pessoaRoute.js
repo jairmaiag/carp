@@ -16,25 +16,25 @@ module.exports = function (app) {
   var util = new app.src.app.server.Util(app)
 
   app.get('/pessoa', async function (req, res) {
-    const entitys = await controller.index(req.body.attributes, req.body.filter, req.body.order)
+    const entities = await controller.index(req.body.attributes, req.body.filter, req.body.order)
     
-    if (entitys.length > 0 ) {
-      res.status(200).json(entitys)
+    if (entities.length > 0 ) {
+      res.status(200).json(entities)
     } else {
       res.status(400).json(util.montarMensagemJson(
-        'Recurso não encontrado. ' + entitys.length + ' registros encontrados.'
+        'Recurso não encontrado. ' + entities.length + ' registros encontrados.'
       ))
     }
   })
 
   app.get('/pessoa/paginacao', async function (req, res) {
-    const pageEntitys = await controller.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, req.body.page)
+    const pageEntities = await controller.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, req.body.page)
     
-    if (pageEntitys.rows.length > 0 ) {
-      res.status(200).json(pageEntitys)
+    if (pageEntities.rows.length > 0 ) {
+      res.status(200).json(pageEntities)
     } else {
       res.status(400).json(util.montarMensagemJson(
-        'Recurso não encontrado. ' + pageEntitys.rows.length + ' registros encontrados.'
+        'Recurso não encontrado. ' + pageEntities.rows.length + ' registros encontrados.'
       ))
     }
   })
@@ -65,7 +65,7 @@ module.exports = function (app) {
     if (entity) {
       res.status(201).json(entity)
     } else {
-      res.status(404).json(util.montarMensagemJson('Recurso não incluido.'))
+      res.status(404).json(util.montarMensagemJson('Recurso não incluído.'))
     }
   })
   
