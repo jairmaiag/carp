@@ -3,27 +3,48 @@
     "username": "carp",
     "password": "carp",
     "database": "carp",
+    "schema": "carp",
+    "logging": false,
+    "searchPath": "carp",
+    "supportsSearchPath": true,    
     "host": "localhost",
     "dialect": "postgres",
     "freezeTableName": true,
-    "timestamps": true
+    "timestamps": true,
+    "dialectOptions": {
+      "prependSearchPath": true
+    }
   },
   "test": {
-    "username": "root",
-    "password": "carp",
-    "database": "carp",
+    "username": "test",
+    "password": "test",
+    "database": "test",
+    "schema": "test",
+    "logging": false,
+    "searchPath": "test",
+    "supportsSearchPath": true,    
     "host": "localhost",
     "dialect": "postgres",
     "freezeTableName": true,
-    "timestamps": true
+    "timestamps": true,
+    "dialectOptions": {
+      "prependSearchPath": true
+    }
   },
   "production": {
-    "username": "carp",
-    "password": "carp",
-    "database": "carp",
+    "username": "test",
+    "password": "test",
+    "database": "test",
+    "schema": "test",
+    "logging": false,
+    "searchPath": "test",
+    "supportsSearchPath": true,    
     "host": "localhost",
     "dialect": "postgres",
     "freezeTableName": true,
-    "timestamps": true
+    "timestamps": true,
+    "dialectOptions": {
+      "prependSearchPath": true
+    }
   }
 }
