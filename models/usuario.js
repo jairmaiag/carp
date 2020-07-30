@@ -3,7 +3,7 @@
 const BaseModel = require('./baseModel')
 
 module.exports = (sequelize, DataTypes) => {
-  class Usuario extends BaseModel {}
+  class Usuario extends BaseModel { }
 
   Usuario.init({
     UUId: {
@@ -25,26 +25,26 @@ module.exports = (sequelize, DataTypes) => {
       field: 'loginUsu',
       allowNull: false,
       type: DataTypes.STRING(30),
-      comment: 'Login do usuáiro para acesso ao sistema.',
+      comment: 'Login do usuário para acesso ao sistema.',
     },
     senha: {
       field: 'senhaUsu',
       allowNull: false,
       type: DataTypes.STRING(64),
-      comment: 'Senha do usuáiro para acesso ao sistema.',
+      comment: 'Senha do usuário para acesso ao sistema.',
     },
     expira: {
       field: 'expirarUsu',
       allowNull: true,
       type: DataTypes.DATEONLY,
-      comment: 'Data de expiração do usuáiro para acesso ao sistema.',
+      comment: 'Data de expiração do usuário para acesso ao sistema.',
     },
     ativo: {
       field: 'ativoUsu',
       allowNull: false,
       defaultValue: true,
       type: DataTypes.BOOLEAN,
-      comment: 'Indica se o usuáiro está ativo para acesso ao sistema.',
+      comment: 'Indica se o usuário está ativo para acesso ao sistema.',
     },
     idPessoa: {
       field: 'idPes',

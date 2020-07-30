@@ -1,12 +1,9 @@
-const { Usuario, Pessoa } = require("../../../models");
-const { PessoaRepository } = require("./PessoaRepository");
-var UsuarioRepository = function (app) {};
+const { Usuario, Pessoa } = require("../../../models")
+const { PessoaRepository } = require("./PessoaRepository")
 
-UsuarioRepository.prototype.findAll = async function (
-  attributes,
-  filter,
-  order
-) {
+var UsuarioRepository = function (app) { }
+
+UsuarioRepository.prototype.findAll = async function (attributes, filter, order) {
   try {
     const result = await Usuario.findAll({
       attributes: attributes,
@@ -15,101 +12,96 @@ UsuarioRepository.prototype.findAll = async function (
       order: order || [["id", "ASC"]],
       include: [{ model: Pessoa, as: "Pessoa" }],
       raw: true,
-    });
+    })
 
-    return result;
+    return result
   } catch (error) {
-    throw error;
+    throw error
   }
-};
+}
 
-UsuarioRepository.prototype.findAndPaginate = async function (
-  attributes,
-  filter,
-  order,
-  page
-) {
+UsuarioRepository.prototype.findAndPaginate = async function (attributes, filter, order, page) {
   try {
-    const include = [{ model: Pessoa, as: "Pessoa" }];
+    const include = [{ model: Pessoa, as: "Pessoa" }]
     page = await Usuario.findAndPaginate(
       attributes,
       filter,
       order,
       page,
       include
-    );
+    )
 
-    return page;
+    return page
   } catch (error) {
-    throw error;
+    throw error
   }
-};
+}
 
 UsuarioRepository.prototype.findByUUId = async function (UUId) {
   try {
     const result = await Usuario.findOne({
       where: { UUId: UUId },
       include: [{ model: Pessoa, as: "Pessoa" }],
-    });
+    })
 
-    return result;
+    return result
   } catch (error) {
-    throw error;
+    throw error
   }
-};
+}
 
 UsuarioRepository.prototype.findById = async function (id) {
   try {
     const result = await Usuario.findByPk(id, {
       include: [{ model: Pessoa, as: "Pessoa" }],
-    });
+    })
 
-    return result;
+    return result
   } catch (error) {
-    throw error;
+    throw error
   }
-};
+}
 
 UsuarioRepository.prototype.insert = async function (dados) {
   try {
-    const pessoa = await Pessoa.create(dados.Pessoa);
-    dados.idPessoa = pessoa.id;
-    const result = await Usuario.create(dados);
+    const pessoa = await Pessoa.create(dados.Pessoa)
+    dados.idPessoa = pessoa.id
+    const result = await Usuario.create(dados)
 
-    return result;
+    return result
   } catch (error) {
-    throw error;
+    throw error
   }
-};
+}
 
 UsuarioRepository.prototype.update = async function (dados) {
   try {
-    let retorno = null;
+    let retorno = null
     if (dados.Pessoa) {
-      PessoaRepository.update(dados.Pessoa);
+      PessoaRepository.update(dados.Pessoa)
     }
-    const result = await Usuario.update(dados, { where: { UUId: dados.UUId } });
+    const result = await Usuario.update(dados, { where: { UUId: dados.UUId } })
     if (result[0] === 1) {
-      retorno = await this.findByUUId(dados.UUId);
+      retorno = await this.findByUUId(dados.UUId)
     }
 
-    return retorno;
+    return retorno
   } catch (error) {
-    throw error;
+    throw error
   }
-};
+}
 
 UsuarioRepository.prototype.delete = async function (UUId) {
   try {
     const result = await Usuario.destroy({
       where: { UUId: UUId },
-    });
+    })
 
-    return result;
+    return result
   } catch (error) {
-    throw error;
+    throw error
   }
-};
+}
 
 UsuarioRepository.prototype.findByLoginSenha = async function (filter) {
   try {
@@ -121,15 +113,15 @@ UsuarioRepository.prototype.findByLoginSenha = async function (filter) {
         },
       },
       { raw: true }
-    );
-    return result;
+    )
+    return result
   } catch (e) {
-    throw e;
+    throw e
   }
-};
-
-function retorno(app) {
-  return new UsuarioRepository(app);
 }
 
-module.exports = () => retorno;
+function retorno(app) {
+  return new UsuarioRepository(app)
+}
+
+module.exports = () => retorno
