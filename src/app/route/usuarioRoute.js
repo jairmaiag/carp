@@ -1,6 +1,6 @@
 module.exports = function (app) {
   var controller = new app.src.app.controller.usuario.UsuarioController(app);
-  var util = new app.src.app.server.Util(app);
+  var util = new app.src.app.util.Util(app);
 
   app.get('/usuario', async function (req, res) {
     const entities = await controller.index(req.body.attributes, req.body.filter, req.body.order)

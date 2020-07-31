@@ -1,6 +1,6 @@
 module.exports = function (app) {
   var controller = new app.src.app.controller.acesso.AcessoController(app)
-  var util = new app.src.app.server.Util(app)
+  var util = new app.src.app.util.Util(app)
 
   app.post("/login", async function (req, res) {
     const filter = req.body
