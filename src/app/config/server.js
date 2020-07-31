@@ -88,11 +88,9 @@ const caminho = "./src/app/"
 consign({
   locale: "pt-br",
 })
-  .include(caminho + "config/dbConnection.js")
-  .then("./models/index.js")
-  .then(caminho + "server")
+  .include("./models/index.js")
+  .then(caminho + "util")
   .then(caminho + "repository")
-  .then(caminho + "usecase")
   .then(caminho + "controller")
   .then(caminho + "route")
   .into(app)
