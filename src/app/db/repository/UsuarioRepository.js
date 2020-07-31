@@ -1,4 +1,4 @@
-const { Usuario, Pessoa } = require("../../../models")
+const { Usuario, Pessoa } = require("../models")
 const { PessoaRepository } = require("./PessoaRepository")
 
 var UsuarioRepository = function (app) { }
