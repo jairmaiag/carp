@@ -4,10 +4,6 @@ class Util {
     this.nodemailer = require('nodemailer')
   }
 
-  async usuarioLogado(req) {
-    console.log(req.session)
-  }
-  
   montarMensagemJson(mensagem) {
     return { mensagem: mensagem }
   }

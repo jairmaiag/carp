@@ -4,7 +4,7 @@ class PessoaController {
 
   constructor(app) {
     this.app = app
-    this.repository = new this.app.src.app.repository.PessoaRepository(this.app)
+    this.repository = new this.app.src.app.db.repository.PessoaRepository(this.app)
   }
 
   async index(attributes, filter, order) {

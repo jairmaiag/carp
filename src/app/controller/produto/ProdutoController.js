@@ -4,7 +4,7 @@ class ProdutoController {
 
   constructor(app) {
     this.app = app
-    this.repository = new this.app.src.app.repository.ProdutoRepository(this.app)
+    this.repository = new this.app.src.app.db.repository.ProdutoRepository(this.app)
   }
 
   async index(attributes, filter, order) {

@@ -90,7 +90,7 @@ consign({
 })
   .include("./models/index.js")
   .then(caminho + "util")
-  .then(caminho + "repository")
+  .then(caminho + "db/repository")
   .then(caminho + "controller")
   .then(caminho + "route")
   .into(app)

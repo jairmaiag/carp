@@ -3,7 +3,7 @@ const UUIDGenerator = require('../../util/UUIDGenerator')
 class UsuarioController {
   constructor(app) {
     this.app = app
-    this.repository = new this.app.src.app.repository.UsuarioRepository(this.app)
+    this.repository = new this.app.src.app.db.repository.UsuarioRepository(this.app)
   }
 
   async index (attributes, filter, order) {
