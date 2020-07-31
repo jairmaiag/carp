@@ -115,8 +115,8 @@ UsuarioRepository.prototype.findByLoginSenha = async function (filter) {
       { raw: true }
     )
     return result
-  } catch (e) {
-    throw e
+  } catch (error) {
+    throw error
   }
 }
 

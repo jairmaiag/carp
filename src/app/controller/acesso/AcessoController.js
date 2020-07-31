@@ -1,16 +1,24 @@
 class AcessoController {
+
   constructor(app) {
-    this.casoUso = new app.src.app.usecase.UcAcesso(app);
+    this.app = app
+    this.repository = new this.app.src.app.repository.UsuarioRepository(this.app)
   }
+
   async login(filter) {
-    return await this.casoUso.findByLoginSenha(filter);
+    return await this.repository.findByLoginSenha(filter)
   }
+
+  async logout() { }
+
 }
 
 function retorno(app) {
-  return new AcessoController(app);
+  return new AcessoController(app)
 }
 
-module.exports = function (app) {
-  return retorno;
-};
+module.exports = function () {
+  return retorno
+}
+
+module.exports = () => retorno
