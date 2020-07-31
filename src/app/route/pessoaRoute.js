@@ -12,7 +12,7 @@
 */
 
 module.exports = function (app) {
-  var controller = new app.src.app.controller.pessoa.PessoaController(app)
+  var controller = new app.src.controller.pessoa.PessoaController(app)
   var util = new app.src.app.util.Util(app)
 
   app.get('/pessoa', async function (req, res) {

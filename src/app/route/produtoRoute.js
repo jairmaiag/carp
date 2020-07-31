@@ -1,5 +1,5 @@
 module.exports = function (app) {
-  var controller = new app.src.app.controller.produto.ProdutoController(app)
+  var controller = new app.src.controller.produto.ProdutoController(app)
   var util = new app.src.app.util.Util(app)
 
   app.get('/produto', async function (req, res) {

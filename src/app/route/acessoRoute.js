@@ -1,5 +1,5 @@
 module.exports = function (app) {
-  var controller = new app.src.app.controller.acesso.AcessoController(app)
+  var controller = new app.src.controller.acesso.AcessoController(app)
   var util = new app.src.app.util.Util(app)
 
   app.post("/login", async function (req, res) {

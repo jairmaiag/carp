@@ -2,7 +2,7 @@ class AcessoController {
 
   constructor(app) {
     this.app = app
-    this.repository = new this.app.src.app.db.repository.UsuarioRepository(this.app)
+    this.repository = new this.app.src.db.repository.UsuarioRepository(this.app)
   }
 
   async login(filter) {

@@ -83,16 +83,16 @@ app.use(function (req, res, next) {
 })
 
 /* efetua o autoload das rotas, dos models e dos controllers para o objeto app */
-const caminho = "./src/app/"
+const caminho = "./src/"
 /* Configuração do consign para utilização dos arquivos sem a necessidade de chamar a função require() */
 consign({
   locale: "pt-br",
 })
   .include(caminho + "db/models/index.js")
-  .then(caminho + "util")
+  .then(caminho + "app/util")
   .then(caminho + "db/repository")
   .then(caminho + "controller")
-  .then(caminho + "route")
+  .then(caminho + "app/route")
   .into(app)
 
 /* Configuração para endereços não existentes na aplicação */

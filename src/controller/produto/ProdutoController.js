@@ -1,10 +1,10 @@
-const UUIDGenerator = require('../../util/UUIDGenerator')
+const UUIDGenerator = require('../../app/util/UUIDGenerator')
 
-class PessoaController {
+class ProdutoController {
 
   constructor(app) {
     this.app = app
-    this.repository = new this.app.src.app.db.repository.PessoaRepository(this.app)
+    this.repository = new this.app.src.db.repository.ProdutoRepository(this.app)
   }
 
   async index(attributes, filter, order) {
@@ -15,12 +15,12 @@ class PessoaController {
     return await this.repository.findAndPaginate(attributes, filter, order, page)
   }
 
-  async findById(id) {
-    return await this.repository.findById(id)
-  }
-
   async findByUUId(UUId) {
     return await this.repository.findByUUId(UUId)
+  }
+
+  async findById(id) {
+    return await this.repository.findById(id)
   }
 
   async insert(dados) {
@@ -34,13 +34,13 @@ class PessoaController {
     return await this.repository.update(dados)
   }
 
-  async delete(id) {
-    return await this.repository.delete(id)
+  async delete(UUId) {
+    return await this.repository.delete(UUId)
   }
 }
 
 function retorno(app) {
-  return new PessoaController(app)
+  return new ProdutoController(app)
 }
 
 module.exports = () => retorno

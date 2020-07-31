@@ -1,7 +1,7 @@
 const PDFDocument = require("pdfmake")
 
 module.exports = function (app) {
-  const controller = new app.src.app.controller.main.MainController(app)
+  const controller = new app.src.controller.main.MainController(app)
 
   const validaCampos = function (dados) {
     if (dados.host === undefined) {
@@ -50,10 +50,10 @@ module.exports = function (app) {
   app.get("/teste.pdf", function (req, res) {
     var fonts = {
       Roboto: {
-        normal: "src/assets/fonts/Roboto-Regular.ttf",
-        bold: "src/assets/fonts/Roboto-Medium.ttf",
-        italics: "src/assets/fonts/Roboto-Italic.ttf",
-        bolditalics: "src/assets/fonts/Roboto-MediumItalic.ttf",
+        normal: "src/app/assets/fonts/Roboto-Regular.ttf",
+        bold: "src/app/assets/fonts/Roboto-Medium.ttf",
+        italics: "src/app/assets/fonts/Roboto-Italic.ttf",
+        bolditalics: "src/app/assets/fonts/Roboto-MediumItalic.ttf",
       },
     }
     var docDefinition = {
