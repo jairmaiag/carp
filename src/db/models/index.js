@@ -1,25 +1,26 @@
 'use strict'
 
-const fs = require("fs");
-const path = require("path");
-const Sequelize = require("sequelize");
-const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || "development";
-const config = require("../config/config.json")[env];
-config.username = process.env.DATABASEUSERNAME || config.username;
-config.password = process.env.DATABASEPASSWORD || config.password;
-config.database = process.env.DATABASENAME || config.database;
-config.host = process.env.DATABASEHOST || config.host;
+const fs = require("fs")
+const path = require("path")
+const Sequelize = require("sequelize")
+const basename = path.basename(__filename)
+const env = process.env.NODE_ENV || "development"
+const databaseConfig = require('../config/config')[env]
+databaseConfig.username = process.env.DATABASEUSERNAME || databaseConfig.username
+databaseConfig.password = process.env.DATABASEPASSWORD || databaseConfig.password
+databaseConfig.database = process.env.DATABASENAME || databaseConfig.database
+databaseConfig.host = process.env.DATABASEHOST || databaseConfig.host
+databaseConfig.schema = process.env.DATABASESCHEMA || databaseConfig.schema
 
-const db = {};
+const db = {}
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+let sequelize
+if (databaseConfig.use_env_variable) {
+  sequelize = new Sequelize(process.env[databaseConfig.use_env_variable], databaseConfig)
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
+  sequelize = new Sequelize(databaseConfig.database, databaseConfig.username, databaseConfig.password, databaseConfig)
 }
-console.log(__dirname + ' wwwww')
+
 fs.readdirSync(__dirname)
   .filter((file) => {
     return (
@@ -27,12 +28,12 @@ fs.readdirSync(__dirname)
       && file !== basename 
       && file.slice(-3) === ".js"
       && (file.toLowerCase() !== 'basemodel.js')
-    );
+    )
   })
   .forEach((file) => {
-    const model = sequelize.import(path.join(__dirname, file));
-    db[model.name] = model;
-  });
+    const model = sequelize.import(path.join(__dirname, file))
+    db[model.name] = model
+  })
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
@@ -47,10 +48,10 @@ db.Sequelize = Sequelize
 // sequelize
 //   .authenticate()
 //   .then(() => {
-//     console.log("Connection has been established successfully.");
+//     console.log("Connection has been established successfully.")
 //   })
 //   .catch((err) => {
-//     console.error("Unable to connect to the database:", err);
-//   });
+//     console.error("Unable to connect to the database:", err)
+//   })
 
 module.exports = db

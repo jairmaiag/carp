@@ -1,0 +1,19 @@
+/*
+env:              The environment to run the command in
+config:           The path to the config file
+options-path:     The path to a JSON file with additional options
+migrations-path:  The path to the migrations folder
+seeders-path:     The path to the seeders folder
+models-path:      The path to the models folder
+url:              The database connection string to use. Alternative to using --config files
+debug:            When available show various debug information
+*/
+
+const { resolve } = require('path')
+
+module.exports = {
+  evn: process.env.NODE_ENV,
+  config: resolve(__dirname, 'src', 'db', 'config', 'config.js'),
+  'models-path': resolve(__dirname, 'src', 'db', 'models'),
+  'migrations-path': resolve(__dirname, 'src', 'db', 'migrations')
+}
