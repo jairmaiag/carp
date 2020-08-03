@@ -1,3 +1,7 @@
+const adaptRoute = require('../adapters/express/express-route-adapter')
+const controller02 = require('../../controller/produto/ProdutoController')
+const { Router } = require('express')
+
 module.exports = function (app) {
   var controller = new app.src.controller.produto.ProdutoController(app)
   var util = new app.src.app.util.Util(app)
@@ -26,15 +30,18 @@ module.exports = function (app) {
     }
   })
 
-  app.get('/produto/UUId/:UUId', async function (req, res) {
-    const entity = await controller.findByUUId(req.params.UUId)
+  debugger
+  app.route('/produto/UUId/:UUId').get(adaptRoute(controller))
+
+  // app.get('/produto/UUId/:UUId', async function (req, res) {
+  //   const entity = await controller.findByUUId(req.params.UUId)
     
-    if (entity) {
-      res.status(200).json(entity)
-    } else {
-      res.status(404).json(util.montarMensagemJson('Recurso não encontrado.'))
-    }
-  })
+  //   if (entity) {
+  //     res.status(200).json(entity)
+  //   } else {
+  //     res.status(404).json(util.montarMensagemJson('Recurso não encontrado.'))
+  //   }
+  // })
 
   app.get('/produto/:id', async function (req, res) {
     const entity = await controller.findById(req.params.id)

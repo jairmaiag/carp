@@ -1,4 +1,5 @@
 const UUIDGenerator = require('../../app/util/UUIDGenerator')
+const http = require('../../app/helpers/http/http-helpers')
 
 class ProdutoController {
 
@@ -15,10 +16,11 @@ class ProdutoController {
     return await this.repository.findAndPaginate(attributes, filter, order, page)
   }
 
-  async findByUUId(UUId) {
-    return await this.repository.findByUUId(UUId)
+  async findByUUId(httpRequest) {
+    const produto = await this.repository.findByUUId(httpRequest.params.UUId)
+    return produto ? http.ok(produto) : http.noContent()
   }
-
+  
   async findById(id) {
     return await this.repository.findById(id)
   }
