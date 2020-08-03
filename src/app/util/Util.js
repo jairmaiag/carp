@@ -8,6 +8,10 @@ class Util {
     return { mensagem: mensagem }
   }
 
+  isEmpty(val){
+    return (val === undefined || val == null || val.length <= 0) ? true : false
+  }
+
   enviarEmail() {
     let emailOrigiem = process.env.EMAIL
     let senha = process.env.SENHA_EMAIL
