@@ -2,13 +2,38 @@ const http = require('../../helpers/http/http-helpers')
 
 module.exports = function (controller) {
   return async (req, res) => {
-
+    let rotaNaoEncontrada = false
     let httpResponse = null
-    
-    if (req.originalUrl.toLowerCase().includes('id')) {
-      httpResponse = await controller.findByUUId(req)
-      
+    const method = req.method.toUpperCase()
+    const url = req.originalUrl
+    const { id } = req.params
+    const { UUId } = req.params
+
+    if (method === 'GET') {
+      if (UUId) {
+        httpResponse = await controller.findByUUId(req)
+      } else if (id) {
+        httpResponse = await controller.findById(req)
+      } else if (url.includes('paginacao')) {
+        httpResponse = await controller.findAndPaginate(req)
+      } else {
+        httpResponse = await controller.index(req)
+      }
+    } else if (method === 'POST') {
+      httpResponse = await controller.insert(req)
+    } else if (method === 'PUT') {
+      httpResponse = await controller.update(req)
+    }  else if (method === 'DELETE') {
+      if (UUId) {
+        httpResponse = await controller.delete(req)
+      } else {
+        rotaNaoEncontrada = true
+      }
     } else {
+      rotaNaoEncontrada = true
+    }
+
+    if (rotaNaoEncontrada) {
       httpResponse = http.badRequest('Rota não encontrada')
     }
 
