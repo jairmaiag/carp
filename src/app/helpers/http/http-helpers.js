@@ -38,6 +38,13 @@ class httpHelpers {
     }
   }
 
+  notFound(error) {
+    return {
+      statusCode: 404,
+      body: error
+    }
+  }
+
   serverError(error) {
     return {
       statusCode: 500,
