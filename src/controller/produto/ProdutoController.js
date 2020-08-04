@@ -36,7 +36,7 @@ class ProdutoController {
     }
 
     const entity = await this.repository.insert(dados)
-    return entity ? http.ok(entity) : http.noContent()
+    return entity ? http.ok(entity) : http.notFound('Erro ao inserir o registro')
   }
   
   async update(req) {
@@ -46,12 +46,12 @@ class ProdutoController {
     }
 
     const entity = await this.repository.update(dados)
-    return entity ? http.ok(entity) : http.noContent()
+    return entity ? http.ok(entity) : http.notFound('Registro não encontrado')
   }
 
   async delete(req) {
     const quantidadeDeletada = await this.repository.delete(req.params.UUId)
-    return quantidadeDeletada > 0 ? http.ok(quantidadeDeletada) : http.noContent()
+    return quantidadeDeletada > 0 ? http.ok(quantidadeDeletada) : http.notFound('Registro não encontrado')
   }
 }
 
