@@ -1,6 +1,6 @@
-"use strict";
+'use strict'
 
-const BaseModel = require("./baseModel");
+const BaseModel = require('./BaseModel')
 
 module.exports = (sequelize, DataTypes) => {
   class Pessoa extends BaseModel {}
@@ -8,71 +8,71 @@ module.exports = (sequelize, DataTypes) => {
   Pessoa.init(
     {
       UUId: {
-        field: "UUIdPes",
+        field: 'UUIdPes',
         allowNull: false,
         type: DataTypes.UUID,
         validate: {
           notNull: true,
         },
-        comment: "UUId na tabela, identificando registro único.",
+        comment: 'UUId na tabela, identificando registro único.',
       },
       id: {
-        field: "idPes",
+        field: 'idPes',
         primaryKey: true,
         autoIncrement: true,
         type: DataTypes.INTEGER,
-        comment: "Id na tabela, identificando registro único.",
+        comment: 'Id na tabela, identificando registro único.',
       },
       nome: {
-        field: "nomePes",
+        field: 'nomePes',
         allowNull: false,
         type: DataTypes.STRING(20),
-        comment: "Nome da pessoa cadastrada.",
+        comment: 'Nome da pessoa cadastrada.',
       },
       nomeMeio: {
-        field: "nomeMeioPes",
+        field: 'nomeMeioPes',
         type: DataTypes.STRING(20),
-        comment: "Nome do meio da pessoa cadastrada.",
+        comment: 'Nome do meio da pessoa cadastrada.',
       },
       sobrenome: {
-        field: "sobrenomePes",
+        field: 'sobrenomePes',
         type: DataTypes.STRING(20),
-        comment: "Sobre Nome da pessoa cadastrada.",
+        comment: 'Sobre Nome da pessoa cadastrada.',
       },
       nascimento: {
-        field: "nascimentoPes",
+        field: 'nascimentoPes',
         type: DataTypes.DATE,
-        comment: "Data de nascimento da pessoa cadastrada.",
+        comment: 'Data de nascimento da pessoa cadastrada.',
       },
       sexo: {
-        field: "sexoPes",
+        field: 'sexoPes',
         type: DataTypes.STRING,
-        comment: "Sexo da pessoa cadastrada podendo assumir valores F ou M.",
+        comment: 'Sexo da pessoa cadastrada podendo assumir valores F ou M.',
       },
       cpf: {
-        field: "cpfPes",
+        field: 'cpfPes',
         type: DataTypes.STRING(11),
-        comment: "Número do CPF da pessoa cadastrada, somente números.",
+        comment: 'Número do CPF da pessoa cadastrada, somente números.',
       },
       rg: {
-        field: "rgPes",
+        field: 'rgPes',
         type: DataTypes.STRING(9),
-        comment: "Número do RG da pessoa cadastrada, somente números.",
+        comment: 'Número do RG da pessoa cadastrada, somente números.',
       },
       ativo: {
-        field: "ativoPes",
+        field: 'ativoPes',
         allowNull: false,
         defaultValue: true,
         type: DataTypes.BOOLEAN,
-        comment: "Indica se a pessoa está ativa para ser utilizada.",
+        comment: 'Indica se a pessoa está ativa para ser utilizada.',
       },
       createdAt: {
-        field: "createAtPes",
+        field: 'createAtPes',
         allowNull: false,
         type: DataTypes.DATE,
       },
       updatedAt: {
-        field: "updatedAtPes",
+        field: 'updatedAtPes',
         allowNull: false,
         type: DataTypes.DATE,
       },
@@ -81,19 +81,19 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       freezeTableName: true,
       timestamps: true,
-      modelName: "Pessoa",
-      comment: "Tabela utilziada para armazenar os dados de uma pessoa.",
+      modelName: 'Pessoa',
+      comment: 'Tabela utilziada para armazenar os dados de uma pessoa.',
     }
-  );
+  )
 
   Pessoa.associate = function (models) {
     Pessoa.hasOne(models.Usuario, {
-      as: "Usuario",
-      foreignKey: "idPes",
-      targetKey: "idPes",
+      as: 'Usuario',
+      foreignKey: 'idPes',
+      targetKey: 'idPes',
       allowNull: true,
-    });
-  };
+    })
+  }
 
-  return Pessoa;
-};
+  return Pessoa
+}

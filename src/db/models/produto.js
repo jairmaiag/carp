@@ -1,6 +1,6 @@
 'use strict'
 
-const BaseModel = require('./baseModel')
+const BaseModel = require('./BaseModel')
 
 module.exports = (sequelize, DataTypes) => {
   class Produto extends BaseModel { }
