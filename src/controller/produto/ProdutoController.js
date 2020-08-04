@@ -1,5 +1,6 @@
 const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
-const { serverError, ok, noContent, notFound, forbidden } = require('../../app/helpers/http/HttpHelpers')
+const { serverError, ok, noContent, notFound, forbidden, badRequest } = require('../../app/helpers/http/HttpHelpers')
+const produtoValidador = require('./ProdutoValidadorFactory')
 const InvalidParamError = require('../../app/errors/InvalidParamError')
 
 class ProdutoController {
@@ -47,6 +48,11 @@ class ProdutoController {
 
   async insert(req) {
     try {
+      const error = produtoValidador.valida(req.body)
+      if (error) {
+        return badRequest(error)
+      }
+
       const dados = req.body
       if (!dados.UUId) {
         dados.UUId = getUUIDV4()
