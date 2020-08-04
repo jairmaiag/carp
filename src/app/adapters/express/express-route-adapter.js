@@ -27,7 +27,7 @@ module.exports = function (app) {
     } else if (method === 'PUT') {
       httpResponse = await controller.update(req)
     }  else if (method === 'DELETE') {
-      if (UUId) {
+      if (UUId || id) {
         httpResponse = await controller.delete(req)
       } else {
         rotaNaoEncontrada = true

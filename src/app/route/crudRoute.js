@@ -8,4 +8,5 @@ module.exports = function (app) {
   app.post('/:model/', adaptRoute(app))
   app.put('/:model/', adaptRoute(app))
   app.delete('/:model/UUId/:UUId', adaptRoute(app))
+  app.delete('/:model/:id', adaptRoute(app))
 }
