@@ -1,4 +1,4 @@
-const adaptRoute = require('../adapters/express/express-route-adapter')
+const adaptRoute = require('../adapters/express/ExpressRouteAdapter')
 
 module.exports = function (app) {
   app.get('/:model/', adaptRoute(app))

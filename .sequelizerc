@@ -13,7 +13,7 @@ const { resolve } = require('path')
 
 module.exports = {
   evn: process.env.NODE_ENV,
-  config: resolve(__dirname, 'src', 'db', 'config', 'config.js'),
+  config: resolve(__dirname, 'src', 'db', 'config', 'Config.js'),
   'models-path': resolve(__dirname, 'src', 'db', 'models'),
   'migrations-path': resolve(__dirname, 'src', 'db', 'migrations')
 }

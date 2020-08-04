@@ -1,9 +1,14 @@
 const { v4: uuidv4 } = require('uuid')
+const { serverError } = require('../helpers/http/HttpHelpers')
 
 class UUIDGenerator {
   getUUIDV4() {
-    return uuidv4()
-   }
+    try {
+      return uuidv4()
+    } catch (error) {
+      return serverError(error)
+    }
+  }
 }
 
 module.exports = new UUIDGenerator()

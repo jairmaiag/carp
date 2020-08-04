@@ -1,4 +1,5 @@
 const { Client } = require("pg")
+const { serverError, ok } = require('../../app/helpers/http/HttpHelpers')
 
 class MainController {
 
@@ -7,72 +8,84 @@ class MainController {
   }
 
   index(req, res) {
-    let porta = process.env.PORT == 80 ? "" : ":" + process.env.PORT
-    res.status(200).json({
-      mensagem: `Sistema GCPS Ativo! Para criação de banco acesse http://localhsot${porta}/criarbanco usando o method POST.`,
-    })
+    try {
+      let porta = process.env.PORT == 80 ? "" : ":" + process.env.PORT
+      return ok(`Sistema GCPS Ativo! Para criação de banco acesse http://localhsot${porta}/criarbanco usando o method POST.`)
+    } catch (error) {
+      return serverError(error)
+    }
   }
 
   montarStringConexao(dadosConexaoPadrao) {
-    return (
-      "postgres://" +
-      dadosConexaoPadrao.usuario +
-      ":" +
-      dadosConexaoPadrao.senha +
-      "@" +
-      dadosConexaoPadrao.host +
-      ":" +
-      dadosConexaoPadrao.porta +
-      "/" +
-      dadosConexaoPadrao.banco
-    )
+    try {
+      return (
+        "postgres://" +
+        dadosConexaoPadrao.usuario +
+        ":" +
+        dadosConexaoPadrao.senha +
+        "@" +
+        dadosConexaoPadrao.host +
+        ":" +
+        dadosConexaoPadrao.porta +
+        "/" +
+        dadosConexaoPadrao.banco
+      )
+    } catch (error) {
+      return serverError(error)
+    }
   }
 
   async criarBanco(dadosConexao) {
-    const cliente = new Client({
-      connectionString: this.montarStringConexao(dadosConexaoPadrao),
-    })
+    try {
+      let mensagem = null
 
-    cliente.connect()
-
-    /* Criação do usuário de acesso ao banco */
-    cliente.query("select usename from pg_user", (errusu, usus) => {
-      let usubd = usus.rows.filter((usu) => usu.usename == "carp")
-      if (usubd.length > 0) {
-        console.log(
-          "Usuário de banco já existe. Saindo da criação do usuario. Aguarde a verificação do banco..."
-        )
-        return
-      }
-
-      const criarUsuario =
-        "CREATE ROLE carp WITH LOGIN SUPERUSER CREATEDB CREATEROLE INHERIT NOREPLICATION CONNECTION LIMIT -1 PASSWORD 'carp'"
-
-      cliente.query(criarUsuario, (errusu, usu) => {
-        console.log("Criando usuario...")
+      const cliente = new Client({
+        connectionString: this.montarStringConexao(dadosConexaoPadrao),
       })
-    })
 
-    /* Criação do banco de dados */
-    cliente.query("SELECT datname FROM pg_database", (err1, res1) => {
-      let bd = res1.rows.filter((banco) => banco.datname == "carp")
-      if (bd.length > 0) {
-        console.log("Banco já existe. Saindo da criação de banco de dados.")
-        cliente.end()
-        return
-      }
+      cliente.connect()
 
-      const criarBanco =
-        "CREATE DATABASE carp WITH OWNER = carp ENCODING = 'UTF8' CONNECTION LIMIT = -1"
+      /* Criação do usuário de acesso ao banco */
+      cliente.query("select usename from pg_user", (errusu, usus) => {
+        let usubd = usus.rows.filter((usu) => usu.usename == "carp")
+        if (usubd.length > 0) {
+          mensagem = 'Usuário de banco já existe. Saindo da criação do usuario. Aguarde a verificação do banco...'
+          console.log(mensagem)
+          return ok(mensagem)
+        }
 
-      cliente.query(criarBanco, (errdb, db) => {
-        console.log("Criando banco...")
-        cliente.end()
-        console.log("Criação de banco concluida!")
+        const criarUsuario =
+          "CREATE ROLE carp WITH LOGIN SUPERUSER CREATEDB CREATEROLE INHERIT NOREPLICATION CONNECTION LIMIT -1 PASSWORD 'carp'"
+
+        cliente.query(criarUsuario, (errusu, usu) => {
+          console.log('Criando usuario...')
+        })
       })
-    })
 
-    return null
+      /* Criação do banco de dados */
+      cliente.query("SELECT datname FROM pg_database", (err1, res1) => {
+        let bd = res1.rows.filter((banco) => banco.datname == "carp")
+        if (bd.length > 0) {
+          mensagem = 'Banco já existe. Saindo da criação de banco de dados.'
+          console.log(mensagem)
+          cliente.end()
+          return ok(mensagem)
+        }
+
+        const criarBanco =
+          "CREATE DATABASE carp WITH OWNER = carp ENCODING = 'UTF8' CONNECTION LIMIT = -1"
+
+        cliente.query(criarBanco, (errdb, db) => {
+          console.log('Criando banco...')
+          cliente.end()
+          console.log('Criação de banco concluída!')
+        })
+      })
+
+      return ok('Criação do banco concluída!')
+    } catch (error) {
+      return serverError(error)
+    }
   }
 }
 

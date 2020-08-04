@@ -1,5 +1,5 @@
-const ServerError = require('../../errors/server-error')
-const UnauthorizedError = require('../../errors/unauthorized-error')
+const ServerError = require('../../errors/ServerError')
+const UnauthorizedError = require('../../errors/UnauthorizedError')
 
 class httpHelpers {
 

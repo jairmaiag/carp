@@ -1,5 +1,5 @@
 /* importar as configurações do servidor */
-var app = require("./src/app/server")
+var app = require("./src/app/Server")
 
 /* parametrizar a porta de escuta */
 let port = process.env.PORT || 80
