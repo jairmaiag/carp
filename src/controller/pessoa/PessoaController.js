@@ -1,5 +1,5 @@
-const UUIDGenerator = require('../../app/util/UUIDGenerator')
-const http = require('../../app/helpers/http/http-helpers')
+const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
+const { serverError, ok, noContent, notFound, forbidden } = require('../../app/helpers/http/http-helpers')
 const InvalidParamError = require('../../app/errors/invalid-param-error')
 
 class PessoaController {
@@ -10,48 +10,76 @@ class PessoaController {
   }
 
   async index(req) {
-    const entities =  await this.repository.findAll(req.body.attributes, req.body.filter, req.body.order)
-    return entities.length > 0 ? http.ok(entities) : http.noContent()
+    try {
+      const entities = await this.repository.findAll(req.body.attributes, req.body.filter, req.body.order)
+      return entities.length > 0 ? ok(entities) : noContent()
+    } catch (error) {
+      serverError(error)
+    }
   }
 
   async findAndPaginate(req) {
-    const entities = await this.repository.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, req.body.page)
-    return entities.rows.length > 0 ? http.ok(entities) : http.noContent()
+    try {
+      const entities = await this.repository.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, req.body.page)
+      return entities.rows.length > 0 ? ok(entities) : noContent()
+    } catch (error) {
+      serverError(error)
+    }
   }
 
   async findByUUId(req) {
-    const entity = await this.repository.findByUUId(req.params.UUId)
-    return entity ? http.ok(entity) : http.noContent()
+    try {
+      const entity = await this.repository.findByUUId(req.params.UUId)
+      return entity ? ok(entity) : noContent()
+    } catch (error) {
+      serverError(error)
+    }
   }
-  
+
   async findById(req) {
-    const entity = await this.repository.findById(req.params.id)
-    return entity ? http.ok(entity) : http.noContent()
+    try {
+      const entity = await this.repository.findById(req.params.id)
+      return entity ? ok(entity) : noContent()
+    } catch (error) {
+      serverError(error)
+    }
   }
 
   async insert(req) {
-    const dados = req.body
-    if (!dados.UUId) {
-      dados.UUId = UUIDGenerator.getUUIDV4()
-    }
+    try {
+      const dados = req.body
+      if (!dados.UUId) {
+        dados.UUId = getUUIDV4()
+      }
 
-    const entity = await this.repository.insert(dados)
-    return entity ? http.ok(entity) : http.notFound('Erro ao inserir o registro')
+      const entity = await this.repository.insert(dados)
+      return entity ? ok(entity) : notFound('Erro ao inserir o registro')
+    } catch (error) {
+      serverError(error)
+    }
   }
 
   async update(req) {
-    const dados = req.body
-    if (!dados.id) {
-      return http.forbidden(new InvalidParamError('ID é um campo obrigatório'))
-    }
+    try {
+      const dados = req.body
+      if (!dados.id) {
+        return forbidden(new InvalidParamError('ID é um campo obrigatório'))
+      }
 
-    const entity = await this.repository.update(dados)
-    return entity ? http.ok(entity) : http.notFound('Registro não encontrado')
+      const entity = await this.repository.update(dados)
+      return entity ? ok(entity) : notFound('Registro não encontrado')
+    } catch (error) {
+      serverError(error)
+    }
   }
 
   async delete(req) {
-    const quantidadeDeletada = await this.repository.delete(req.params.id)
-    return quantidadeDeletada > 0 ? http.ok(quantidadeDeletada) : http.notFound('Registro não encontrado')
+    try {
+      const quantidadeDeletada = await this.repository.delete(req.params.id)
+      return quantidadeDeletada > 0 ? ok(quantidadeDeletada) : notFound('Registro não encontrado')
+    } catch (error) {
+      serverError(error)
+    }
   }
 }
 
