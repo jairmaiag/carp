@@ -2,6 +2,7 @@ const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
 const { serverError, ok, noContent, notFound, forbidden, badRequest } = require('../../app/helpers/http/HttpHelpers')
 const produtoValidador = require('./ProdutoValidadorFactory')
 const InvalidParamError = require('../../app/errors/InvalidParamError')
+const util = require('../../app/util/Util')
 
 class ProdutoController {
 
@@ -12,6 +13,10 @@ class ProdutoController {
 
   async index(req) {
     try {
+      if (util.isEmpty(req.body.filter)  ) {
+        return forbidden('É necessário filtrar a consulta. /n Parâmetro "req.body.filter"')
+      }
+
       const entities = await this.repository.findAll(req.body.attributes, req.body.filter, req.body.order)
       return entities.length > 0 ? ok(entities) : noContent()
     } catch (error) {

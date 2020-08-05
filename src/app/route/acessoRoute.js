@@ -1,6 +1,7 @@
+const util = require('../util/Util')
+
 module.exports = function (app) {
   var controller = new app.src.controller.acesso.AcessoController(app)
-  var util = new app.src.app.util.Util(app)
 
   app.post("/login", async function (req, res) {
     const httpResponse = await controller.login(req)

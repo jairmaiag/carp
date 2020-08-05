@@ -1,11 +1,7 @@
 const { serverError } = require('../helpers/http/HttpHelpers')
+const nodemailer = require('nodemailer')
 
 class Util {
-  constructor(app) {
-    this.app = app
-    this.nodemailer = require('nodemailer')
-  }
-
   montarMensagemJson(mensagem) {
     try {
       return { mensagem: mensagem }
@@ -16,6 +12,9 @@ class Util {
 
   isEmpty(val) {
     try {
+      if (val instanceof Object) {
+        return Object.keys(val).length === 0
+      }
       return (val === undefined || val == null || val.length <= 0) ? true : false
     } catch (error) {
       return serverError(error)
@@ -27,7 +26,7 @@ class Util {
       let emailOrigiem = process.env.EMAIL
       let senha = process.env.SENHA_EMAIL
       let emailDestino = 'jairmaiay@yahoo.com.br'
-      var transporter = this.nodemailer.createTransport({
+      var transporter = nodemailer.createTransport({
         host: 'smtp.gmail.com',
         port: 465,
         secure: true,
@@ -57,8 +56,4 @@ class Util {
   }
 }
 
-function retorno(app) {
-  return new Util(app)
-}
-
-module.exports = () => retorno
+module.exports = new Util()
