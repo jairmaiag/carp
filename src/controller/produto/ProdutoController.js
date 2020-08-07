@@ -1,9 +1,6 @@
 const repository = require('../../db/repository/ProdutoRepository')
-const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
-const { serverError, ok, notFound, forbidden, badRequest } = require('../../app/helpers/http/HttpHelpers')
+const { serverError, ok, notFound, badRequest } = require('../../app/helpers/http/HttpHelpers')
 const produtoValidador = require('./ProdutoValidadorFactory')
-const InvalidParamError = require('../../app/errors/InvalidParamError')
-const validator = require('validator')
 
 class ProdutoController {
 

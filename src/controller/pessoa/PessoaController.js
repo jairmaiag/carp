@@ -1,8 +1,5 @@
 const repository = require('../../db/repository/PessoaRepository')
-const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
-const { serverError, ok, notFound, forbidden } = require('../../app/helpers/http/HttpHelpers')
-const InvalidParamError = require('../../app/errors/InvalidParamError')
-const validator = require('validator')
+const { serverError, ok, notFound } = require('../../app/helpers/http/HttpHelpers')
 
 class PessoaController {
 
