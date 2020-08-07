@@ -1,7 +1,8 @@
 const repository = require('../../db/repository/PessoaRepository')
 const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
-const { serverError, ok, noContent, notFound, forbidden } = require('../../app/helpers/http/HttpHelpers')
+const { serverError, ok, notFound, forbidden } = require('../../app/helpers/http/HttpHelpers')
 const InvalidParamError = require('../../app/errors/InvalidParamError')
+const validator = require('validator')
 
 class PessoaController {
 
@@ -12,7 +13,7 @@ class PessoaController {
   async index(req) {
     try {
       const entities = await repository.findAll(req.body.attributes, req.body.filter, req.body.order)
-      return entities.length > 0 ? ok(entities) : noContent()
+      return entities.length > 0 ? ok(entities) : ok('Nenhum registro não encontrado.')
     } catch (error) {
       return serverError(error)
     }
@@ -21,7 +22,7 @@ class PessoaController {
   async findAndPaginate(req) {
     try {
       const entities = await repository.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, req.body.page)
-      return entities.rows.length > 0 ? ok(entities) : noContent()
+      return entities.rows.length > 0 ? ok(entities) : ok('Nenhum registro não encontrado.')
     } catch (error) {
       return serverError(error)
     }
@@ -30,7 +31,7 @@ class PessoaController {
   async findByUUId(req) {
     try {
       const entity = await repository.findByUUId(req.params.UUId)
-      return entity ? ok(entity) : noContent()
+      return entity ? ok(entity) : ok('Registro não encontrado.')
     } catch (error) {
       return serverError(error)
     }
@@ -39,7 +40,7 @@ class PessoaController {
   async findById(req) {
     try {
       const entity = await repository.findById(req.params.id)
-      return entity ? ok(entity) : noContent()
+      return entity ? ok(entity) : ok('Registro não encontrado.')
     } catch (error) {
       return serverError(error)
     }
@@ -47,12 +48,7 @@ class PessoaController {
 
   async insert(req) {
     try {
-      const dados = req.body
-      if (!dados.UUId) {
-        dados.UUId = getUUIDV4()
-      }
-
-      const entity = await repository.insert(dados)
+      const entity = await repository.insert(req.body)
       return entity ? ok(entity) : notFound('Erro ao inserir o registro')
     } catch (error) {
       return serverError(error)
@@ -61,12 +57,7 @@ class PessoaController {
 
   async update(req) {
     try {
-      const dados = req.body
-      if (!dados.id) {
-        return forbidden(new InvalidParamError('ID é um campo obrigatório'))
-      }
-
-      const entity = await repository.update(dados)
+      const entity = await repository.update(req.body)
       return entity ? ok(entity) : notFound('Registro não encontrado')
     } catch (error) {
       return serverError(error)
@@ -75,7 +66,7 @@ class PessoaController {
 
   async delete(req) {
     try {
-      const quantidadeDeletada = await repository.delete(req.params.id)
+      const quantidadeDeletada = await repository.delete(req.params.UUId)
       return quantidadeDeletada > 0 ? ok(quantidadeDeletada) : notFound('Registro não encontrado')
     } catch (error) {
       return serverError(error)

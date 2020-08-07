@@ -1,7 +1,8 @@
 const repository = require('../../db/repository/UsuarioRepository')
 const InvalidParamError = require('../../app/errors/InvalidParamError')
 const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
-const { serverError, ok, noContent, notFound, forbidden } = require('../../app/helpers/http/HttpHelpers')
+const { serverError, ok, notFound, forbidden } = require('../../app/helpers/http/HttpHelpers')
+const validator = require('validator')
 
 class UsuarioController {
 
@@ -12,7 +13,7 @@ class UsuarioController {
   async index(req) {
     try {
       const entities = await repository.findAll(req.body.attributes, req.body.filter, req.body.order)
-      return entities.length > 0 ? ok(entities) : noContent()
+      return entities.length > 0 ? ok(entities) : ok('Nenhum registro não encontrado.')
     } catch (error) {
       return serverError(error)
     }
@@ -21,7 +22,7 @@ class UsuarioController {
   async findAndPaginate(req) {
     try {
       const entities = await repository.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, req.body.page)
-      return entities.rows.length > 0 ? ok(entities) : noContent()
+      return entities.rows.length > 0 ? ok(entities) : ok('Nenhum registro não encontrado.')
     } catch (error) {
       return serverError(error)
     }
@@ -30,7 +31,7 @@ class UsuarioController {
   async findByUUId(req) {
     try {
       const entity = await repository.findByUUId(req.params.UUId)
-      return entity ? ok(entity) : noContent()
+      return entity ? ok(entity) : ok('Registro não encontrado.')
     } catch (error) {
       return serverError(error)
     }
@@ -39,7 +40,7 @@ class UsuarioController {
   async findById(req) {
     try {
       const entity = await repository.findById(req.params.id)
-      return entity ? ok(entity) : noContent()
+      return entity ? ok(entity) : ok('Registro não encontrado.')
     } catch (error) {
       return serverError(error)
     }
@@ -48,10 +49,6 @@ class UsuarioController {
   async insert(req) {
     try {
       const dados = req.body
-
-      if (!dados.UUId) {
-        dados.UUId = getUUIDV4()
-      }
 
       const uuidPessoa = getUUIDV4()
       let nomePessoa = dados.login
@@ -85,12 +82,7 @@ class UsuarioController {
 
   async update(req) {
     try {
-      const dados = req.body
-      if (!dados.UUId) {
-        return forbidden(new InvalidParamError('UUId é um campo obrigatório'))
-      }
-
-      const entity = await repository.update(dados)
+      const entity = await repository.update(req.body)
       return entity ? ok(entity) : notFound('Registro não encontrado')
     } catch (error) {
       return serverError(error)

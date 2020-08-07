@@ -1,9 +1,14 @@
 const ServerError = require('../../errors/ServerError')
 const UnauthorizedError = require('../../errors/UnauthorizedError')
+const util = require('../../util/Util')
 
 class httpHelpers {
 
   ok(data) {
+    if (!(data instanceof Object)) {
+      data = util.montarMensagemJson(data)
+    }
+
     return {
       statusCode: 200,
       body: data

@@ -43,16 +43,19 @@ PessoaRepository.prototype.insert = async function (dados) {
 }
 
 PessoaRepository.prototype.update = async function (dados) {
-  const result = await Pessoa.update(dados, { where: { id: dados.id } })
+  const result = await Pessoa.update(
+    dados, 
+    { where: { UUId: dados.UUId } 
+  })
 
   const retorno = result[0] === 1 ? 1 : null
 
   return retorno
 }
 
-PessoaRepository.prototype.delete = async function (id) {
+PessoaRepository.prototype.delete = async function (UUId) {
   const result = await Pessoa.destroy({
-    where: { id: id },
+    where: { UUId: UUId }
   })
 
   return result
