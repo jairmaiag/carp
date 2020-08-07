@@ -1,10 +1,10 @@
+const repository = require('../../db/repository/UsuarioRepository')
 const { serverError, badRequest, ok } = require('../../app/helpers/http/HttpHelpers')
 
 class AcessoController {
 
   constructor(app) {
     this.app = app
-    this.repository = new this.app.src.db.repository.UsuarioRepository()
   }
 
   async login(req) {
@@ -14,7 +14,7 @@ class AcessoController {
         return badRequest('Campos de Login e Senha são obrigatórios.')
       }
 
-      const entity = await this.repository.findByLoginSenha(filter)
+      const entity = await repository.findByLoginSenha(filter)
       if (!entity) {
         return badRequest('Usuário ou senha inválida')
       }

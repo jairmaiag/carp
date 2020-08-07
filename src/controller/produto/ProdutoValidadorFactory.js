@@ -4,7 +4,7 @@ const CampoObrigatorioValidador = require('../../app/validators/CampoObrigatorio
 const produtoValidador = () => {
   const validadores = []
   
-  for (const campo of ['nome', 'descricao']) {
+  for (const campo of ['codigo', 'nome']) {
     validadores.push(new CampoObrigatorioValidador(campo))
   }
 

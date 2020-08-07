@@ -1,23 +1,24 @@
+const repository = require('../../db/repository/ProdutoRepository')
 const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
 const { serverError, ok, noContent, notFound, forbidden, badRequest } = require('../../app/helpers/http/HttpHelpers')
 const produtoValidador = require('./ProdutoValidadorFactory')
 const InvalidParamError = require('../../app/errors/InvalidParamError')
 const util = require('../../app/util/Util')
+const validator = require('validator')
 
 class ProdutoController {
 
   constructor(app) {
     this.app = app
-    this.repository = new this.app.src.db.repository.ProdutoRepository()
   }
 
   async index(req) {
     try {
       if (util.isEmpty(req.body.filter)  ) {
-        return forbidden('É necessário filtrar a consulta. /n Parâmetro "req.body.filter"')
+        return forbidden(new InvalidParamError('É necessário filtrar a consulta.'))
       }
 
-      const entities = await this.repository.findAll(req.body.attributes, req.body.filter, req.body.order)
+      const entities = await repository.findAll(req.body.attributes, req.body.filter, req.body.order)
       return entities.length > 0 ? ok(entities) : noContent()
     } catch (error) {
       return serverError(error)
@@ -26,7 +27,7 @@ class ProdutoController {
 
   async findAndPaginate(req) {
     try {
-      const entities = await this.repository.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, req.body.page)
+      const entities = await repository.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, req.body.page)
       return entities.rows.length > 0 ? ok(entities) : noContent()
     } catch (error) {
       return serverError(error)
@@ -35,7 +36,11 @@ class ProdutoController {
 
   async findByUUId(req) {
     try {
-      const entity = await this.repository.findByUUId(req.params.UUId)
+      if (!validator.isUUID(req.params.UUId, 4)  ) {
+        return forbidden(new InvalidParamError('Formato inválido para o campo UUId.'))
+      }
+
+      const entity = await repository.findByUUId(req.params.UUId)
       return entity ? ok(entity) : noContent()
     } catch (error) {
       return serverError(error)
@@ -44,7 +49,11 @@ class ProdutoController {
 
   async findById(req) {
     try {
-      const entity = await this.repository.findById(req.params.id)
+      if (!validator.isInt(req.params.id)) {
+        return forbidden(new InvalidParamError('O campo Id deve ser do tipo numérico.'))
+      }
+
+      const entity = await repository.findById(req.params.id)
       return entity ? ok(entity) : noContent()
     } catch (error) {
       return serverError(error)
@@ -63,7 +72,7 @@ class ProdutoController {
         dados.UUId = getUUIDV4()
       }
 
-      const entity = await this.repository.insert(dados)
+      const entity = await repository.insert(dados)
       return entity ? ok(entity) : notFound('Erro ao inserir o registro')
     } catch (error) {
       return serverError(error)
@@ -73,11 +82,15 @@ class ProdutoController {
   async update(req) {
     try {
       const dados = req.body
-      if (!dados.UUId) {
+      if (util.isEmpty(dados.UUId)  ) {
         return forbidden(new InvalidParamError('UUId é um campo obrigatório'))
       }
 
-      const entity = await this.repository.update(dados)
+      if (!validator.isUUID(dados.UUId, 4)  ) {
+        return forbidden(new InvalidParamError('Formato inválido para o campo UUId.'))
+      }
+
+      const entity = await repository.update(dados)
       return entity ? ok(entity) : notFound('Registro não encontrado')
     } catch (error) {
       return serverError(error)
@@ -86,7 +99,11 @@ class ProdutoController {
 
   async delete(req) {
     try {
-      const quantidadeDeletada = await this.repository.delete(req.params.UUId)
+      if (!validator.isUUID(req.params.UUId, 4)  ) {
+        return forbidden(new InvalidParamError('Formato inválido para o campo UUId.'))
+      }
+
+      const quantidadeDeletada = await repository.delete(req.params.UUId)
       return quantidadeDeletada > 0 ? ok(quantidadeDeletada) : notFound('Registro não encontrado')
     } catch (error) {
       return serverError(error)

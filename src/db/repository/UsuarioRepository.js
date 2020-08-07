@@ -88,4 +88,4 @@ UsuarioRepository.prototype.findByLoginSenha = async function (filter) {
   return result
 }
 
-module.exports = () => UsuarioRepository
+module.exports = new UsuarioRepository()

@@ -63,4 +63,4 @@ ProdutoRepository.prototype.delete = async function (UUId) {
   return result
 }
 
-module.exports = () => ProdutoRepository
+module.exports = new ProdutoRepository()

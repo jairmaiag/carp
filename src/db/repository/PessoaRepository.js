@@ -58,4 +58,4 @@ PessoaRepository.prototype.delete = async function (id) {
   return result
 }
 
-module.exports = () => PessoaRepository
+module.exports = new PessoaRepository()
