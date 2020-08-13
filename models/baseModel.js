@@ -24,7 +24,7 @@ class BaseModel extends Model {
         }
       }
 
-      const totalRows = await super.count();
+      page.totalRows = await super.count();
 
       const rows = await super.findAll({
         attributes: attributes,
@@ -36,9 +36,12 @@ class BaseModel extends Model {
         raw: true,
       });
 
-      page.totalRows = totalRows;
       if (page.totalRows > page.size) {
+        let resto = page.totalRows % page.size;
         page.total = Math.round(page.totalRows / page.size);
+        if (resto != 0 && resto <= 5) {
+          page.total++;
+        }
       }
 
       if (rows.length > 0) {
@@ -54,18 +57,4 @@ class BaseModel extends Model {
   }
 }
 
-// BaseModel.init(
-//   {},{
-//   freezeTableName: true,
-//   sequelize
-// }
-// )
-
 module.exports = BaseModel;
-
-// sequelize = new Sequelize("postgres://carp:carp@localhost:5432/carp", {
-//   define: {
-//     freezeTableName: true,
-//     timestamps: false,
-//   },
-// });
