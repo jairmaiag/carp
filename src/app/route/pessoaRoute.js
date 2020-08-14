@@ -28,7 +28,15 @@ module.exports = function (app) {
   })
 
   app.get('/pessoa/paginacao', async function (req, res) {
-    const pageEntitys = await controller.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, req.body.page)
+    let parametros = req.query;
+    let page = {};
+    page.fieldName = parametros.fieldName || "id";
+    page.previousId = parametros.previousId || 0;
+    page.next = parametros.next || 0;
+    page.size = parametros.size || 10;
+    page.totalRows = parametros.totalRows || 0;
+    page.total = parametros.total || 1;
+    const pageEntitys = await controller.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, page)
     
     if (pageEntitys.rows.length > 0 ) {
       res.status(200).json(pageEntitys)
