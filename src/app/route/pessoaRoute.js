@@ -36,6 +36,9 @@ module.exports = function (app) {
     page.size = parametros.size || 10;
     page.totalRows = parametros.totalRows || 0;
     page.total = parametros.total || 1;
+    page.fieldOrder = parametros.fieldOrder || "id";
+    page.directionOrder = parametros.directionOrder || "ASC";
+
     const pageEntitys = await controller.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, page)
     
     if (pageEntitys.rows.length > 0 ) {
