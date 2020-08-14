@@ -6,14 +6,17 @@ class BaseModel extends Model {
       if (page === undefined) {
         page = {};
       }
+
       page.fieldName = page.fieldName || "id";
       page.previousId = page.previousId || 0;
       page.next = page.next || 0;
       page.size = page.size || 10;
       page.totalRows = page.totalRows || 0;
       page.total = 1;
+      page.fieldOrder = page.fieldOrder || "id";
+      page.directionOrder = page.directionOrder || "ASC";
       let offset = page.next * page.size;
-      order = order || [["id", "ASC"]];
+      order = order || [[page.fieldOrder, page.directionOrder]];
 
       if (filter == null && page.next > 0 && page.totalRows > 0) {
         offset = 0;
