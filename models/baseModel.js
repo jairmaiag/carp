@@ -50,7 +50,7 @@ class BaseModel extends Model {
         page.previousId = rows[rows.length - 1][page.fieldName];
       }
 
-      return { page, rows };
+      return { page, rows, order };
     } catch (error) {
       throw error;
     }
