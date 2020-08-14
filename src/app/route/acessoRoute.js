@@ -1,30 +1,27 @@
+const util = require('../util/Util')
+
 module.exports = function (app) {
-  var controller = new app.src.app.controller.acesso.AcessoController(app);
-  var util = new app.src.app.server.Util(app);
+  var controller = new app.src.controller.acesso.AcessoController(app)
 
   app.post("/login", async function (req, res) {
-    const filter = req.body;
-    if (
-      Object.is(filter.login, undefined) ||
-      Object.is(filter.senha, undefined)
-    ) {
-      res
-        .status(400)
-        .json(
-          util.montarMensagemJson("Campos de Login e Senha são obrigatórios.")
-        );
-      return;
-    }
-    const usuario = await controller.login(filter);
-    if (usuario == null) {
-      res.status(404).json(util.montarMensagemJson("Recurso não encontrado."));
+    const httpResponse = await controller.login(req)
+
+    if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
+      req.session.usuario = httpResponse.body
+      res.status(httpResponse.statusCode).json(httpResponse.body)
     } else {
-      req.session.usuario = usuario;
-      res.status(200).json(usuario);
+      res.status(httpResponse.statusCode).json({
+        error: httpResponse.body
+      })
     }
-  });
+  })
+
   app.get("/logout", async function (req, res) {
-    req.session.destroy();
-    res.status(200).json(util.montarMensagemJson("Usuário não logado."));
-  });
-};
+    try {
+      req.session.destroy()
+      res.status(200).json(util.montarMensagemJson('Usuário não logado.'))
+    } catch (error) {
+      res.status(500).json(error)
+    }
+  })
+}
