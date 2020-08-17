@@ -18,7 +18,7 @@ class BaseModel extends Model {
       let offset = page.next * page.size;
       order = order || [[page.fieldOrder, page.directionOrder]];
 
-      if (filter == null && page.next > 0 && page.totalRows > 0) {
+      if (filter == undefined && page.next > 0 && page.totalRows > 0) {
         offset = 0;
         if (order[0][1] == "ASC") {
           filter = { [page.fieldName]: { [Op.gt]: [page.previousId] } };
