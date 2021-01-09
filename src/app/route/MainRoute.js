@@ -49,8 +49,7 @@ module.exports = function (app) {
     httpResponse = await controller.criarBanco(req.body)
 
     if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-      httpResponse.body = httpResponse.body + '/n Verifique também o console do nodejs para ver os resultados.'
-      res.status(httpResponse.statusCode).json(httpResponse.body)
+      res.status(httpResponse.statusCode).json('Criação de banco concluida. Verifique também o console do nodejs para ver os resultados.')
     } else {
       res.status(httpResponse.statusCode).json({
         error: httpResponse.body

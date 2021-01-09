@@ -40,7 +40,7 @@ class MainController {
       let mensagem = null
 
       const cliente = new Client({
-        connectionString: this.montarStringConexao(dadosConexaoPadrao),
+        connectionString: this.montarStringConexao(dadosConexao),
       })
 
       cliente.connect()
