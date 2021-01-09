@@ -82,6 +82,42 @@ class MainController {
         })
       })
 
+      /* Criação do schema do banco 
+      CREATE SCHEMA carp AUTHORIZATION carp;
+      GRANT ALL ON SCHEMA carp TO carp;
+      ALTER DEFAULT PRIVILEGES IN SCHEMA carp GRANT ALL ON TABLES TO carp;
+
+      */
+      cliente.query("select schema_name from information_schema.schemata", (err1, res1) => {
+        let bd = res1.rows.filter((banco) => banco.schema_name == "carp")
+        if (bd.length > 0) {
+          mensagem = 'Schema do banco já existe. Saindo da criação de schema.'
+          console.log(mensagem)
+          cliente.end()
+          return ok(mensagem)
+        }
+
+        const criarSchema =
+          "CREATE SCHEMA carp AUTHORIZATION carp"
+
+        cliente.query(criarSchema, (errdb, db) => {
+          console.log('Criando Schema...')
+          cliente.end()
+          console.log('Criação de schema concluída!')
+        })
+
+        cliente.query('GRANT ALL ON SCHEMA carp TO carp', (errdb, db) => {
+          console.log('Privilegios para o Schema...')
+          cliente.end()
+        })
+        cliente.query('ALTER DEFAULT PRIVILEGES IN SCHEMA carp GRANT ALL ON TABLES TO carp', (errdb, db) => {
+          console.log('Privilegios para o Schema...')
+          cliente.end()
+        })
+
+      })
+
+
       return ok('Criação do banco concluída!')
     } catch (error) {
       return serverError(error)
