@@ -40,7 +40,7 @@ Ter os programas abaixo já instalados e rodando:
 [Voltar ao Índice](#índice)
 
 ### Variáveis de ambiente
-
+**EXTREMAMENTE IMPORTANTE**
 Para que o funcione em modo de desenvolvimento crie um arquivo **.env** na raiz da aplicação com algumas variáveis configuradas.
 
 Veja o conteúdo do arquivo [.env.example](https://github.com/jairmaiag/carp/blob/master/.env.example) que contem as variáveis utilizadas no sistema.
