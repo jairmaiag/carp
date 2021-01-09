@@ -57,7 +57,7 @@ Utilize o nodejs para executar o mesmo com um dos comandos abaixo:
 1. npm start
 2. npm run nodemon
 
-Na segunda opção o **nodemon** deverá está instalado. Para isso use o comando:
+Na segunda opção, o **nodemon** deverá está instalado. Para isso use o comando:
 
 ```
 npm i nodemon -g
