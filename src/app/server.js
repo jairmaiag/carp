@@ -22,6 +22,7 @@ const app = express()
 /* configurar o middleware body-parser */
 /* Configuração para receber dados via x-www-form-urlencoded*/
 app.use(bodyParser.urlencoded({ extended: true }))
+
 /* Configuração para receber dados via raw JSON(application/json) */
 /* Fazer os testes via Postman */
 app.use(bodyParser.json())
@@ -32,25 +33,27 @@ const configSession = {
   resave: false, // Se true, a sessão será regravada no servidor
   saveUninitialized: false, // Se true cria uma nova sessão sempre que a mesma for modificada.
 }
-/* Configurando o sessin na aplicação */
+/* Configurando o session na aplicação */
 app.use(session(configSession))
 
-/* Pre configurando as requisições e as respostas para evitar erros *
-/* Access-Control-Allow-Origin - para permitir que seja feita a resposta para qualquer cliente */
+/* 
+Pre configurando as requisições e as respostas para evitar erros to tipo
+Access-Control-Allow-Origin - para permitir que seja feita a resposta para qualquer cliente 
+*/
 
 /* Configurando a aplicação para receber requisições de outros domínio */
 app.use(cors())
 
 app.use(function (req, res, next) {
-  /* Habilita requisições cros domain, requisições de domínos diferentes 
+  /* 
+  Habilita requisições cros domain, requisições de domínos diferentes 
   res.setHeader('Access-Control-Allow-Origin', '*')
-
-  */
-  /* Quais os métodos que a origem pode requisitar 
+  Os métodos que a origem pode requisitar 
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
   */
 
-  /* Habilitar que a requisição feita pela origem tenha cabeçalhos reescritos 
+  /* 
+  Habilitar que a requisição feita pela origem tenha cabeçalhos reescritos 
   res.setHeader(
     'Access-Control-Allow-Headers',
     'Origin, X-Requested-With, Content-Type, Accept'
