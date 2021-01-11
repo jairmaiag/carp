@@ -47,12 +47,10 @@ class ProdutoController {
   async insert(req) {
     try {
       const dados = req.body
-
       const error = produtoValidador.valida(dados)
       if (error) {
         return badRequest(error)
       }
-
       const entity = await repository.insert(dados)
       return entity ? ok(entity) : notFound(req.i18n_texts.error_insert_record)
     } catch (error) {
