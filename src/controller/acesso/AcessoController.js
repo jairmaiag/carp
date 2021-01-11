@@ -11,12 +11,12 @@ class AcessoController {
     try {
       const filter = req.body
       if (!filter.login || !filter.senha) {
-        return badRequest('Campos de Login e Senha são obrigatórios.')
+        return badRequest(`${req.i18n_texts.field_login_password_required} ${req.i18n_texts.please_try_again}`)
       }
 
       const entity = await repository.findByLoginSenha(filter)
       if (!entity) {
-        return badRequest('Usuário ou senha inválida')
+        return badRequest(`${req.i18n_texts.username_password_invalid} ${req.i18n_texts.please_try_again}`)
       }
 
       return ok(entity)

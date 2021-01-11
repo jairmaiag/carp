@@ -1,5 +1,10 @@
 {
     "empty_table":"No records found.",
     "record_not_found":"Record not found.",
-    "error_insert_record":"Error insert record."
+    "error_insert_record":"Error insert record.",
+    "route_not_found":"Route not found.",
+    "user_not_logged_in":"User not logged in.",
+    "please_try_again":"Please try again.",
+    "username_password_invalid":"Invalid username or password.",
+    "field_login_password_required":"Username and password fields are required."
 }

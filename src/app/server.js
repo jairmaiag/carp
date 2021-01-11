@@ -89,7 +89,7 @@ app.use(function (req, res, next) {
       return
     }
     if (req.session.usuario === undefined) {
-      res.status(401).json({mensagem: 'Não existe um usuário logado. Por favor tente fazer o login.'})
+      res.status(401).json({mensagem: `${req.i18n_texts.user_not_logged_in} ${req.i18n_texts.please_try_again}`})
       return
     }
   }
@@ -111,7 +111,7 @@ consign({
 
 /* Configuração para endereços não existentes na aplicação */
 app.use(function (req, res, next) {
-  res.status(404).json({ mensagem: 'Rota não encontrada.' })
+  res.status(404).json({ mensagem: req.i18n_texts.route_not_found })
   next()
 })
 

@@ -17,7 +17,6 @@ class PessoaController {
   }
 
   async findAndPaginate(req) {
-    console.log(req);
     try {
       let parametros = req.query;
       let page = {};
