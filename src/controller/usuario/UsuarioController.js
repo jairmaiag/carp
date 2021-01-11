@@ -11,7 +11,7 @@ class UsuarioController {
   async index(req) {
     try {
       const entities = await repository.findAll(req.body.attributes, req.body.filter, req.body.order)
-      return entities.length > 0 ? ok(entities) : ok('Nenhum registro não encontrado.')
+      return entities.length > 0 ? ok(entities) : ok('Nenhum registro encontrado.')
     } catch (error) {
       return serverError(error)
     }

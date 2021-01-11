@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(20),
         comment: 'Nome da pessoa cadastrada.',
       },
-      nomeMeio: {
+      nomemeio: {
         field: 'nomeMeioPes',
         type: DataTypes.STRING(20),
         comment: 'Nome do meio da pessoa cadastrada.',

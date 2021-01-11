@@ -29,7 +29,7 @@ class PessoaController {
       page.fieldOrder = parametros.fieldOrder || "id";
       page.directionOrder = parametros.directionOrder || "ASC";
       const entities = await repository.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, page)
-      return entities.rows.length > 0 ? ok(entities) : ok('Nenhum registro não encontrado.')
+      return entities.rows.length > 0 ? ok(entities) : ok('Nenhum registro encontrado.')
     } catch (error) {
       return serverError(error)
     }
