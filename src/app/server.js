@@ -16,8 +16,20 @@ const bodyParser = require('body-parser')
 /* importar o módulo do express-validator */
 const session = require('express-session')
 
+/* 
+  Importar a biblioteca utilizada para fazer o i18n (internacionalização)
+  Para mudar o idioma envie o parametro clang=en-us no endereço da url
+*/
+var i18n = require('i18n-express');
+const i18nConfig = {
+  translationsPath: __dirname+'/i18n',
+  defaultLang:"pt-br",
+  siteLangs: ["pt-br","en-us"],
+  textsVarName: "i18n"
+};
+
 /* iniciar o objeto do express */
-const app = express()
+const app = express();
 
 /* configurar o middleware body-parser */
 /* Configuração para receber dados via x-www-form-urlencoded*/
@@ -26,6 +38,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 /* Configuração para receber dados via raw JSON(application/json) */
 /* Fazer os testes via Postman */
 app.use(bodyParser.json())
+
+app.use(i18n(i18nConfig))
 
 /* Configuração da sessão */
 const configSession = {
