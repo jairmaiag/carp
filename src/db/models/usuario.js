@@ -10,9 +10,10 @@ module.exports = (sequelize, DataTypes) => {
       field: 'UUIdUsu',
       allowNull: false,
       type: DataTypes.UUID,
+      comment: 'UUID do usuario, utilizado para acessar os dados.',
       validate: {
         notNull: true
-      }
+      },
     },
     id: {
       field: 'idUsu',
@@ -55,12 +56,14 @@ module.exports = (sequelize, DataTypes) => {
     createdAt: {
       field: 'createAtUsu',
       allowNull: false,
-      type: DataTypes.DATE
+      type: DataTypes.DATE,
+      comment: 'Data de ciração do registro.'
     },
     updatedAt: {
       field: 'updatedAtUsu',
       allowNull: false,
-      type: DataTypes.DATE
+      type: DataTypes.DATE,
+      comment: 'Data de atualização do registro.'
     }
   }, {
     sequelize,

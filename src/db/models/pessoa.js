@@ -70,13 +70,13 @@ module.exports = (sequelize, DataTypes) => {
         field: 'createAtPes',
         allowNull: false,
         type: DataTypes.DATE,
-        comment: 'Data de ciração do registro.',
+        comment: 'Data de ciração do registro.'
       },
       updatedAt: {
         field: 'updatedAtPes',
         allowNull: false,
         type: DataTypes.DATE,
-        comment: 'Data de atualização do registro.',
+        comment: 'Data de atualização do registro.'
       },
     },
     {
