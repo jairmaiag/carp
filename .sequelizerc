@@ -15,5 +15,6 @@ module.exports = {
   evn: process.env.NODE_ENV,
   config: resolve(__dirname, 'src', 'db', 'config', 'config.js'),
   'models-path': resolve(__dirname, 'src', 'db', 'models'),
-  'migrations-path': resolve(__dirname, 'src', 'db', 'migrations')
+  'migrations-path': resolve(__dirname, 'src', 'db', 'migrations'),
+  'seeders-path': resolve(__dirname, 'src','db', 'seeders')
 }

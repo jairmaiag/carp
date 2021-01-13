@@ -7,21 +7,21 @@ module.exports = (sequelize, DataTypes) => {
 
   Pessoa.init(
     {
-      UUId: {
-        field: 'UUIdPes',
-        allowNull: false,
-        type: DataTypes.UUID,
-        validate: {
-          notNull: true,
-        },
-        comment: 'UUId na tabela, identificando registro único.',
-      },
       id: {
         field: 'idPes',
         primaryKey: true,
         autoIncrement: true,
         type: DataTypes.INTEGER,
         comment: 'Id na tabela, identificando registro único.',
+      },
+      UUId: {
+        field: 'UUIdPes',
+        allowNull: false,
+        type: DataTypes.UUID,
+        comment: 'UUId na tabela, identificando registro único.',
+        validate: {
+          notNull: true,
+        },
       },
       nome: {
         field: 'nomePes',
@@ -70,11 +70,13 @@ module.exports = (sequelize, DataTypes) => {
         field: 'createAtPes',
         allowNull: false,
         type: DataTypes.DATE,
+        comment: 'Data de ciração do registro.',
       },
       updatedAt: {
         field: 'updatedAtPes',
         allowNull: false,
         type: DataTypes.DATE,
+        comment: 'Data de atualização do registro.',
       },
     },
     {
