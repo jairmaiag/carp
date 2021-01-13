@@ -1,4 +1,5 @@
 const repository = require('../../db/repository/UsuarioRepository')
+const pessoaRepository = require('../../db/repository/PessoaRepository')
 const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
 const { serverError, ok, notFound } = require('../../app/helpers/http/HttpHelpers')
 
@@ -47,8 +48,8 @@ class UsuarioController {
   async insert(req) {
     try {
       const dados = req.body
-
       const uuidPessoa = getUUIDV4()
+      let idPessoa = dados.idPessoa
       let nomePessoa = dados.login
       let sobrenomePessoa = null
 
@@ -62,6 +63,8 @@ class UsuarioController {
         if (dados.Pessoa.sobrenome) {
           sobrenomePessoa = dados.Pessoa.sobrenome
         }
+      } else if(idPessoa){
+          dados.Pessoa = await pessoaRepository.findById(idPessoa);
       } else {
         dados.Pessoa = {
           nome: nomePessoa,
@@ -70,7 +73,6 @@ class UsuarioController {
           UUId: uuidPessoa,
         }
       }
-
       const entity = await repository.insert(dados)
       return entity ? ok(entity) : notFound(req.i18n_texts.error_insert_record)
     } catch (error) {

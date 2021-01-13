@@ -47,10 +47,16 @@ UsuarioRepository.prototype.findById = async function (id) {
 }
 
 UsuarioRepository.prototype.insert = async function (dados) {
-  const pessoa = await Pessoa.create(dados.Pessoa)
+  
+  if(dados.idPessoa){
+    const pessoa = await Pessoa.findById(dados.idPessoa)
+    dados.pessoa = pessoa
+  } else if(dados.Pessoa){
+    const pessoa = await Pessoa.create(dados.Pessoa)
+  }
+  const pessoa = await PessoaRepository.insert()
   dados.idPessoa = pessoa.id
   const result = await Usuario.create(dados)
-
   return result
 }
 
