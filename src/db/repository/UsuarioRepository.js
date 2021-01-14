@@ -1,5 +1,6 @@
 const { Usuario, Pessoa } = require("../models")
-const { PessoaRepository } = require("./PessoaRepository")
+const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
+const pessoaRepository = require('./PessoaRepository')
 
 var UsuarioRepository = function () { }
 
@@ -45,18 +46,23 @@ UsuarioRepository.prototype.findById = async function (id) {
 
   return result
 }
+UsuarioRepository.prototype.dadosPessoa = async function(dados){
+  let pessoa;
+  if(dados.idPessoa){
+    pessoa = await pessoaRepository.findById(dados.idPessoa);
+  }else{  
+    if(!dados.Pessoa){
+      pessoa = await pessoaRepository.insert({nome: dados.login, UUId: getUUIDV4() })
+    }
+  }
+  return pessoa;
+}
 
 UsuarioRepository.prototype.insert = async function (dados) {
-  
-  if(dados.idPessoa){
-    const pessoa = await Pessoa.findById(dados.idPessoa)
-    dados.pessoa = pessoa
-  } else if(dados.Pessoa){
-    const pessoa = await Pessoa.create(dados.Pessoa)
-  }
-  const pessoa = await PessoaRepository.insert()
-  dados.idPessoa = pessoa.id
-  const result = await Usuario.create(dados)
+  dados.Pessoa = await this.dadosPessoa(dados);
+  dados.idPessoa = dados.Pessoa.id;
+  const result = await Usuario.create(dados);
+  result.Pessoa = dados.Pessoa;
   return result
 }
 

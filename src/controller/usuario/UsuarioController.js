@@ -47,33 +47,7 @@ class UsuarioController {
 
   async insert(req) {
     try {
-      const dados = req.body
-      const uuidPessoa = getUUIDV4()
-      let idPessoa = dados.idPessoa
-      let nomePessoa = dados.login
-      let sobrenomePessoa = null
-
-      if (dados.Pessoa) {
-        if (!dados.Pessoa.UUId) {
-          dados.Pessoa.UUId = uuidPessoa
-        }
-        if (dados.Pessoa.nome) {
-          nomePessoa = dados.Pessoa.nome
-        }
-        if (dados.Pessoa.sobrenome) {
-          sobrenomePessoa = dados.Pessoa.sobrenome
-        }
-      } else if(idPessoa){
-          dados.Pessoa = await pessoaRepository.findById(idPessoa);
-      } else {
-        dados.Pessoa = {
-          nome: nomePessoa,
-          ativo: dados.ativo,
-          sobrenome: sobrenomePessoa,
-          UUId: uuidPessoa,
-        }
-      }
-      const entity = await repository.insert(dados)
+      const entity = await repository.insert(req.body)
       return entity ? ok(entity) : notFound(req.i18n_texts.error_insert_record)
     } catch (error) {
       return serverError(error)
