@@ -6,24 +6,29 @@ class BaseModel extends Model {
       if (page === undefined) {
         page = {};
       }
-
+      /* Preciso fazer os testes para as páginas posteriores e anteriores */
       page.fieldName = page.fieldName || "id";
-      page.previousId = page.previousId || 0;
-      page.next = page.next || 0;
-      page.size = page.size || 10;
+      page.previousRecord = page.previousRecord || 0;
+      page.lastRecord = page.lastRecord || 0;
+      page.nextPage = page.nextPage || 0;
+      page.amountRecord = page.amountRecord || 10;
       page.totalRows = page.totalRows || 0;
-      page.total = 1;
-      page.fieldOrder = page.fieldOrder || "id";
+      page.totalPages = page.totalPages || 1;
+      page.currentPage = page.currentPage || 1
       page.directionOrder = page.directionOrder || "ASC";
-      let offset = page.next * page.size;
-      order = order || [[page.fieldOrder, page.directionOrder]];
+      let offset = page.nextPage * page.amountRecord;
+      order = [[page.fieldName, page.directionOrder]];
+      
+      if(typeof page.nextPage === 'string'){
+        page.nextPage = parseInt(page.nextPage);
+      }
 
-      if (filter == undefined && page.next > 0 && page.totalRows > 0) {
+      if (filter == undefined && page.nextPage > 0 && page.totalRows > 0) {
         offset = 0;
-        if (order[0][1] == "ASC") {
-          filter = { [page.fieldName]: { [Op.gt]: [page.previousId] } };
+        if (directionOrder === "ASC") {
+          filter = { [page.fieldName]: { [Op.gt]: [page.lastRecord] } };
         } else {
-          filter = { [page.fieldName]: { [Op.lt]: [page.previousId] } };
+          filter = { [page.fieldName]: { [Op.lt]: [page.previousRecord] } };
         }
       }
 
@@ -34,23 +39,28 @@ class BaseModel extends Model {
         where: filter,
         include: include,
         offset: offset,
-        limit: page.size,
+        limit: page.amountRecord,
         order: order,
         raw: true,
       });
 
-      if (page.totalRows > page.size) {
-        let resto = page.totalRows % page.size;
-        page.total = Math.round(page.totalRows / page.size);
+      if (page.totalRows > page.amountRecord) {
+        let resto = page.totalRows % page.amountRecord;
+        page.totalPages = Math.round(page.totalRows / page.amountRecord);
         if (resto != 0 && resto <= 5) {
-          page.total++;
+          page.totalPages++;
         }
       }
 
-      if (rows.length > 0) {
-        page.previous = page.next;
-        page.next = page.next + 1;
-        page.previousId = rows[rows.length - 1][page.fieldName];
+      if (rows.length > 0 && page.totalRows > page.amountRecord) {
+        page.previous = page.nextPage;
+        if(rows.length <= page.totalRows){
+          page.nextPage = page.nextPage + 1;
+        }
+        if(page.nextPage > 1){
+          page.previousRecord = rows[rows.length - 1][page.fieldName];
+        }
+        page.lastRecord = rows[rows.length - 1][page.fieldName]
       }
 
       return { page, rows, order };

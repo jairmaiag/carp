@@ -18,17 +18,7 @@ class PessoaController {
 
   async findAndPaginate(req) {
     try {
-      let parametros = req.query;
-      let page = {};
-      page.fieldName = parametros.fieldName || "id";
-      page.previousId = parametros.previousId || 0;
-      page.next = parametros.next || 0;
-      page.size = parametros.size || 10;
-      page.totalRows = parametros.totalRows || 0;
-      page.total = parametros.total || 1;
-      page.fieldOrder = parametros.fieldOrder || "id";
-      page.directionOrder = parametros.directionOrder || "ASC";
-      const entities = await repository.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, page)
+      const entities = await repository.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, req.query)
       return entities.rows.length > 0 ? ok(entities) : ok(req.i18n_texts.empty_table)
     } catch (error) {
       return serverError(error)
