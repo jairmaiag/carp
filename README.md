@@ -13,6 +13,7 @@ API para controle de clientes, usuários, funcionários, produtos, geração de 
     - [Banco de dados](#banco-de-dados)
     - [Migrations](#migrations)
     - [Utilização](#utilização)
+      - [Paginação](#Paginação)
       - [Pessoa](#pessoa)
         - [Recursos](#recursos)
         - [Exemplo JSON](#exemplo-json)
@@ -121,6 +122,70 @@ sequelize-cli db:migrate:undo:all
 ### Utilização
 
 Para utilizar a API, deve ser utilizado o programa [postman](https://www.postman.com/) para envio das requisições.
+
+#### Paginação
+
+Para utilizar os registros com paginação inclua a palavra **paginacao** logo após o recurso a ser utilizado.
+
+Exemplo: http://localhost:8080/pessoa/paginacao
+
+Este retornará um objeto JSON como abaixo:
+```
+{
+    "page": {
+        "selectPage": "1",
+        "amountRecord": "5",
+        "fieldName": "id",
+        "previousRecord": "",
+        "lastRecord": "",
+        "previousPage": "0",
+        "nextPage": 0,
+        "totalRows": 16,
+        "totalPages": 4,
+        "directionOrder": "ASC"
+    },
+    "rows": [],
+    "order": [
+        [
+            "id",
+            "ASC"
+        ]
+    ]
+}
+```
+Este objeto JSON possue os campos **page, rows** e **order**.
+
+O campo **page** é um objeto contendo os seguintes campos:
+01. selectPage: É a página que se deseja visualizar.
+02. amountRecord: Quantidade de registros por página.
+03. fieldName: Nome do campo utilizado para ordenação.
+04. directionOrder: Direção da ordenação ( ASC ou DESC).
+05. previousRecord: Registro anterior, pode ser utilizado para filtros.
+06. lastRecord: Último registro da página, pode ser utilizado para filtros.
+07. totalRows: Quantidade total de registros na tabela.
+08. totalPages: Quantidade total de páginas. Este total depende de **totalRows** e **amountRecord**.
+09. previousPage: Número da página anterior.
+10. nextPage: Número da próxima página.
+
+O campo **rows** é um array de objetos com os registros retornados.
+O campo **order** é um array de arrays com os camos de ordenação. Podem ser incluidos vários campos com sua direção de ordem.
+
+Para utilizar basta enviar o número da página no parâmetro selectPage como nos exemplos:
+
+http://localhost:8080/pessoa/paginacao?selectPage=2
+
+http://localhost:8080/pessoa/paginacao?selectPage=3
+
+http://localhost:8080/pessoa/paginacao?selectPage=4
+
+Para passar qual campo será ordenado utilize o parâmetro **fieldName**, também no endereço, como abaixo:
+
+http://localhost:8080/pessoa/paginacao?selectPage=4&fieldName=nome
+
+E assim vale para os outros parâmetros.
+
+
+[Voltar ao Índice](#índice)
 
 #### Pessoa
 
