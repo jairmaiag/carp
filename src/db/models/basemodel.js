@@ -6,17 +6,17 @@ class BaseModel extends Model {
       if (page === undefined) {
         page = {};
       }
-      /* Preciso fazer os testes para as páginas posteriores e anteriores */
       page.fieldName = page.fieldName || "id";
       page.previousRecord = page.previousRecord || 0;
       page.lastRecord = page.lastRecord || 0;
-      page.nextPage = page.nextPage || 0;
+      page.previousPage = page.previousPage || 0;
+      page.selectPage = page.selectPage || 1;
+      page.nextPage = page.nextPage || 2;
       page.amountRecord = page.amountRecord || 10;
       page.totalRows = page.totalRows || 0;
       page.totalPages = page.totalPages || 1;
-      page.currentPage = page.currentPage || 1
       page.directionOrder = page.directionOrder || "ASC";
-      let offset = page.nextPage * page.amountRecord;
+      let offset = (page.selectPage - 1) * page.amountRecord;
       order = [[page.fieldName, page.directionOrder]];
       
       if(typeof page.nextPage === 'string'){
@@ -43,24 +43,20 @@ class BaseModel extends Model {
         order: order,
         raw: true,
       });
-
-      if (page.totalRows > page.amountRecord) {
+      const totalLines = rows.length;
+      if ((totalLines > 0) && (page.totalRows > page.amountRecord)) {
         let resto = page.totalRows % page.amountRecord;
         page.totalPages = Math.round(page.totalRows / page.amountRecord);
         if (resto != 0 && resto <= 5) {
           page.totalPages++;
         }
-      }
-
-      if (rows.length > 0 && page.totalRows > page.amountRecord) {
-        page.previous = page.nextPage;
-        if(rows.length <= page.totalRows){
-          page.nextPage = page.nextPage + 1;
+        
+        if(totalLines <= page.totalRows && page.selectPage > 1){
+          page.previousPage = page.selectPage;
+          page.nextPage++;
+          page.previousRecord = rows[totalLines - 1][page.fieldName];
+          page.lastRecord = rows[totalLines - 1][page.fieldName]
         }
-        if(page.nextPage > 1){
-          page.previousRecord = rows[rows.length - 1][page.fieldName];
-        }
-        page.lastRecord = rows[rows.length - 1][page.fieldName]
       }
 
       return { page, rows, order };
