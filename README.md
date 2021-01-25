@@ -168,6 +168,7 @@ O campo **page** é um objeto contendo os seguintes campos:
 10. nextPage: Número da próxima página.
 
 O campo **rows** é um array de objetos com os registros retornados.
+
 O campo **order** é um array de arrays com os camos de ordenação. Podem ser incluidos vários campos com sua direção de ordem.
 
 Para utilizar basta enviar o número da página no parâmetro selectPage como nos exemplos:
