@@ -90,7 +90,6 @@ Utilizando uma requisição POST passando no body da mesma, com o formato JSON a
 "senha":"senhaBanco"
 }
 ```
-
 Onde:
 
 - host - É o endereço ou IP de acesso ao banco padrão postgres.
@@ -171,7 +170,7 @@ O campo **page** é um objeto contendo os seguintes campos:
 
 O campo **rows** é um array de objetos com os registros retornados.
 
-O campo **order** é um array de arrays com os campos de ordenação. Podem ser incluidos vários campos com sua direção de ordem.
+O campo **order** é um array de arrays com os campos de ordenação. Pode ser incluidos vários campos com sua direção de ordem.
 
 Para utilizar basta enviar o número da página no parâmetro **selectPage** como nos exemplos:
 
