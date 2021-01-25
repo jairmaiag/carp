@@ -42,7 +42,8 @@ Ter os programas abaixo já instalados e rodando:
 
 ### Variáveis de ambiente
 **EXTREMAMENTE IMPORTANTE**
-Para que o funcione em modo de desenvolvimento crie um arquivo **.env** na raiz da aplicação com algumas variáveis configuradas.
+
+Para que funcione em modo de desenvolvimento devé-se crie um arquivo **.env** na raiz da aplicação com algumas variáveis configuradas.
 
 Veja o conteúdo do arquivo [.env.example](https://github.com/jairmaiag/carp/blob/master/.env.example) que contem as variáveis utilizadas no sistema.
 
@@ -51,9 +52,10 @@ Veja o conteúdo do arquivo [.env.example](https://github.com/jairmaiag/carp/blo
 ### Executando
 
 Após baixar os fontes acesse a pasta da aplicação e execute o comando:
+
 `npm install`
 
-Utilize o nodejs para executar o mesmo com um dos comandos abaixo:
+Utilize o **npm** para executar o mesmo com um dos comandos abaixo:
 
 1. npm start
 2. npm run nodemon
