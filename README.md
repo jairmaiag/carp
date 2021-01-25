@@ -169,9 +169,9 @@ O campo **page** é um objeto contendo os seguintes campos:
 
 O campo **rows** é um array de objetos com os registros retornados.
 
-O campo **order** é um array de arrays com os camos de ordenação. Podem ser incluidos vários campos com sua direção de ordem.
+O campo **order** é um array de arrays com os campos de ordenação. Podem ser incluidos vários campos com sua direção de ordem.
 
-Para utilizar basta enviar o número da página no parâmetro selectPage como nos exemplos:
+Para utilizar basta enviar o número da página no parâmetro **selectPage** como nos exemplos:
 
 http://localhost:8080/pessoa/paginacao?selectPage=2
 
