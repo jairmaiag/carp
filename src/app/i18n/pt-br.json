@@ -6,5 +6,6 @@
     "user_not_logged_in":"Nenhum usuário logado.",
     "please_try_again":"Porfavor tente novamente.",
     "username_password_invalid":"Usuário ou senha inválido.",
-    "field_login_password_required":"Campos de login e senha são obrigatórios."
+    "field_login_password_required":"Campos de login e senha são obrigatórios.",
+    "method_invalid":"Método inválido."
 }
