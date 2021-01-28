@@ -9,21 +9,15 @@ class BaseModel extends Model {
       page.fieldName = page.fieldName || "id";
       page.previousRecord = page.previousRecord || 0;
       page.lastRecord = page.lastRecord || 0;
-      page.previousPage = page.previousPage || 0;
-      page.selectPage = page.selectPage || 1;
-      page.nextPage = page.nextPage || 2;
-      page.amountRecord = page.amountRecord || 10;
-      page.totalRows = page.totalRows || 0;
-      page.totalPages = page.totalPages || 1;
+      page.selectPage = parseInt(page.selectPage) || 1;
+      page.amountRecord = parseInt(page.amountRecord) || 10;
+      page.totalRows = parseInt(page.totalRows) || 0;
+      page.totalPages = parseInt(page.totalPages) || 1;
       page.directionOrder = page.directionOrder || "ASC";
       let offset = (page.selectPage - 1) * page.amountRecord;
       order = [[page.fieldName, page.directionOrder]];
       
-      if(typeof page.nextPage === 'string'){
-        page.nextPage = parseInt(page.nextPage);
-      }
-
-      if (filter == undefined && page.nextPage > 0 && page.totalRows > 0) {
+      if (filter == undefined && page.amountRecord > 0 && page.totalRows > 0) {
         offset = 0;
         if (directionOrder === "ASC") {
           filter = { [page.fieldName]: { [Op.gt]: [page.lastRecord] } };
@@ -52,8 +46,6 @@ class BaseModel extends Model {
         }
         
         if(totalLines <= page.totalRows && page.selectPage > 1){
-          page.previousPage = page.selectPage;
-          page.nextPage++;
           page.previousRecord = rows[totalLines - 1][page.fieldName];
           page.lastRecord = rows[totalLines - 1][page.fieldName]
         }
