@@ -16,6 +16,9 @@ const bodyParser = require('body-parser')
 /* importar o módulo do express-validator */
 const session = require('express-session')
 
+/* importar o módulo de checagem de login */
+const checkLoginMiddleware = require('./middleware/CheckLoginMiddleware');
+
 /* 
   Importar a biblioteca utilizada para fazer o i18n (internacionalização)
   Para mudar o idioma envie o parametro clang=en-us no endereço da url
@@ -58,44 +61,7 @@ Access-Control-Allow-Origin - para permitir que seja feita a resposta para qualq
 /* Configurando a aplicação para receber requisições de outros domínio */
 app.use(cors())
 
-app.use(function (req, res, next) {
-  /* 
-  Habilita requisições cros domain, requisições de domínos diferentes 
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  Os métodos que a origem pode requisitar 
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
-  */
-
-  /* 
-  Habilitar que a requisição feita pela origem tenha cabeçalhos reescritos 
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
-    )
-  */
-
-  /*  
-  res.setHeader('Access-Control-Allow-Credentials', true)
-  */
-
-  /* Tratamento para acesso aos recuros
-     Verifica se existe um usuário logado
-     Para login e logout veja no arquivo AcessoRoute.js
-     GET http://localhost:8081/pessoa/paginacao net::ERR_BLOCKED_BY_CLIENT
-  */
-  if (process.env.NODE_ENV === 'production') {
-    let urlOrigem = req.originalUrl
-    if (urlOrigem === '/' || urlOrigem === '/login') {
-      next()
-      return
-    }
-    if (req.session.usuario === undefined) {
-      res.status(401).json({mensagem: `${req.i18n_texts.user_not_logged_in} ${req.i18n_texts.please_try_again}`})
-      return
-    }
-  }
-  next()
-})
+app.use(checkLoginMiddleware);
 
 /* efetua o autoload das rotas, dos models e dos controllers para o objeto app */
 const caminho = './src/'
@@ -113,16 +79,18 @@ consign({
 /* Configuração para endereços não existentes na aplicação */
 app.use(function (req, res, next) {
   res.status(404).json({ mensagem: req.i18n_texts.route_not_found })
-  next()
+  return;
 })
 
 /* Configuração para erros internos da aplicação */
 app.use(function (err, req, res, next) {
-  res.status(500).json({
-    mensagem: 'Erro interno.',
-    error: err.toString(),
-    contato: 'jairmaiag@gmail.com',
-  })
+  if(err){
+    res.status(500).json({
+      mensagem: 'Erro interno.',
+      error: err.toString(),
+      contato: 'jairmaiag@gmail.com',
+    })
+  }
   next()
 })
 
