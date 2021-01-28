@@ -4,7 +4,9 @@
     "error_insert_record":"Error insert record.",
     "route_not_found":"Route not found.",
     "user_not_logged_in":"User not logged in.",
+    "user_logged_out":"User logged out.",
     "please_try_again":"Please try again.",
+    "please_do_login":"Please do login.",
     "username_password_invalid":"Invalid username or password.",
     "field_login_password_required":"Username and password fields are required.",
     "method_invalid":"Invalid method."
