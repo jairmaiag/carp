@@ -5,7 +5,7 @@ CheckLoginMiddleware = (req, res, next) =>{
           return next();
         }
         if (req.session.usuario === undefined) {
-          res.status(401).json({mensagem: `${req.i18n_texts.user_not_logged_in} ${req.i18n_texts.please_try_again}`})
+          res.status(401).json({mensagem: `${req.i18n_texts.user_not_logged_in} ${req.i18n_texts.please_do_login}`})
           return;
         }
       }
