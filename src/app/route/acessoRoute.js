@@ -22,7 +22,7 @@ module.exports = function (app) {
   app.get("/logout", async function (req, res) {
     try {
       req.session.destroy()
-      res.status(200).json(util.montarMensagemJson(req.i18n_texts.user_not_logged_in))
+      res.status(200).json(util.montarMensagemJson(req.i18n_texts.user_logged_out))
     } catch (error) {
       res.status(500).json(error)
     }
