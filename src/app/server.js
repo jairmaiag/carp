@@ -81,6 +81,7 @@ app.use(function (req, res, next) {
   /* Tratamento para acesso aos recuros
      Verifica se existe um usuário logado
      Para login e logout veja no arquivo AcessoRoute.js
+     GET http://localhost:8081/pessoa/paginacao net::ERR_BLOCKED_BY_CLIENT
   */
   if (process.env.NODE_ENV === 'production') {
     let urlOrigem = req.originalUrl
