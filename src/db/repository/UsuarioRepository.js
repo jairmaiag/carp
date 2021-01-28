@@ -5,6 +5,9 @@ const pessoaRepository = require('./PessoaRepository')
 var UsuarioRepository = function () { }
 
 UsuarioRepository.prototype.findAll = async function (attributes, filter, order) {
+  if(! attributes){
+    attributes:{exclude: ['senha']}
+  }
   const result = await Usuario.findAll({
     attributes: attributes,
     where: filter,
@@ -18,6 +21,9 @@ UsuarioRepository.prototype.findAll = async function (attributes, filter, order)
 }
 
 UsuarioRepository.prototype.findAndPaginate = async function (attributes, filter, order, page) {
+  if(! attributes){
+    attributes:{exclude: ['senha']}
+  }
   const include = [{ model: Pessoa, as: "Pessoa" }]
   page = await Usuario.findAndPaginate(
     attributes,
@@ -90,12 +96,16 @@ UsuarioRepository.prototype.delete = async function (UUId) {
 UsuarioRepository.prototype.findByLoginSenha = async function (filter) {
   const result = await Usuario.findOne(
     {
+      attributes:{exclude: ['senha','idPes']},
       where: {
         login: filter.login,
         senha: filter.senha,
       },
+      include: [{ model: Pessoa, as: "Pessoa" }]
     },
-    { raw: true }
+    { 
+      raw: true 
+    }
   )
   return result
 }
