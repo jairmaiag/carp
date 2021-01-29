@@ -1,4 +1,4 @@
-const { Perfil, Usuario } = require("../models")
+const { Perfil } = require("../models")
 
 const PerfilRepository = function () { }
 
