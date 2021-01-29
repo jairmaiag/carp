@@ -201,7 +201,7 @@ Abaixo uma lista com os recursos e seus métodos:
 2. Dados de uma pessoa [http://localhost/pessoa/id](http://localhost/pessoa/id) usando GET, onde o **id** é o número de id da pessoa na tabela.
 3. Cadastrar [http://localhost/pessoa](http://localhost/pessoa) usando POST, passando no corpo da requisição um JSON como do exemplo do final da lista.
 4. Alterar [http://localhost/pessoa](http://localhost/pessoa) usando PUT, passando no corpo da requisição um JSON como do exemplo do final da lista.
-5. Excluir [http://localhost/pessoa/id](http://localhost/pessoa/id) usando DELETE, onde o **id** é o número de id da pessoa na tabela.
+5. Excluir [http://localhost/pessoa/UUId](http://localhost/pessoa/UUId) usando DELETE, onde o **UUId** é o número de UUId da pessoa na tabela.
 
 [Voltar ao Índice](#índice)
 
