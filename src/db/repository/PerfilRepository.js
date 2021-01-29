@@ -1,6 +1,4 @@
-const { Perfil, Usuario, Pessoa } = require("../models")
-const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
-const pessoaRepository = require('./PessoaRepository')
+const { Perfil, Usuario } = require("../models")
 
 const PerfilRepository = function () { }
 
@@ -10,78 +8,37 @@ PerfilRepository.prototype.findAll = async function (attributes, filter, order) 
     where: filter,
     limit: filter ? null : 10,
     order: order || [["id", "ASC"]],
-    include: [{ model: Usuario, as: "Usuario" }],
     raw: true,
   })
-
   return result
 }
-
 PerfilRepository.prototype.findAndPaginate = async function (attributes, filter, order, page) {
-  const include = [{ model: Usuario, as: "Usuario" }]
   page = await Perfil.findAndPaginate(
     attributes,
     filter,
     order,
     page,
-    include
   )
   return page
 }
-
-PerfilRepository.prototype.findByUUId = async function (UUId) {
-  const result = await Perfil.findOne({
-    where: { UUId: UUId },
-    include: [{ model: Usuario, as: "Usuario" }],
-  })
-
-  return result
-}
-
 PerfilRepository.prototype.findById = async function (id) {
-  const result = await Perfil.findByPk(id, {
-    include: [{ model: Usuario, as: "Usuario" }],
-  })
-
-  return result
+  return await Perfil.findByPk(id);
 }
-PerfilRepository.prototype.dadosPessoa = async function(dados){
-  let pessoa;
-  if(dados.idPessoa){
-    pessoa = await pessoaRepository.findById(dados.idPessoa);
-  }else{
-    const uuid = getUUIDV4();
-    if(!dados.Pessoa){
-      pessoa = await pessoaRepository.insert({nome: dados.login, UUId: uuid,ativo: true })
-    }else {
-      dados.Pessoa.UUId = dados.Pessoa.UUId || uuid;
-      dados.Pessoa.ativo = dados.Pessoa.ativo || true;
-      pessoa = await pessoaRepository.insert(dados.Pessoa);
-    }
-  }
-  return pessoa;
+PerfilRepository.prototype.findByUUId = async function (UUId) {
+  return await Perfil.findOne({ where: { UUId: UUId } });
 }
 
 PerfilRepository.prototype.insert = async function (dados) {
-  const result = await Perfil.create(dados);
-  return result;
+  return await Perfil.create(dados);
 }
 
 PerfilRepository.prototype.update = async function (dados) {
   const result = await Perfil.update(dados, { where: { UUId: dados.UUId } })
-  if (result[0] === 1) {
-    retorno = await this.findByUUId(dados.UUId)
-  }
-
-  return retorno
+  return result[0] === 1 ? await this.findByUUId(dados.UUId) : null
 }
 
 PerfilRepository.prototype.delete = async function (UUId) {
-  const result = await Perfil.destroy({
-    where: { UUId: UUId },
-  })
-
-  return result
+  return await Perfil.destroy({ where: { UUId: UUId }, });
 }
 
 module.exports = new PerfilRepository()

@@ -6,6 +6,13 @@ module.exports = (sequelize, DataTypes) => {
   class Perfil extends BaseModel { }
 
   Perfil.init({
+    id: {
+      field: 'idPer',
+      primaryKey: true,
+      autoIncrement: true,
+      type: DataTypes.INTEGER,
+      comment: 'Id na tabela, identificando registro único.',
+    },
     UUId: {
       field: 'UUIdPer',
       allowNull: false,
@@ -15,23 +22,16 @@ module.exports = (sequelize, DataTypes) => {
         notNull: true
       },
     },
-    id: {
-      field: 'idPer',
-      primaryKey: true,
-      autoIncrement: true,
-      type: DataTypes.INTEGER,
-      comment: 'Id na tabela, identificando registro único.',
-    },
     nome: {
-        field: 'nomePer',
-        allowNull: false,
-        type: DataTypes.STRING(30),
-        comment: 'Nome do perfil.',
+      field: 'nomePer',
+      allowNull: false,
+      type: DataTypes.STRING(30),
+      comment: 'Nome do perfil.',
     },
     descricao: {
-        field: 'descricaoPer',
-        type: DataTypes.TEXT,
-        comment: 'Descrição do perfil.',
+      field: 'descricaoPer',
+      type: DataTypes.TEXT,
+      comment: 'Descrição do perfil.',
     },
     ativo: {
       field: 'ativoPer',
@@ -61,12 +61,6 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   Perfil.associate = function (models) {
-    /* Perfil pertence a (belongsTo) Usuário */
-    Perfil.belongsTo(models.Usuario, {
-      as: 'Usuario',
-      foreignKey: 'idUsu',
-      allowNull: false,
-    });
   };
 
   return Perfil
