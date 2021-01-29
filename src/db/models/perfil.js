@@ -40,11 +40,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       comment: 'Indica se o Perário está ativo para acesso ao sistema.',
     },
-    idPerario: {
+    idUsuario: {
       field: 'idPer',
       allowNull: false,
       type: DataTypes.INTEGER,
-      comment: 'Id da tabela Perario, onde este perfil pertence.',
+      comment: 'Id da tabela Usuario, onde este perfil pertence.',
     },
     createdAt: {
       field: 'createAtPer',
@@ -75,5 +75,5 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  return Perario
+  return Perfil
 }

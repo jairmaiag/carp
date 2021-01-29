@@ -74,7 +74,7 @@ class PerfilController {
 }
 
 function retorno(app) {
-  return new PerfillController(app)
+  return new PerfilController(app)
 }
 
 module.exports = () => retorno

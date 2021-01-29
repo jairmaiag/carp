@@ -5,7 +5,7 @@ const pessoaRepository = require('./PessoaRepository')
 const PerfilRepository = function () { }
 
 PerfilRepository.prototype.findAll = async function (attributes, filter, order) {
-  const result = await Peril.findAll({
+  const result = await Perfil.findAll({
     attributes: attributes,
     where: filter,
     limit: filter ? null : 10,
@@ -19,7 +19,7 @@ PerfilRepository.prototype.findAll = async function (attributes, filter, order) 
 
 PerfilRepository.prototype.findAndPaginate = async function (attributes, filter, order, page) {
   const include = [{ model: Usuario, as: "Usuario" }]
-  page = await Peril.findAndPaginate(
+  page = await Perfil.findAndPaginate(
     attributes,
     filter,
     order,
@@ -30,7 +30,7 @@ PerfilRepository.prototype.findAndPaginate = async function (attributes, filter,
 }
 
 PerfilRepository.prototype.findByUUId = async function (UUId) {
-  const result = await Peril.findOne({
+  const result = await Perfil.findOne({
     where: { UUId: UUId },
     include: [{ model: Usuario, as: "Usuario" }],
   })
@@ -39,7 +39,7 @@ PerfilRepository.prototype.findByUUId = async function (UUId) {
 }
 
 PerfilRepository.prototype.findById = async function (id) {
-  const result = await Peril.findByPk(id, {
+  const result = await Perfil.findByPk(id, {
     include: [{ model: Usuario, as: "Usuario" }],
   })
 
@@ -63,12 +63,12 @@ PerfilRepository.prototype.dadosPessoa = async function(dados){
 }
 
 PerfilRepository.prototype.insert = async function (dados) {
-  const result = await Peril.create(dados);
+  const result = await Perfil.create(dados);
   return result;
 }
 
 PerfilRepository.prototype.update = async function (dados) {
-  const result = await Peril.update(dados, { where: { UUId: dados.UUId } })
+  const result = await Perfil.update(dados, { where: { UUId: dados.UUId } })
   if (result[0] === 1) {
     retorno = await this.findByUUId(dados.UUId)
   }
@@ -77,7 +77,7 @@ PerfilRepository.prototype.update = async function (dados) {
 }
 
 PerfilRepository.prototype.delete = async function (UUId) {
-  const result = await Peril.destroy({
+  const result = await Perfil.destroy({
     where: { UUId: UUId },
   })
 
