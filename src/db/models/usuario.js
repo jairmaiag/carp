@@ -57,6 +57,10 @@ module.exports = (sequelize, DataTypes) => {
       field: 'idPer',
       allowNull: false,
       type: DataTypes.INTEGER,
+      references:{
+        model:sequelize.model.Perfil,
+        key:'idPer'
+      },
       comment: 'Id da tabela Perfil, onde este usuário pertence.',
     },
     createdAt: {
