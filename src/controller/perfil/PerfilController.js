@@ -1,6 +1,4 @@
 const repository = require('../../db/repository/PerfilRepository')
-const pessoaRepository = require('../../db/repository/PessoaRepository')
-const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
 const { serverError, ok, notFound } = require('../../app/helpers/http/HttpHelpers')
 
 class PerfilController {
