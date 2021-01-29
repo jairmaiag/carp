@@ -10,6 +10,7 @@ module.exports = {
           allowNull: false,
           type: Sequelize.UUID,
           defaultValue: Sequelize.UUIDV4,
+          comment: 'UUId na tabela, identificando registro para pesquisa externa.',
         },
         id: {
           field: "idPes",
