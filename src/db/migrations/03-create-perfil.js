@@ -30,7 +30,7 @@ module.exports = {
           field: 'ativoPer',
           allowNull: false,
           defaultValue: true,
-          type: DataTypes.BOOLEAN,
+          type: Sequelize.BOOLEAN,
           comment: 'Indica se o perfil está ativa para ser utilizada.',
         },
         createdAt: {

@@ -53,6 +53,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       comment: 'Id da tabela Pessoa, onde este usuário pertence.',
     },
+    idPerfil: {
+      field: 'idPer',
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      comment: 'Id da tabela Perfil, onde este usuário pertence.',
+    },
     createdAt: {
       field: 'createAtUsu',
       allowNull: false,

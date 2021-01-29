@@ -40,12 +40,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       comment: 'Indica se o Perário está ativo para acesso ao sistema.',
     },
-    idUsuario: {
-      field: 'idPer',
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      comment: 'Id da tabela Usuario, onde este perfil pertence.',
-    },
     createdAt: {
       field: 'createAtPer',
       allowNull: false,
@@ -67,10 +61,10 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   Perfil.associate = function (models) {
-    /* Perário pertence a (belongsTo) Pessoa */
+    /* Perfil pertence a (belongsTo) Usuário */
     Perfil.belongsTo(models.Usuario, {
       as: 'Usuario',
-      foreignKey: 'idPer',
+      foreignKey: 'idUsu',
       allowNull: false,
     });
   };
