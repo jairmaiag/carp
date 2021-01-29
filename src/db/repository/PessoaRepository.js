@@ -1,6 +1,6 @@
 const { Usuario, Pessoa } = require('../models')
 
-var PessoaRepository = function () { }
+const PessoaRepository = function () { }
 
 PessoaRepository.prototype.findAll = async function (attributes, filter, order) {
   const result = await Pessoa.findAll({
@@ -33,24 +33,17 @@ PessoaRepository.prototype.findByUUId = async function (UUId) {
 }
 
 PessoaRepository.prototype.insert = async function (dados) {
-  const result = await Pessoa.create(dados)
-  return result
+  console.log(dados);
+  return await Pessoa.create(dados);
 }
 
 PessoaRepository.prototype.update = async function (dados) {
-  const result = await Pessoa.update(
-    dados, 
-    { where: { UUId: dados.UUId } 
-  })
-  const retorno = result[0] === 1 ? 1 : null
-  return retorno
+  const result = await Pessoa.update(dados,{ where: { UUId: dados.UUId } })
+  return result[0] === 1 ? await this.findByUUId(dados.UUId) : null
 }
 
 PessoaRepository.prototype.delete = async function (UUId) {
-  const result = await Pessoa.destroy({
-    where: { UUId: UUId }
-  })
-  return result
+  return await Pessoa.destroy({ where: { UUId: UUId } });
 }
 
 module.exports = new PessoaRepository()
