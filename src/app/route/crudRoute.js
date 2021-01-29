@@ -14,7 +14,7 @@ module.exports = function (app) {
 
   app.put('/:model/',checkLogin, checkUUId, adaptRoute(app))
 
-  app.delete('/:model/UUId/:UUId',checkLogin, checkUUId, adaptRoute(app))
+  app.delete('/:model/:UUId',checkLogin, checkUUId, adaptRoute(app))
 
   // Delete por ID provavelmente não vai existir
   // app.delete('/:model/:id', checkId, adaptRoute(app))
