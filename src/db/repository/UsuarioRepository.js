@@ -1,4 +1,5 @@
 const { Usuario, Pessoa } = require("../models")
+const criptor = require('../../app/util/Cryptography');
 const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
 const pessoaRepository = require('./PessoaRepository')
 const includePessoa = { association: 'Pessoa', attributes: ['id', 'UUId', 'nome', 'nomemeio', 'sobrenome', 'nascimento', 'sexo', 'cpf', 'rg', 'ativo'] }
@@ -73,6 +74,7 @@ UsuarioRepository.prototype.insert = async function (dados) {
   dados.Pessoa = await this.dadosPessoa(dados);
   dados.idPessoa = dados.Pessoa.id;
   dados.ativo = dados.ativo || true;
+  dados.senha = criptor.cryptor(dados.senha.trim());
   const result = await Usuario.create(dados);
   result.Pessoa = dados.Pessoa;
   const complete = await this.findById(result.id);
@@ -100,6 +102,7 @@ UsuarioRepository.prototype.delete = async function (UUId) {
 }
 
 UsuarioRepository.prototype.findByLoginSenha = async function (filter) {
+  filter.senha = criptor.cryptor(filter.senha.trim());
   const result = await Usuario.findOne(
     {
       attributes: attributesExcludes,
