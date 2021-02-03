@@ -1,19 +1,21 @@
 const { Usuario, Pessoa } = require("../models")
 const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
 const pessoaRepository = require('./PessoaRepository')
-
+const includePessoa = { association: 'Pessoa', attributes: ['id', 'UUId', 'nome', 'nomemeio', 'sobrenome', 'nascimento', 'sexo', 'cpf', 'rg', 'ativo'] }
+const attributesExcludes = { exclude: ['idPessoa', 'idPes','senha'] }
 const UsuarioRepository = function () { }
 
 UsuarioRepository.prototype.findAll = async function (attributes, filter, order) {
-  if(! attributes){
-    attributes:{exclude: ['senha']}
+  if (!attributes) {
+    attributes: { exclude: ['senha'] }
   }
+  let include = { association: 'Pessoa' }
   const result = await Usuario.findAll({
     attributes: attributes,
     where: filter,
     limit: filter ? null : 10,
     order: order || [["id", "ASC"]],
-    include: [{ model: Pessoa, as: "Pessoa" }],
+    include,
     raw: true,
   })
 
@@ -21,25 +23,17 @@ UsuarioRepository.prototype.findAll = async function (attributes, filter, order)
 }
 
 UsuarioRepository.prototype.findAndPaginate = async function (attributes, filter, order, page) {
-  if(! attributes){
-    attributes={exclude: ['senha','idPes']}
+  if (!attributes) {
+    attributes = attributesExcludes
   }
-  const include = [{ model: Pessoa, as: "Pessoa" }]
-  page = await Usuario.findAndPaginate(
-    attributes,
-    filter,
-    order,
-    page,
-    include
-  )
-  return page
+  return await Usuario.findAndPaginate(attributes, filter, order, page, includePessoa)
 }
 
 UsuarioRepository.prototype.findByUUId = async function (UUId) {
   const result = await Usuario.findOne({
     where: { UUId: UUId },
-    attributes:{exclude: ['senha','idPes']},
-    include: [{ model: Pessoa, as: "Pessoa" }],
+    attributes: attributesExcludes,
+    include: includePessoa,
   })
 
   return result
@@ -47,22 +41,27 @@ UsuarioRepository.prototype.findByUUId = async function (UUId) {
 
 UsuarioRepository.prototype.findById = async function (id) {
   const result = await Usuario.findByPk(id, {
-    attributes:{exclude: ['senha','idPes']},
-    include: [{ model: Pessoa, as: "Pessoa" }],
+    attributes: attributesExcludes,
+    include: includePessoa,
   })
 
   return result
 }
-UsuarioRepository.prototype.dadosPessoa = async function(dados){
-  let pessoa;
-  if(dados.idPessoa){
+UsuarioRepository.prototype.dadosPessoa = async function (dados) {
+  let pessoa = null;
+  if (dados.idPessoa) {
     pessoa = await pessoaRepository.findById(dados.idPessoa);
-  }else{
+  }
+  if (!pessoa) {
     const uuid = getUUIDV4();
-    if(!dados.Pessoa){
-      pessoa = await pessoaRepository.insert({nome: dados.login, UUId: uuid,ativo: true })
-    }else {
+    if (!dados.Pessoa) {
+      pessoa = await pessoaRepository.insert({ nome: dados.login, UUId: uuid, ativo: true })
+    } else {
       dados.Pessoa.UUId = dados.Pessoa.UUId || uuid;
+      dados.Pessoa.nomemeio = dados.Pessoa.nomemeio || null;
+      dados.Pessoa.sobrenome = dados.Pessoa.sobrenome || null
+      dados.Pessoa.sexo = dados.Pessoa.sexo || 'F'
+      dados.Pessoa.nascimento = dados.Pessoa.nascimento || null;
       dados.Pessoa.ativo = dados.Pessoa.ativo || true;
       pessoa = await pessoaRepository.insert(dados.Pessoa);
     }
@@ -73,10 +72,10 @@ UsuarioRepository.prototype.dadosPessoa = async function(dados){
 UsuarioRepository.prototype.insert = async function (dados) {
   dados.Pessoa = await this.dadosPessoa(dados);
   dados.idPessoa = dados.Pessoa.id;
-  dados.ativo =  dados.ativo || true;
+  dados.ativo = dados.ativo || true;
   const result = await Usuario.create(dados);
   result.Pessoa = dados.Pessoa;
-  const complete =  await this.findById(result.id);
+  const complete = await this.findById(result.id);
   return complete;
 }
 
@@ -89,7 +88,6 @@ UsuarioRepository.prototype.update = async function (dados) {
   if (result[0] === 1) {
     retorno = await this.findByUUId(dados.UUId)
   }
-
   return retorno
 }
 
@@ -104,12 +102,12 @@ UsuarioRepository.prototype.delete = async function (UUId) {
 UsuarioRepository.prototype.findByLoginSenha = async function (filter) {
   const result = await Usuario.findOne(
     {
-      attributes:{exclude: ['senha','idPes']},
+      attributes: attributesExcludes,
       where: {
         login: filter.login,
         senha: filter.senha,
       },
-      include: [{ model: Pessoa, as: "Pessoa" }]
+      include: includePessoa
     },
     { raw: true }
   )
