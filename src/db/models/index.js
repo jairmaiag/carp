@@ -20,29 +20,30 @@ if (databaseConfig.use_env_variable) {
 } else {
   sequelize = new Sequelize(databaseConfig.database, databaseConfig.username, databaseConfig.password, databaseConfig)
 }
+
 fs.readdirSync(__dirname)
-.filter((file) => {
+  .filter((file) => {
     return (
-      file.indexOf('.') !== 0 
-      && file !== basename 
+      file.indexOf('.') !== 0
+      && file !== basename
       && file.slice(-3) === '.js'
       && (file.toLowerCase() !== 'basemodel.js')
-      )
-    }).forEach((file) => {
-        // const model = sequelize.import(path.join(__dirname, file.toLowerCase())) // removido na versão 6
-        const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-        db[model.name] = model
-    })
-  
-  Object.keys(db).forEach((modelName) => {
-    if (db[modelName].associate) {
-      db[modelName].associate(db)
-    }
+    )
   })
-  
-  db.sequelize = sequelize
-  db.Sequelize = Sequelize
-  
+  .forEach((file) => {
+    // const model = sequelize.import(path.join(__dirname, file.toLowerCase())) // removido na versão 6
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+    db[model.name] = model
+  })
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db)
+  }
+})
+
+db.sequelize = sequelize
+db.Sequelize = Sequelize
+
 // Teste: Verificando a conexão com o banco de dados
 // sequelize
 //   .authenticate()
