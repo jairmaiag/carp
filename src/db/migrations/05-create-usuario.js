@@ -28,7 +28,7 @@ module.exports = {
         senha: {
           field: 'senhaUsu',
           allowNull: false,
-          type: Sequelize.STRING(64),
+          type: Sequelize.STRING(128),
           comment: 'Senha do usuáiro para acesso ao sistema.',
         },
         expira: {
@@ -40,7 +40,7 @@ module.exports = {
         ativo: {
           field: 'ativoUsu',
           allowNull: false,
-          defaultValue: false,
+          defaultValue: true,
           type: Sequelize.BOOLEAN,
           comment: 'Indica se o usuáiro está ativo para acesso ao sistema.',
         },
@@ -48,14 +48,17 @@ module.exports = {
           field: 'idPes',
           allowNull: false,
           type: Sequelize.INTEGER,
+          references: { model: 'Pessoa', key: 'idPes' },
+          onUpdate: 'CASCADE',
+          onDelete: 'CASCADE',
           comment: 'Id da tabela Pessoa, onde este usuário pertence.',
         },
-        idPerfil: {
-          field: 'idPer',
-          allowNull: false,
-          type: Sequelize.INTEGER,
-          comment: 'Id da tabela Perfil, onde este usuário pertence.',
-        },
+        // idPerfil: {
+        //   field: 'idPer',
+        //   allowNull: false,
+        //   type: Sequelize.INTEGER,
+        //   comment: 'Id da tabela Perfil, onde este usuário pertence.',
+        // },
         createdAt: {
           field: 'createAtUsu',
           allowNull: false,
