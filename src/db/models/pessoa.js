@@ -92,7 +92,7 @@ module.exports = (sequelize, DataTypes) => {
       as: 'Usuario',
       foreignKey: 'idPes',
       targetKey: 'idPes',
-      allowNull: true,
+      allowNull: false,
     })
   }
 
