@@ -1,5 +1,5 @@
 const { Usuario, Pessoa } = require('../models')
-
+const includeUsuario = { association: 'Usuario', attributes:['id','UUId','login','expira','ativo'] }
 const PessoaRepository = function () { }
 
 PessoaRepository.prototype.findAll = async function (attributes, filter, order) {
@@ -8,37 +8,41 @@ PessoaRepository.prototype.findAll = async function (attributes, filter, order) 
     where: filter,
     limit: filter ? null : 10,
     order: order || [["id", "ASC"]],
-    include: [{ model: Usuario, as: "Usuario" }],
+    include: includeUsuario,
     raw: true,
   })
   return result
 }
 
 PessoaRepository.prototype.findAndPaginate = async function (attributes, filter, order, page) {
+  
   page = await Pessoa.findAndPaginate(attributes, filter, order, page)
+  return page
+}
+PessoaRepository.prototype.findAndPaginateWithChildren = async function (attributes, filter, order, page) {
+  page = await Pessoa.findAndPaginate(attributes, filter, order, page, includeUsuario)
   return page
 }
 PessoaRepository.prototype.findById = async function (id) {
   const result = await Pessoa.findByPk(id, {
-    include: [{ model: Usuario, as: "Usuario" }],
+    include: includeUsuario,
   })
   return result
 }
 PessoaRepository.prototype.findByUUId = async function (UUId) {
   const result = await Pessoa.findOne({
     where: { UUId: UUId },
-    include: [{ model: Usuario, as: "Usuario" }],
+    include: includeUsuario,
   })
   return result
 }
 
 PessoaRepository.prototype.insert = async function (dados) {
-  console.log(dados);
   return await Pessoa.create(dados);
 }
 
 PessoaRepository.prototype.update = async function (dados) {
-  const result = await Pessoa.update(dados,{ where: { UUId: dados.UUId } })
+  const result = await Pessoa.update(dados, { where: { UUId: dados.UUId } })
   return result[0] === 1 ? await this.findByUUId(dados.UUId) : null
 }
 
