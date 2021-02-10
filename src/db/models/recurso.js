@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Recurso.init({
     id: {
-      field: 'idRec',
       primaryKey: true,
       autoIncrement: true,
       type: DataTypes.INTEGER,
