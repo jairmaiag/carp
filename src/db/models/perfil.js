@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
 
   Perfil.init({
     id: {
-      field: 'idPer',
       primaryKey: true,
       autoIncrement: true,
       type: DataTypes.INTEGER,
