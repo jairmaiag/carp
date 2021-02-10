@@ -26,10 +26,12 @@ PerfilRepository.prototype.findAndPaginate = async function (attributes, filter,
   return page
 }
 PerfilRepository.prototype.findById = async function (id) {
-  return await Perfil.findByPk(id);
+  let include = { association: 'Recursos',through: {attributes: [] } }
+  return await Perfil.findByPk(id,include);
 }
 PerfilRepository.prototype.findByUUId = async function (UUId) {
-  return await Perfil.findOne({ where: { UUId: UUId } });
+  let include = { association: 'Recursos',through: {attributes: [] } }
+  return await Perfil.findOne({ where: { UUId: UUId } },include);
 }
 
 PerfilRepository.prototype.insert = async function (dados) {
@@ -41,9 +43,11 @@ PerfilRepository.prototype.insert = async function (dados) {
 
 PerfilRepository.prototype.update = async function (dados) {
   const result = await Perfil.update(dados, { where: { UUId: dados.UUId } })
+  console.log(result);
   if (result[0] === 1) {
+    let perfil = this.findByUUId(dados.UUId);
     await this.insertRecursos(dados.Recursos, perfil);
-    return await this.findByUUId(dados.UUId);
+    return perfil;
   } else {
     return null;
   }
