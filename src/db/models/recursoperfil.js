@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       references: {
         model: 'Recurso',
-        key: 'idRec'
+        key: 'id'
       },
       comment: 'Id do recurso.',
     },
@@ -33,12 +33,12 @@ module.exports = (sequelize, DataTypes) => {
   RecursoPerfil.associate = function (models) { 
     RecursoPerfil.hasMany(models.Perfil,{
       as:'Perfil',
-      foreignKey:'idPer',
+      foreignKey:'id',
       otherKey:'PerfilId'
     })
     RecursoPerfil.hasMany(models.Recurso,{
       as:'Recurso',
-      foreignKey:'idRec',
+      foreignKey:'id',
       otherKey:'RecursoId'
     })
   };
