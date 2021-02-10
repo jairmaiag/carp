@@ -27,6 +27,19 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING(30),
       comment: 'Nome do perfil.',
+      validate: {
+        notNull: {
+          msg: "O campo não pode ser nulo"
+        },
+        isAlpha: {
+          args: true,
+          msg: "O nome só pode possuir letras"
+        },
+        len: {
+          args: [3, 30],
+          msg: "O nome deve ter entre 3 e 30 caracteres"
+        }
+      }
     },
     descricao: {
       field: 'descricaoPer',
@@ -58,10 +71,17 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     modelName: 'Perfil',
     comment: 'Tabela utilizada para armazenar os dados de perfil do Perário.'
-  })
+  });
 
   Perfil.associate = function (models) {
+    Perfil.belongsToMany(models.Recurso, {
+      foreignKey: 'PerfilId',
+      otherKey: 'RecursoId',
+      through: models.RecursoPerfil,
+      uniqueKey: 'recurco_perfil_unique',
+      as: 'Recursos'
+    });
   };
 
-  return Perfil
+  return Perfil;
 }
