@@ -61,6 +61,13 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   Recurso.associate = function (models) {
+    Recurso.belongsToMany(models.Perfil, {
+      foreignKey: 'RecursoId',
+      otherKey: 'PerfilId',
+      through: models.RecursoPerfil,
+      uniqueKey: 'recurco_perfil_unique',
+      as: 'Perfis'
+    });
   };
 
   return Recurso
