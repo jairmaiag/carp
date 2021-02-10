@@ -3,36 +3,24 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable(
-      'RecrusoPerfil', 
+      'RecursoPerfil', 
       {
-        idPerfil: {
-          field: 'idPer',
+        PerfilId: {
+          field: 'PerfilId',
           type: Sequelize.INTEGER,
           references: { model: 'Perfil', key: 'idPer' },
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
           comment: 'Id na tabela de perfil.',
         },
-        idRecurso: {
-            field: 'idRec',
+        RecursoId: {
+            field: 'RecursoId',
             type: Sequelize.INTEGER,
             references: { model: 'Recurso', key: 'idRec' },
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE',
             comment: 'Id na tabela de recurso.',
-        },  
-        createdAt: {
-          field: 'createAtRecPer',
-          allowNull: false,
-          type: Sequelize.DATE,
-          comment: 'Data de criação do registro',
-        },
-        updatedAt: {
-          field: 'updatedAtRecPer',
-          allowNull: false,
-          type: Sequelize.DATE,
-          comment: 'Data de alteração do registro',
-        },
+        }
       },
       {
         schema: 'carp', // default: public, PostgreSQL only.
@@ -43,6 +31,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('RecrusoPerfil')
+    return queryInterface.dropTable('RecursoPerfil')
   },
 };
