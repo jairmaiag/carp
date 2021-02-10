@@ -4,23 +4,22 @@ API para controle de clientes, usuários, funcionários, produtos, geração de 
 
 ## Índice
 
-- [Carp](#carp)
-  - [Índice](#carp)
-  - [Iniciando](#iniciando)
-    - [Pré-rquisito](#pré-rquisito)
-    - [Variáveis de ambiente](#variáveis-de-ambiente)
-    - [Executando](#executando)
-    - [Banco de dados](#banco-de-dados)
-    - [Migrations](#migrations)
-    - [Utilização](#utilização)
-      - [Paginação](#Paginação)
-      - [Pessoa](#pessoa)
-        - [Recursos](#recursos)
-        - [Exemplo JSON](#exemplo-json)
-      - [Usuário](#usuário)
-        - [Recursos](#recursos-1)
-        - [Exemplo JSON](#exemplo-json-1)
-  - [Dúvidas](#dúvidas)
+- [Iniciando](#iniciando)
+  - [Pré-rquisito](#pré-rquisito)
+  - [Variáveis de ambiente](#variáveis-de-ambiente)
+  - [Executando](#executando)
+  - [Banco de dados](#banco-de-dados)
+  - [Migrations](#migrations)
+  - [Utilização](#utilização)
+    - [Filtro](#Filtro)
+    - [Paginação](#Paginação)
+    - [Pessoa](#pessoa)
+      - [Recursos](#recursos)
+      - [Exemplo JSON](#exemplo-json)
+    - [Usuário](#usuário)
+      - [Recursos](#recursos-1)
+      - [Exemplo JSON](#exemplo-json-1)
+- [Dúvidas](#dúvidas)
 
 ## Iniciando
 
@@ -124,6 +123,19 @@ sequelize-cli db:migrate:undo:all
 
 Para utilizar a API, deve ser utilizado o programa [postman](https://www.postman.com/) para envio das requisições.
 
+#### Filtro
+
+Para utlização de uma requisião GET para o endereço principal do recurso, é preciso enviar um objeto **filter**, no corpo da requisição, para a mesma. Como Abaixo:
+
+Exemplo: http://localhost:8080/pessoa/
+```
+{
+	"filter":{
+		"idPes":1
+	}
+}
+```
+[Voltar ao Índice](#carp)
 #### Paginação
 
 Para utilizar os registros com paginação inclua a palavra **paginacao** logo após o recurso a ser utilizado.
