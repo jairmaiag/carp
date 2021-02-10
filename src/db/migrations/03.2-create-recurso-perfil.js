@@ -8,7 +8,7 @@ module.exports = {
         PerfilId: {
           field: 'PerfilId',
           type: Sequelize.INTEGER,
-          references: { model: 'Perfil', key: 'idPer' },
+          references: { model: 'Perfil', key: 'id' },
           onUpdate: 'CASCADE',
           onDelete: 'CASCADE',
           comment: 'Id na tabela de perfil.',
@@ -16,7 +16,7 @@ module.exports = {
         RecursoId: {
             field: 'RecursoId',
             type: Sequelize.INTEGER,
-            references: { model: 'Recurso', key: 'idRec' },
+            references: { model: 'Recurso', key: 'id' },
             onUpdate: 'CASCADE',
             onDelete: 'CASCADE',
             comment: 'Id na tabela de recurso.',
