@@ -13,7 +13,7 @@ module.exports = {
           comment: 'UUId na tabela, identificando registro para pesquisa externa.',
         },
         id: {
-          field: 'idPer',
+          // field: 'idPer',
           primaryKey: true,
           autoIncrement: true,
           type: Sequelize.INTEGER,
