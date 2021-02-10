@@ -10,6 +10,7 @@ API para controle de clientes, usuários, funcionários, produtos, geração de 
   - [Executando](#executando)
   - [Banco de dados](#banco-de-dados)
   - [Migrations](#migrations)
+  - [Seed](#Seed)
   - [Utilização](#utilização)
     - [Filtro](#Filtro)
     - [Paginação](#Paginação)
@@ -115,6 +116,22 @@ Isso não remove o banco de dados.
 
 ```
 sequelize-cli db:migrate:undo:all
+```
+
+[Voltar ao Índice](#carp)
+
+### Seed
+
+Para semear, popular as tabelas utilize o comando abaixo:
+
+```
+sequelize-cli db:seed:all
+```
+
+Para desfazer o dados inseridos.
+
+```
+sequelize-cli db:seed:undo:all
 ```
 
 [Voltar ao Índice](#carp)
