@@ -35,7 +35,7 @@ class BaseModel extends Model {
         offset: offset,
         limit: page.amountRecord,
         order: order,
-        raw: true,
+        raw: false,
       });
       const totalLines = rows.length;
       if ((totalLines > 0) && (page.totalRows > page.amountRecord)) {
