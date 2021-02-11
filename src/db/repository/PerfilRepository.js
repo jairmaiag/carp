@@ -35,9 +35,8 @@ PerfilRepository.prototype.findByUUId = async function (UUId) {
 }
 
 PerfilRepository.prototype.insert = async function (dados) {
-  console.log(dados);
   let perfil = await Perfil.create(dados);
-  // await this.insertRecursos(dados.Recursos, perfil);
+  await this.insertRecursos(dados.Recursos, perfil);
   return perfil;
 }
 
@@ -45,7 +44,7 @@ PerfilRepository.prototype.update = async function (dados) {
   const result = await Perfil.update(dados, { where: { UUId: dados.UUId } })
   console.log(result);
   if (result[0] === 1) {
-    let perfil = this.findByUUId(dados.UUId);
+    let perfil = await this.findByUUId(dados.UUId);
     await this.insertRecursos(dados.Recursos, perfil);
     return perfil;
   } else {
@@ -62,6 +61,7 @@ PerfilRepository.prototype.insertRecursos = async function (dados, perfil) {
     for (let i = 0; i < dados.length; i++) {
       let recursoModel = await Recurso.findOne({ where: { UUId: dados[i].UUId } });
       if (recursoModel) {
+        await perfil.reload();
         await perfil.addRecursos(recursoModel);
       }
     }
