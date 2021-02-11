@@ -1,9 +1,9 @@
 const { Perfil, Recurso, RecursoPerfil } = require("../models")
 
 const PerfilRepository = function () { }
+const include = { association: 'Recursos',through: {attributes: [] } };
 
 PerfilRepository.prototype.findAll = async function (attributes, filter, order) {
-  let include = { association: 'Recursos',through: {attributes: [] } }
   const result = await Perfil.findAll({
     attributes: attributes,
     where: filter,
@@ -15,23 +15,20 @@ PerfilRepository.prototype.findAll = async function (attributes, filter, order) 
   return result
 }
 PerfilRepository.prototype.findAndPaginate = async function (attributes, filter, order, page) {
-  let include = { association: 'Recursos',through: {attributes: [] } }
   page = await Perfil.findAndPaginate(
     attributes,
     filter,
     order,
-    page,
-    include
+    page
   )
   return page
 }
 PerfilRepository.prototype.findById = async function (id) {
-  let include = { association: 'Recursos',through: {attributes: [] } }
   return await Perfil.findByPk(id,include);
 }
 PerfilRepository.prototype.findByUUId = async function (UUId) {
-  let include = { association: 'Recursos',through: {attributes: [] } }
-  return await Perfil.findOne({ where: { UUId: UUId } },include);
+  let perfis = await this.findAll({},{ UUId: UUId });
+  return perfis.length === 0? null: perfis[0];
 }
 
 PerfilRepository.prototype.insert = async function (dados) {
