@@ -42,7 +42,6 @@ PerfilRepository.prototype.insert = async function (dados) {
 
 PerfilRepository.prototype.update = async function (dados) {
   const result = await Perfil.update(dados, { where: { UUId: dados.UUId } })
-  console.log(result);
   if (result[0] === 1) {
     let perfil = await this.findByUUId(dados.UUId);
     await this.insertRecursos(dados.Recursos, perfil);
