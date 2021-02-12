@@ -9,5 +9,9 @@
     "please_do_login":"Please do login.",
     "username_password_invalid":"Invalid username or password.",
     "field_login_password_required":"Username and password fields are required.",
-    "method_invalid":"Invalid method."
+    "method_invalid":"Invalid method.",
+    "invalidParam":"It is necessary to filter the query.",
+    "idFieldNumeric":"The Id field must be of the numeric type.",
+    "UUId_required":"UUId is a required field.",
+    "UUId_invalid_format":"Invalid format for the UUId field."
 }

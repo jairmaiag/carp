@@ -9,5 +9,10 @@
     "please_do_login":"Porfavor faça o login.",
     "username_password_invalid":"Usuário ou senha inválido.",
     "field_login_password_required":"Campos de login e senha são obrigatórios.",
-    "method_invalid":"Método inválido."
+    "method_invalid":"Método inválido.",
+    "invalidParam":"É necessário filtrar a consulta.",
+    "idFieldNumeric":"The Id field must be of the numeric type.",
+    "UUId_required":"UUId é um campo obrigatório.",
+    "UUId_invalid_format":"Formato inválido para o campo UUId."
+
 }
