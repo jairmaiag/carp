@@ -24,9 +24,11 @@ PerfilRepository.prototype.findAndPaginate = async function (attributes, filter,
   )
   return page
 }
+
 PerfilRepository.prototype.findById = async function (id) {
   return await Perfil.findByPk(id, include);
 }
+
 PerfilRepository.prototype.findByUUId = async function (UUId) {
   return Perfil.findOne({ where: { UUId: UUId }, include });
 }
