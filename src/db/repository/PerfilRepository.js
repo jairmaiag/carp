@@ -51,7 +51,7 @@ PerfilRepository.prototype.delete = async function (UUId) {
 }
 
 PerfilRepository.prototype.manutencaoRecursos = async function (dados, perfil) {
-  let recursosBack = perfil.Recursos.map(r => r.dataValues);
+  let recursosBack = perfil.Recursos ? perfil.Recursos.map(r => r.dataValues): [];
   let listas = await util.montarListasExclusaoInclusao(dados, recursosBack);
   if (listas.listaIncluir.length !== 0) {
     let litaIncluir = listas.listaIncluir.map(rec => { return { RecursoId: rec.id, PerfilId: perfil.id } });
