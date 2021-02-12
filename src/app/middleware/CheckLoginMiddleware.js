@@ -1,4 +1,4 @@
-CheckLoginMiddleware = (req, res, next) =>{
+let CheckLoginMiddleware = (req, res, next) =>{
     if (process.env.NODE_ENV === 'production') {
         let urlOrigem = req.originalUrl
         if (urlOrigem === '/' || urlOrigem === '/login') {
