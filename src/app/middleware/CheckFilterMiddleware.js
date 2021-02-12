@@ -2,14 +2,12 @@ const { serverError, noContent, forbidden } = require('../helpers/http/HttpHelpe
 const InvalidParamError = require('../errors/InvalidParamError')
 const util = require('../util/Util')
 
-
 class CheckFilterMiddleware {
-  async execute (req) {
+  async execute(req) {
     try {
-      if (util.isEmpty(req.body.filter)  ) {
-        return forbidden(new InvalidParamError('É necessário filtrar a consulta.'))
+      if (util.isEmpty(req.body.filter)) {
+        return forbidden(new InvalidParamError(`${req.i18n_texts.invalidParam}`))
       }
-
       return noContent()
     } catch (error) {
       return serverError(error)
