@@ -8,6 +8,7 @@ API para controle de clientes, usuários, funcionários, produtos, geração de 
   - [Pré-rquisito](#pré-rquisito)
   - [Variáveis de ambiente](#variáveis-de-ambiente)
   - [Executando](#executando)
+  - [Internacionalização](#Internacionalização)
   - [Banco de dados](#banco-de-dados)
   - [Migrations](#migrations)
   - [Seed](#Seed)
@@ -73,6 +74,18 @@ Servidor online na port: 80
 Acesse http://localhost
 Para criar o banco acesse http://localhost/criarbanco e siga as instruções.
 ```
+
+[Voltar ao Índice](#carp)
+
+### Internacionalização
+
+Para utilizar a internacionalização, deve-se passar o parâmetro ```clang=en-us``` no endereço da requisição.
+
+Exemplo:
+
+http://localhost/perfil?clang=en-us
+
+Assim os alertas e avisos serão em inglês.
 
 [Voltar ao Índice](#carp)
 
