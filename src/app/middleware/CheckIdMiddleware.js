@@ -6,7 +6,7 @@ class CheckIdMiddleware {
   async execute (req) {
     try {
       if (!validator.isInt(req.params.id)) {
-        return forbidden(new InvalidParamError('O campo Id deve ser do tipo numérico.'))
+        return forbidden(new InvalidParamError(`${req.i18n_texts.idFieldNumeric}`))
       }
 
       return noContent()
