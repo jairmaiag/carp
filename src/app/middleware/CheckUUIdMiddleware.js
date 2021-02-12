@@ -18,16 +18,13 @@ class CheckUUIdMiddleware {
 
       if (util.isEmpty(UUId)) {
         if (method === 'POST') {
-          UUId = getUUIDV4()
-          
-          // Colocando o UUId no body da requisição (req.body) do Express
-          req.body.UUId = UUId
+          req.body.UUId = getUUIDV4()
         } else {
-          return forbidden(new InvalidParamError('UUId é um campo obrigatório'))
+          return forbidden(new InvalidParamError(`${req.i18n_texts.UUId_required}`))
         }
       }
       if (!validator.isUUID(UUId, 4)) {
-        return forbidden(new InvalidParamError('Formato inválido para o campo UUId.'))
+        return forbidden(new InvalidParamError(`${req.i18n_texts.UUId_invalid_format}`))
       }
 
       return noContent()
