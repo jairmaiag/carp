@@ -2,6 +2,39 @@ const nodemailer = require('nodemailer')
 
 class Util {
 
+  static montarListasExclusaoInclusao(listaFront, listaBack) {
+    let listaParaExcluir = [];
+    let listaParaIncluir = [];
+
+    if (listaFront.length === 0 && listaBack.length !== 0) {
+      listaParaExcluir = listaBack;
+    } else {
+      let listaBackOrdenada = listaBack.sort(Util.ordenerListaPeloNome);
+      let litaFrontOrdenada = listaFront.sort(Util.ordenerListaPeloNome);
+      listaBackOrdenada.forEach(back => {
+        if (!litaFrontOrdenada.find(front => back.nome === front.nome)) {
+          listaParaExcluir.push(back);
+        }
+      });
+    }
+  
+    if (listaBack.length === 0 && listaFront.length !== 0) {
+      listaParaIncluir = listaFront;
+    } else {
+      let listaBackOrdenada = listaBack.sort(Util.ordenerListaPeloNome);
+      let litaFrontOrdenada = listaFront.sort(Util.ordenerListaPeloNome);
+      litaFrontOrdenada.forEach(back => {
+        if (!listaBackOrdenada.find(front => back.nome === front.nome)) {
+          listaParaIncluir.push(back);
+        }
+      });
+    }
+    return { listaExcluir: listaParaExcluir, listaIncluir: listaParaIncluir };
+  }
+  static ordenerListaPeloNome(itemA, itemB) {
+    return itemA.nome.toLowerCase().localeCompare(itemB.nome.toLowerCase());
+  }
+
   montarMensagemJson(mensagem) {
     return { mensagem: mensagem }
   }
