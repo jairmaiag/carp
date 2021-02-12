@@ -6,6 +6,7 @@
     "Controle",
     "Cliente"
   ],
+  "homepage": "https://github.com/jairmaiag/carp",
   "main": "main.js",
   "scripts": {
     "dev": "nodemon main",
@@ -13,7 +14,18 @@
     "nodemon": "nodemon main",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Jair Diniz",
+  "author": {
+    "name": "Jair Diniz",
+    "email": "jairmaiag@gmail.com",
+    "url": "https://github.com/jairmaiag/carp"
+  },
+  "contributors": [
+    {
+      "name": "Itmar nunes",
+      "email": "itamarbel@gmail.com",
+      "url": "https://github.com/itamar-nunes"
+    }
+  ],
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
