@@ -1,6 +1,6 @@
 class InvalidParamError {
   constructor(paramName) {
-    this.error = `Parâmetro inválido: ${paramName}`
+    this.error = `Invalid parameter: ${paramName}`
     this.name = 'InvalidParamError'
   }
 }
