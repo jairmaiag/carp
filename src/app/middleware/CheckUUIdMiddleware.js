@@ -19,6 +19,7 @@ class CheckUUIdMiddleware {
       if (util.isEmpty(UUId)) {
         if (method === 'POST') {
           req.body.UUId = getUUIDV4()
+          UUId=req.body.UUId;
         } else {
           return forbidden(new InvalidParamError(`${req.i18n_texts.UUId_required}`))
         }
