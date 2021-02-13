@@ -1,6 +1,7 @@
 const { Recurso, Perfil } = require("../models")
 
 const RecursoRepository = function () { }
+const include = { association: 'Perfis', through: { attributes: [] } };
 
 RecursoRepository.prototype.findAll = async function (attributes, filter, order) {
   const result = await Recurso.findAll({
@@ -13,13 +14,11 @@ RecursoRepository.prototype.findAll = async function (attributes, filter, order)
   return result
 }
 RecursoRepository.prototype.findAndPaginate = async function (attributes, filter, order, page) {
-  // const include = { model: Perfil, as: "Perfis"}
   page = await Recurso.findAndPaginate(
     attributes,
     filter,
     order,
     page,
-    // include
   )
   return page
 }
@@ -27,7 +26,7 @@ RecursoRepository.prototype.findById = async function (id) {
   return await Recurso.findByPk(id);
 }
 RecursoRepository.prototype.findByUUId = async function (UUId) {
-  return await Recurso.findOne({ where: { UUId: UUId } });
+  return await Recurso.findOne({ where: { UUId: UUId }, include });
 }
 
 RecursoRepository.prototype.insert = async function (dados) {
