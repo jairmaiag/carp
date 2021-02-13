@@ -30,7 +30,6 @@ RecursoRepository.prototype.findByUUId = async function (UUId) {
 }
 
 RecursoRepository.prototype.insert = async function (dados) {
-  console.log(dados);
   return await Recurso.create(dados);
 }
 
