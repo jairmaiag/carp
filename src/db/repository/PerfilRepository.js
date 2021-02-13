@@ -10,8 +10,7 @@ PerfilRepository.prototype.findAll = async function (attributes, filter, order) 
     where: filter,
     limit: filter ? null : 10,
     order: order || [["id", "ASC"]],
-    raw: false,
-    include
+    raw: false
   })
   return result
 }
