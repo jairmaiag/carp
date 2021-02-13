@@ -3,7 +3,6 @@ module.exports = function (middleware) {
 
     const httpResponse = await middleware.execute(req)
     if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-
       next()
     } else {
       res.status(httpResponse.statusCode).json({
