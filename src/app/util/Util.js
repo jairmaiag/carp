@@ -1,56 +1,56 @@
-const nodemailer = require('nodemailer')
+const nodemailer = require('nodemailer');
 
 class Util {
+  static async ordenerListaPeloNome(itemA, itemB) {
+    const ita = itemA.nome.toLowerCase();
+    const itb = itemB.nome.toLowerCase();
+    return ita.localeCompare(itb);
+  }
 
   async montarListasExclusaoInclusao(listaFront, listaBack) {
-    let listaParaExcluir = [];
-    let listaParaIncluir = [];
-
+    const retorno = { listaExcluir: [], listaIncluir: [] };
     if (listaFront.length === 0 && listaBack.length !== 0) {
-      listaParaExcluir = listaBack;
+      retorno.listaExcluir = listaBack;
     } else {
-      let listaBackOrdenada = listaBack.sort(this.ordenerListaPeloNome);
-      let litaFrontOrdenada = listaFront.sort(this.ordenerListaPeloNome);
-      listaBackOrdenada.forEach(back => {
-        if (!litaFrontOrdenada.find(front => back.nome === front.nome)) {
-          listaParaExcluir.push(back);
+      const listaBackOrdenada = listaBack.sort(this.ordenerListaPeloNome);
+      const litaFrontOrdenada = listaFront.sort(this.ordenerListaPeloNome);
+      listaBackOrdenada.forEach((back) => {
+        if (!litaFrontOrdenada.find((front) => back.nome === front.nome)) {
+          retorno.listaExcluir.push(back);
         }
       });
     }
-  
+
     if (listaBack.length === 0 && listaFront.length !== 0) {
-      listaParaIncluir = listaFront;
+      retorno.listaIncluir = listaFront;
     } else {
-      let listaBackOrdenada = listaBack.sort(this.ordenerListaPeloNome);
-      let litaFrontOrdenada = listaFront.sort(this.ordenerListaPeloNome);
-      litaFrontOrdenada.forEach(back => {
-        if (!listaBackOrdenada.find(front => back.nome === front.nome)) {
-          listaParaIncluir.push(back);
+      const listaBackOrdenada = listaBack.sort(this.ordenerListaPeloNome);
+      const litaFrontOrdenada = listaFront.sort(this.ordenerListaPeloNome);
+      litaFrontOrdenada.forEach((back) => {
+        if (!listaBackOrdenada.find((front) => back.nome === front.nome)) {
+          retorno.listaIncluir.push(back);
         }
       });
     }
-    return { listaExcluir: listaParaExcluir, listaIncluir: listaParaIncluir };
-  }
-  async ordenerListaPeloNome(itemA, itemB) {
-    return itemA.nome.toLowerCase().localeCompare(itemB.nome.toLowerCase());
+    return retorno;
   }
 
   montarMensagemJson(mensagem) {
-    return { mensagem: mensagem }
+    return { mensagem };
   }
 
   isEmpty(val) {
     if (val instanceof Object) {
-      return Object.keys(val).length === 0
+      return Object.keys(val).length === 0;
     }
-    return (val === undefined || val == null || val.length <= 0) ? true : false
+    return !!((val === undefined || val == null || val.length <= 0));
   }
 
   enviarEmail() {
-    let emailOrigiem = process.env.EMAIL
-    let senha = process.env.SENHA_EMAIL
-    let emailDestino = 'jairmaiay@yahoo.com.br'
-    var transporter = nodemailer.createTransport({
+    const emailOrigiem = process.env.EMAIL;
+    const senha = process.env.SENHA_EMAIL;
+    const emailDestino = 'jairmaiay@yahoo.com.br';
+    const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 465,
       secure: true,
@@ -58,22 +58,23 @@ class Util {
         user: emailOrigiem,
         pass: senha,
       },
-    })
-    var mailOptions = {
+    });
+    const mailOptions = {
       from: emailOrigiem,
       to: emailDestino,
       subject: 'Sending Email using Node.js',
       text: 'That was easy!',
       html:
         '<div><h1>Título</h1><p>Corpo do texto para envio de mensagens</p></div>',
-    }
-    transporter.sendMail(mailOptions, function (error, info) {
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        console.log(error)
+        console.log(error);
       } else {
-        console.log('Email sent: ' + info.response)
+        console.log(`Email sent: ${info.response}`);
       }
-    })
+    });
   }
 }
 
