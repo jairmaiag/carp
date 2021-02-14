@@ -1,98 +1,99 @@
 /* importar o módulo do framework express */
-const express = require('express')
+const express = require('express');
 
 /* Necessário para acesso de outros domínos */
-var cors = require('cors')
+const cors = require('cors');
 
 /* Para configurar as variáveis de ambiente da aplicação */
-require('dotenv/config')
+require('dotenv/config');
 
 /* importar o módulo do consign */
-const consign = require('consign')
+const consign = require('consign');
 
 /* importar o módulo do body-parser */
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 
 /* importar o módulo do express-validator */
-const session = require('express-session')
+const session = require('express-session');
 
 /* importar o módulo de checagem de login */
+const i18n = require('i18n-express');
 const checkLoginMiddleware = require('./middleware/CheckLoginMiddleware');
 
-/* 
+/*
   Importar a biblioteca utilizada para fazer o i18n (internacionalização)
   Para mudar o idioma envie o parametro clang=en-us no endereço da url
 */
-var i18n = require('i18n-express');
 const i18nConfig = {
-  translationsPath: __dirname+'/i18n',
-  defaultLang:"pt-br",
-  siteLangs: ["pt-br","en-us"],
-  textsVarName: "i18n"
+  translationsPath: `${__dirname}/i18n`,
+  defaultLang: 'pt-br',
+  siteLangs: ['pt-br', 'en-us'],
+  textsVarName: 'i18n',
 };
 
 /* iniciar o objeto do express */
 const app = express();
 
 /* configurar o middleware body-parser */
-/* Configuração para receber dados via x-www-form-urlencoded*/
-app.use(bodyParser.urlencoded({ extended: true }))
+/* Configuração para receber dados via x-www-form-urlencoded */
+app.use(bodyParser.urlencoded({ extended: true }));
 
 /* Configuração para receber dados via raw JSON(application/json) */
 /* Fazer os testes via Postman */
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
-app.use(i18n(i18nConfig))
+app.use(i18n(i18nConfig));
 
 /* Configuração da sessão */
 const configSession = {
   secret: 'carpssession', // Chave secreta
   resave: false, // Se true, a sessão será regravada no servidor
   saveUninitialized: false, // Se true cria uma nova sessão sempre que a mesma for modificada.
-}
+};
 /* Configurando o session na aplicação */
-app.use(session(configSession))
+app.use(session(configSession));
 
-/* 
+/*
 Pre configurando as requisições e as respostas para evitar erros to tipo
-Access-Control-Allow-Origin - para permitir que seja feita a resposta para qualquer cliente 
+Access-Control-Allow-Origin - para permitir que seja feita a resposta para qualquer cliente
 */
 
 /* Configurando a aplicação para receber requisições de outros domínio */
-app.use(cors())
+app.use(cors());
 
 app.use(checkLoginMiddleware);
 
 /* efetua o autoload das rotas, dos models e dos controllers para o objeto app */
-const caminho = './src/'
-/* Configuração do consign para utilização dos arquivos sem a necessidade de chamar a função require() */
+const caminho = './src/';
+/* Configuração do consign para utilização
+* dos arquivos sem a necessidade de chamar a função require()
+*/
 consign({
   locale: 'pt-br',
 })
-  .include(caminho + 'db/models/index.js')
-  .then(caminho + 'app/util')
-  .then(caminho + 'db/repository')
-  .then(caminho + 'controller')
-  .then(caminho + 'app/route')
-  .into(app)
+  .include(`${caminho}db/models/index.js`)
+  .then(`${caminho}app/util`)
+  .then(`${caminho}db/repository`)
+  .then(`${caminho}controller`)
+  .then(`${caminho}app/route`)
+  .into(app);
 
 /* Configuração para endereços não existentes na aplicação */
-app.use(function (req, res, next) {
-  res.status(404).json({ mensagem: req.i18n_texts.route_not_found })
-  return;
-})
+app.use((req, res) => {
+  res.status(404).json({ mensagem: req.i18n_texts.route_not_found });
+});
 
 /* Configuração para erros internos da aplicação */
-app.use(function (err, req, res, next) {
-  if(err){
+app.use((err, req, res, next) => {
+  if (err) {
     res.status(500).json({
       mensagem: 'Erro interno.',
       error: err.toString(),
       contato: 'jairmaiag@gmail.com',
-    })
+    });
   }
-  next()
-})
+  next();
+});
 
 /* exportar o objeto app */
-module.exports = app
+module.exports = app;
