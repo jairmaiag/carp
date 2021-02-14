@@ -1,4 +1,4 @@
-const repository = require('../../db/repository/PerfilRepository');
+const repository = require('../../db/repository/PerfilRepository')();
 const { serverError, ok, notFound } = require('../../app/helpers/http/HttpHelpers');
 
 class PerfilController {
