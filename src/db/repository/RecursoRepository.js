@@ -1,8 +1,10 @@
+// const { RepositoryBase } = require('./RepositoryBase');
 const { Recurso } = require('../models');
 
 const include = { association: 'Perfis', through: { attributes: [] } };
 
 class RecursoRepository {
+
   static async findAll(attributes, filter, order) {
     const result = await Recurso.findAll({
       attributes,
