@@ -5,15 +5,11 @@ const includeUsuario = { association: 'Usuario', attributes: ['id', 'UUId', 'log
 class PessoaRepository {
 
   static async findAll(attributes, filter, order) {
-    const result = await Pessoa.findAll({
-      attributes,
-      where: filter,
-      limit: filter ? null : 10,
-      order: order || [['id', 'ASC']],
-      include: includeUsuario,
-      raw: true,
+    const limitObj = filter ? null : 10;
+    const orderObj = order || [['id', 'ASC']];
+    return Pessoa.findAll({
+      attributes, where: filter, limit: limitObj, order: orderObj, include: includeUsuario, raw: true,
     });
-    return result;
   }
 
   static async findAndPaginate(attributes, filter, order, page) {
@@ -33,7 +29,11 @@ class PessoaRepository {
   }
 
   static async insert(dados) {
-    return Pessoa.create(dados);
+    try {
+      return Pessoa.create(dados);
+    } catch (error) {
+      throw new Error(error.original);
+    }
   }
 
   static async update(dados) {

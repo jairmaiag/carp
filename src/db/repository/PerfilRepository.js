@@ -6,14 +6,9 @@ const include = { association: 'Recursos', through: { attributes: [] } };
 class PerfilRepository {
 
   static async findAll(attributes, filter, order) {
-    const result = await Perfil.findAll({
-      attributes,
-      where: filter,
-      limit: filter ? null : 10,
-      order: order || [['id', 'ASC']],
-      raw: false,
-    });
-    return result;
+    const limitObj = filter ? null : 10;
+    const orderObj = order || [['id', 'ASC']];
+    return Perfil.findAll({ attributes, where: filter, limit: limitObj, order: orderObj, raw: false, });;
   }
 
   static async findAndPaginate(attributes, filter, order, page) {
@@ -25,25 +20,20 @@ class PerfilRepository {
   }
 
   static async findByUUId(UUId) {
-    return Perfil.findOne({
-      where: {
-        UUId,
-      },
-      include,
-    });
+    return Perfil.findOne({ where: { UUId, }, include, });
   }
 
   static async insert(dados) {
-    const perfil = await Perfil.create(dados);
-    return this.manutencaoRecursos(dados.Recursos || [], perfil);
+    try {
+      const perfil = await Perfil.create(dados);
+      return this.manutencaoRecursos(dados.Recursos || [], perfil);
+    } catch (error) {
+      throw new Error(error.original);
+    }
   }
 
   static async update(dados) {
-    const result = await Perfil.update(dados, {
-      where: {
-        UUId: dados.UUId,
-      },
-    });
+    const result = await Perfil.update(dados, { where: { UUId: dados.UUId, }, });
     if (result[0] === 1) {
       const perfil = await this.findByUUId(dados.UUId);
       return this.manutencaoRecursos(dados.Recursos, perfil);
@@ -52,11 +42,7 @@ class PerfilRepository {
   }
 
   static async delete(UUId) {
-    return Perfil.destroy({
-      where: {
-        UUId,
-      },
-    });
+    return Perfil.destroy({ where: { UUId, }, });
   }
 
   static async manutencaoRecursos(dados, perfil) {

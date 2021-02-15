@@ -10,57 +10,40 @@ ProdutoRepository.prototype.findAll = async function (attributes, filter, order)
     order: order || [['id', 'ASC']],
     raw: true
   })
-
-  return result
+  return result;
 }
 
 ProdutoRepository.prototype.findAndPaginate = async function (attributes, filter, order, page) {
-  page = await Produto.findAndPaginate(attributes, filter, order, page)
-
-  return page
+  return Produto.findAndPaginate(attributes, filter, order, page);
 }
 
 ProdutoRepository.prototype.findByUUId = async function (UUId) {
-  const result = await Produto.findOne({
-    where: { UUId: UUId }
-  })
-
-  return result
+  return Produto.findOne({ where: { UUId: UUId } });
 }
 
 ProdutoRepository.prototype.findById = async function (id) {
-  const result = await Produto.findByPk(id)
-
-  return result
+  return Produto.findByPk(id);
 }
 
 ProdutoRepository.prototype.insert = async function (dados) {
-  const result = await Produto.create(dados)
-
-  return result
+  try {
+    return Produto.create(dados);
+  } catch (error) {
+    throw new Error(error.original);
+  }
 }
 
 ProdutoRepository.prototype.update = async function (dados) {
   let retorno = null
-
-  const result = await Produto.update(
-    dados,
-    { where: { UUId: dados.UUId } }
-  )
-
+  const result = await Produto.update(dados, { where: { UUId: dados.UUId } })
   if (result[0] === 1) {
     retorno = await this.findByUUId(dados.UUId);
   }
-
-  return retorno
+  return retorno;
 }
 
 ProdutoRepository.prototype.delete = async function (UUId) {
-  const result = await Produto.destroy({
-    where: { UUId: UUId }
-  })
-
-  return result
+  return Produto.destroy({ where: { UUId: UUId } });
 }
 
 module.exports = new ProdutoRepository()

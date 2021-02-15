@@ -3,7 +3,7 @@ const criptor = require('../../app/util/Cryptography');
 const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
 const pessoaRepository = require('./PessoaRepository')
 const includePessoa = { association: 'Pessoa', attributes: ['id', 'UUId', 'nome', 'nomemeio', 'sobrenome', 'nascimento', 'sexo', 'cpf', 'rg', 'ativo'] }
-const attributesExcludes = { exclude: ['idPessoa', 'idPes','senha'] }
+const attributesExcludes = { exclude: ['idPessoa', 'idPes', 'senha'] }
 const UsuarioRepository = function () { }
 
 UsuarioRepository.prototype.findAll = async function (attributes, filter, order) {
@@ -71,14 +71,18 @@ UsuarioRepository.prototype.dadosPessoa = async function (dados) {
 }
 
 UsuarioRepository.prototype.insert = async function (dados) {
-  dados.Pessoa = await this.dadosPessoa(dados);
-  dados.idPessoa = dados.Pessoa.id;
-  dados.ativo = dados.ativo || true;
-  dados.senha = criptor.cryptor(dados.senha.trim());
-  const result = await Usuario.create(dados);
-  result.Pessoa = dados.Pessoa;
-  const complete = await this.findById(result.id);
-  return complete;
+  try {
+    dados.Pessoa = await this.dadosPessoa(dados);
+    dados.idPessoa = dados.Pessoa.id;
+    dados.ativo = dados.ativo || true;
+    dados.senha = criptor.cryptor(dados.senha.trim());
+    const result = await Usuario.create(dados);
+    result.Pessoa = dados.Pessoa;
+    const complete = await this.findById(result.id);
+    return complete;
+  } catch (error) {
+    throw new Error(error.original);
+  }
 }
 
 UsuarioRepository.prototype.update = async function (dados) {
