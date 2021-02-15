@@ -70,6 +70,7 @@ const caminho = './src/';
 */
 consign({
   locale: 'pt-br',
+  extensions: ['.js', '.json', '.node', '.mjs'],
 })
   .include(`${caminho}db/models/index.js`)
   .then(`${caminho}app/util`)
