@@ -4,6 +4,7 @@ const util = require('../../app/util/Util');
 const include = { association: 'Recursos', through: { attributes: [] } };
 
 class PerfilRepository {
+
   static async findAll(attributes, filter, order) {
     const result = await Perfil.findAll({
       attributes,
