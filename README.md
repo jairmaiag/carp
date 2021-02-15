@@ -33,7 +33,7 @@ Segue as instruções de utilização da API.
 
 Ter os programas abaixo já instalados e rodando:
 
-1. Ter o **NodeJs**.
+1. Ter o **NodeJs** versão **14.15.4** ou superior.
 2. Ter o **SGBD (Sistema de Gestão de Banco de Dados) Postgres**.
 3. Saber o usuário e senha padrão do Postgres.
 4. [sequelize-cli](https://www.npmjs.com/package/sequelize-cli).
