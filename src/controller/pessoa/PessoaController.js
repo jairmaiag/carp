@@ -1,10 +1,10 @@
-const repository = require('../../db/repository/PessoaRepository')
-const { serverError, ok, notFound } = require('../../app/helpers/http/HttpHelpers')
+const repository = require('../../db/repository/PessoaRepository')();
+const { serverError, ok, notFound } = require('../../app/helpers/http/HttpHelpers');
 
 class PessoaController {
 
   constructor(app) {
-    this.app = app
+    this.app = app;
   }
 
   async index(req) {
@@ -72,7 +72,7 @@ class PessoaController {
 }
 
 function retorno(app) {
-  return new PessoaController(app)
+  return new PessoaController(app);
 }
 
-module.exports = () => retorno
+module.exports = () => retorno;
