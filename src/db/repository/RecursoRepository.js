@@ -59,4 +59,4 @@ class RecursoRepository {
   }
 }
 
-module.exports = function repository() { return RecursoRepository; };
+module.exports = () => RecursoRepository;
