@@ -1,53 +1,48 @@
-const { Usuario, Pessoa } = require('../models')
-const includeUsuario = { association: 'Usuario', attributes:['id','UUId','login','expira','ativo'] }
-const PessoaRepository = function () { }
+const { Pessoa } = require('../models');
 
-PessoaRepository.prototype.findAll = async function (attributes, filter, order) {
-  const result = await Pessoa.findAll({
-    attributes: attributes,
-    where: filter,
-    limit: filter ? null : 10,
-    order: order || [["id", "ASC"]],
-    include: includeUsuario,
-    raw: true,
-  })
-  return result
-}
+const includeUsuario = { association: 'Usuario', attributes: ['id', 'UUId', 'login', 'expira', 'ativo'] };
 
-PessoaRepository.prototype.findAndPaginate = async function (attributes, filter, order, page) {
-  
-  page = await Pessoa.findAndPaginate(attributes, filter, order, page)
-  return page
-}
-PessoaRepository.prototype.findAndPaginateWithChildren = async function (attributes, filter, order, page) {
-  page = await Pessoa.findAndPaginate(attributes, filter, order, page, includeUsuario)
-  return page
-}
-PessoaRepository.prototype.findById = async function (id) {
-  const result = await Pessoa.findByPk(id, {
-    include: includeUsuario,
-  })
-  return result
-}
-PessoaRepository.prototype.findByUUId = async function (UUId) {
-  const result = await Pessoa.findOne({
-    where: { UUId: UUId },
-    include: includeUsuario,
-  })
-  return result
-}
+class PessoaRepository {
+  static async findAll(attributes, filter, order) {
+    const result = await Pessoa.findAll({
+      attributes,
+      where: filter,
+      limit: filter ? null : 10,
+      order: order || [['id', 'ASC']],
+      include: includeUsuario,
+      raw: true,
+    });
+    return result;
+  }
 
-PessoaRepository.prototype.insert = async function (dados) {
-  return await Pessoa.create(dados);
-}
+  static async findAndPaginate(attributes, filter, order, page) {
+    return Pessoa.findAndPaginate(attributes, filter, order, page);
+  }
 
-PessoaRepository.prototype.update = async function (dados) {
-  const result = await Pessoa.update(dados, { where: { UUId: dados.UUId } })
-  return result[0] === 1 ? await this.findByUUId(dados.UUId) : null
-}
+  static async findAndPaginateWithChildren(attributes, filter, order, page) {
+    return Pessoa.findAndPaginate(attributes, filter, order, page, includeUsuario);
+  }
 
-PessoaRepository.prototype.delete = async function (UUId) {
-  return await Pessoa.destroy({ where: { UUId: UUId } });
+  static async findById(id) {
+    return Pessoa.findByPk(id, { include: includeUsuario });
+  }
+
+  static async findByUUId(UUId) {
+    return Pessoa.findOne({ where: { UUId }, include: includeUsuario });
+  }
+
+  static async insert(dados) {
+    return Pessoa.create(dados);
+  }
+
+  static async update(dados) {
+    const result = Pessoa.update(dados, { where: { UUId: dados.UUId } });
+    return result[0] === 1 ? this.findByUUId(dados.UUId) : null;
+  }
+
+  static async delete(UUId) {
+    return Pessoa.destroy({ where: { UUId } });
+  }
 }
 
-module.exports = new PessoaRepository()
+module.exports = () => PessoaRepository;
