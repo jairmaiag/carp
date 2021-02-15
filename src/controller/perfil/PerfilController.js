@@ -77,7 +77,6 @@ class PerfilController {
     }
   }
 }
-
 function retorno(app) {
   return new PerfilController(app);
 }
