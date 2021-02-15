@@ -3,6 +3,7 @@ const { Pessoa } = require('../models');
 const includeUsuario = { association: 'Usuario', attributes: ['id', 'UUId', 'login', 'expira', 'ativo'] };
 
 class PessoaRepository {
+
   static async findAll(attributes, filter, order) {
     const result = await Pessoa.findAll({
       attributes,
