@@ -1,9 +1,7 @@
-'use strict'
-
 module.exports = {
-  up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable(
-      'Recurso', 
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable(
+      'Recurso',
       {
         UUId: {
           field: 'UUIdRec',
@@ -13,7 +11,6 @@ module.exports = {
           comment: 'UUId na tabela, identificando registro para pesquisa externa.',
         },
         id: {
-          // field: 'idRec',
           primaryKey: true,
           autoIncrement: true,
           type: Sequelize.INTEGER,
@@ -23,12 +20,12 @@ module.exports = {
           field: 'nomeRec',
           allowNull: false,
           type: Sequelize.STRING(30),
-          comment: "Nome do Recurso cadastrado.",
+          comment: 'Nome do Recurso cadastrado.',
         },
         descricao: {
           field: 'descricaoRec',
           type: Sequelize.TEXT,
-          comment: "Descrição do Recurso cadastrado.",
+          comment: 'Descrição do Recurso cadastrado.',
         },
         ativo: {
           field: 'ativoRec',
@@ -54,11 +51,8 @@ module.exports = {
         schema: 'carp', // default: public, PostgreSQL only.
         comment:
           'Tabela utilizada para armazenar os dados dos Recursos do sistema.',
-      }
+      },
     )
   },
-
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Recurso')
-  },
+  down: async (queryInterface, Sequelize) => queryInterface.dropTable('Recurso'),
 };
