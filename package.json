@@ -6,6 +6,7 @@
     "Controle",
     "Cliente"
   ],
+  "type": "commonjs",
   "homepage": "https://github.com/jairmaiag/carp",
   "main": "main.js",
   "scripts": {
