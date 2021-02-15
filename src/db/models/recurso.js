@@ -1,6 +1,4 @@
-'use strict'
-
-const BaseModel = require('./basemodel')
+const BaseModel = require('./basemodel');
 
 module.exports = (sequelize, DataTypes) => {
   class Recurso extends BaseModel { }
@@ -18,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       comment: 'UUID do Recurso, utilizado para acessar os dados.',
       validate: {
-        notNull: true
+        notNull: true,
       },
     },
     nome: {
@@ -26,6 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.STRING(30),
       comment: 'Nome do Recurso.',
+      unique: true,
     },
     descricao: {
       field: 'descricaoRec',
@@ -43,21 +42,21 @@ module.exports = (sequelize, DataTypes) => {
       field: 'createAtRec',
       allowNull: false,
       type: DataTypes.DATE,
-      comment: 'Data de ciração do registro.'
+      comment: 'Data de ciração do registro.',
     },
     updatedAt: {
       field: 'updatedAtRec',
       allowNull: false,
       type: DataTypes.DATE,
-      comment: 'Data de atualização do registro.'
-    }
+      comment: 'Data de atualização do registro.',
+    },
   }, {
     sequelize,
     freezeTableName: true,
     timestamps: true,
     modelName: 'Recurso',
-    comment: 'Tabela utilizada para armazenar os dados de Recurso do sistema.'
-  })
+    comment: 'Tabela utilizada para armazenar os dados de Recurso do sistema.',
+  });
 
   Recurso.associate = function (models) {
     Recurso.belongsToMany(models.Perfil, {
@@ -65,9 +64,9 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: 'PerfilId',
       through: models.RecursoPerfil,
       uniqueKey: 'recurco_perfil_unique',
-      as: 'Perfis'
+      as: 'Perfis',
     });
   };
 
-  return Recurso
-}
+  return Recurso;
+};
