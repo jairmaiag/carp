@@ -16,13 +16,7 @@ class PerfilRepository {
   }
 
   static async findAndPaginate(attributes, filter, order, page) {
-    const result = await Perfil.findAndPaginate(
-      attributes,
-      filter,
-      order,
-      page,
-    );
-    return result;
+    return Perfil.findAndPaginate(attributes, filter, order, page);
   }
 
   static async findById(id) {
@@ -89,4 +83,4 @@ class PerfilRepository {
   }
 }
 
-module.exports = function repository() { return PerfilRepository; };
+module.exports = () => PerfilRepository;
