@@ -37,7 +37,7 @@ class PessoaRepository {
   }
 
   static async update(dados) {
-    const result = Pessoa.update(dados, { where: { UUId: dados.UUId } });
+    const result = await Pessoa.update(dados, { where: { UUId: dados.UUId } });
     return result[0] === 1 ? this.findByUUId(dados.UUId) : null;
   }
 
