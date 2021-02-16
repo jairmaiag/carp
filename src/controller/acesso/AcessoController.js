@@ -29,8 +29,4 @@ class AcessoController {
 
 }
 
-function retorno(app) {
-  return new AcessoController(app)
-}
-
-module.exports = () => retorno
+module.exports = () => AcessoController
