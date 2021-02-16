@@ -116,8 +116,6 @@ class MainController {
         })
 
       })
-
-
       return ok('Criação do banco concluída!')
     } catch (error) {
       return serverError(error)
@@ -125,8 +123,4 @@ class MainController {
   }
 }
 
-function retorno(app) {
-  return new MainController(app)
-}
-
-module.exports = () => retorno
+module.exports = () => MainController
