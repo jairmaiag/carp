@@ -52,6 +52,9 @@ class PerfilController {
       const entity = await repository.insert(req.body);
       return entity ? ok(entity) : notFound(req.i18n_texts.error_insert_record);
     } catch (error) {
+      if (error.stack.includes("violates unique constraint")) {
+        error.stack = req.i18n_texts.record_already_exists;
+      }
       return this.serverError(error);
     }
   }
@@ -77,8 +80,5 @@ class PerfilController {
     }
   }
 }
-function retorno(app) {
-  return new PerfilController(app);
-}
 
-module.exports = () => retorno;
+module.exports = () => PerfilController;
