@@ -1,61 +1,60 @@
-const ServerError = require('../../errors/ServerError')
-const UnauthorizedError = require('../../errors/UnauthorizedError')
-const util = require('../../util/Util')
+const ServerError = require('../../errors/ServerError');
+const UnauthorizedError = require('../../errors/UnauthorizedError');
+const util = require('../../util/Util');
 
 class httpHelpers {
-
   ok(data) {
     if (!(data instanceof Object)) {
-      data = util.montarMensagemJson(data)
+      data = util.montarMensagemJson(data);
     }
 
     return {
       statusCode: 200,
-      body: data
-    }
+      body: data,
+    };
   }
 
   noContent() {
     return {
       statusCode: 204,
-      body: null
-    }
+      body: null,
+    };
   }
 
   badRequest(error) {
     return {
       statusCode: 400,
-      body: error
-    }
+      body: error,
+    };
   }
 
   unauthorized() {
     return {
       statusCode: 401,
-      body: new UnauthorizedError()
-    }
+      body: new UnauthorizedError(),
+    };
   }
 
   forbidden(error) {
     return {
       statusCode: 403,
-      body: error
-    }
+      body: error,
+    };
   }
 
   notFound(error) {
     return {
       statusCode: 404,
-      body: error
-    }
+      body: error,
+    };
   }
 
   serverError(error) {
     return {
       statusCode: 500,
-      body: new ServerError(error.stack)
-    }
+      body: new ServerError(error.stack),
+    };
   }
 }
 
-module.exports = new httpHelpers()
+module.exports = new httpHelpers();
