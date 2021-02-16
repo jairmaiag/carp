@@ -1,6 +1,4 @@
 const repository = require('../../db/repository/UsuarioRepository')
-const pessoaRepository = require('../../db/repository/PessoaRepository')
-const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
 const { serverError, ok, notFound } = require('../../app/helpers/http/HttpHelpers')
 
 class UsuarioController {
@@ -50,7 +48,10 @@ class UsuarioController {
       const entity = await repository.insert(req.body)
       return entity ? ok(entity) : notFound(req.i18n_texts.error_insert_record)
     } catch (error) {
-      return serverError(error)
+      if (error.stack.includes("violates unique constraint")) {
+        error.stack = req.i18n_texts.record_already_exists;
+      }
+      return this.serverError(error);
     }
   }
 
@@ -73,8 +74,4 @@ class UsuarioController {
   }
 }
 
-function retorno(app) {
-  return new UsuarioController(app)
-}
-
-module.exports = () => retorno
+module.exports = () => UsuarioController;
