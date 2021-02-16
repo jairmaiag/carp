@@ -54,7 +54,10 @@ class ProdutoController {
       const entity = await repository.insert(dados)
       return entity ? ok(entity) : notFound(req.i18n_texts.error_insert_record)
     } catch (error) {
-      return serverError(error)
+      if (error.stack.includes("violates unique constraint")) {
+        error.stack = req.i18n_texts.record_already_exists;
+      }
+      return this.serverError(error);
     }
   }
 
@@ -77,8 +80,4 @@ class ProdutoController {
   }
 }
 
-function retorno(app) {
-  return new ProdutoController(app)
-}
-
-module.exports = () => retorno
+module.exports = () => ProdutoController;
