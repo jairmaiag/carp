@@ -9,8 +9,9 @@ class UsuarioController {
 
   async index(req) {
     try {
-      const entities = await repository.findAll(req.body.attributes, req.body.filter, req.body.order)
-      return entities.length > 0 ? ok(entities) : ok(req.i18n_texts.empty_table)
+      const { attributes, filter, order } = req.body;
+      const entities = await repository.findAll(attributes, filter, order);
+      return entities.length > 0 ? ok(entities) : ok(req.i18n_texts.empty_table);
     } catch (error) {
       return serverError(error)
     }
@@ -18,8 +19,9 @@ class UsuarioController {
 
   async findAndPaginate(req) {
     try {
-      const entities = await repository.findAndPaginate(req.body.attributes, req.body.filter, req.body.order, req.body.page)
-      return entities.rows.length > 0 ? ok(entities) : ok(req.i18n_texts.empty_table)
+      const { attributes, filter, order, page } = req.body;
+      const entities = await repository.findAndPaginate(attributes, filter, order, page);
+      return entities.rows.length > 0 ? ok(entities) : ok(req.i18n_texts.empty_table);
     } catch (error) {
       return serverError(error)
     }
