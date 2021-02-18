@@ -21,8 +21,8 @@ const i18n = require('i18n-express');
 const checkLoginMiddleware = require('./middleware/CheckLoginMiddleware');
 
 /*
-  Importar a biblioteca utilizada para fazer o i18n (internacionalização)
-  Para mudar o idioma envie o parametro clang=en-us no endereço da url
+Importar a biblioteca utilizada para fazer o i18n (internacionalização)
+Para mudar o idioma envie o parametro clang=en-us no endereço da url
 */
 const i18nConfig = {
   translationsPath: `${__dirname}/i18n`,
@@ -64,7 +64,6 @@ app.use(cors());
 app.use(checkLoginMiddleware);
 
 /* efetua o autoload das rotas, dos models e dos controllers para o objeto app */
-const caminho = './src/';
 /* Configuração do consign para utilização
 * dos arquivos sem a necessidade de chamar a função require()
 */
