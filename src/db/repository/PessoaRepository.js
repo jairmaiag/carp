@@ -30,7 +30,7 @@ class PessoaRepository {
 
   static async insert(dados) {
     try {
-      return Pessoa.create(dados);
+      return await Pessoa.create(dados);
     } catch (error) {
       throw new Error(error.original);
     }
