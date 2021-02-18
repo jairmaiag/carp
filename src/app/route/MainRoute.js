@@ -1,27 +1,27 @@
-module.exports = function (app) {
-  const controller = new app.src.controller.main.MainController(app)
+module.exports = (app) => {
+  const controller = new app.src.controller.main.MainController(app);
 
-  const validaCampos = function (dados) {
+  function validaCampos(dados) {
     if (dados.host === undefined) {
-      return false
+      return false;
     }
     if (dados.porta === undefined) {
-      return false
+      return false;
     }
     if (dados.banco === undefined) {
-      return false
+      return false;
     }
     if (dados.usuario === undefined) {
-      return false
+      return false;
     }
     if (dados.senha === undefined) {
-      return false
+      return false;
     }
-    return true
+    return true;
   }
 
   app.get("/", function (req, res) {
-    httpResponse = controller.index(req, res)
+    let httpResponse = controller.index(req, res);
 
     if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
       res.status(httpResponse.statusCode).json(httpResponse.body)
