@@ -1,18 +1,16 @@
-'use strict';
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-   await queryInterface.bulkInsert('Pessoa', [{
+    await queryInterface.bulkInsert('Pessoa', [{
       nomePes: 'Jair',
       nomeMeioPes: 'Maia',
-      sobrenomePes:'Diniz',
+      sobrenomePes: 'Diniz',
       createAtPes: new Date(),
       updatedAtPes: new Date(),
-      sexoPes:'M'
-   }], {});
+      sexoPes: 'M',
+    }], {});
   },
 
   down: async (queryInterface, Sequelize) => {
     await queryInterface.bulkDelete('Pessoa', null, {});
-  }
+  },
 };
