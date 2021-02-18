@@ -50,12 +50,6 @@ module.exports = {
         onDelete: 'CASCADE',
         comment: 'Id da tabela Pessoa, onde este usuário pertence.',
       },
-      // idPerfil: {
-      //   field: 'idPer',
-      //   allowNull: false,
-      //   type: Sequelize.INTEGER,
-      //   comment: 'Id da tabela Perfil, onde este usuário pertence.',
-      // },
       createdAt: {
         field: 'createAtUsu',
         allowNull: false,
