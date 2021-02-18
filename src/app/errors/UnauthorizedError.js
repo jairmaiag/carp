@@ -1,8 +1,8 @@
 class UnauthorizedError {
-  constructor () {
-    this.error = 'Não autorizado'
-    this.name = 'UnauthorizedError'
+  constructor() {
+    this.error = 'Não autorizado';
+    this.name = 'UnauthorizedError';
   }
 }
 
-module.exports = UnauthorizedError
+module.exports = UnauthorizedError;
