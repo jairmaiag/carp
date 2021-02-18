@@ -1,7 +1,7 @@
 const util = require('../util/Util')
 
 module.exports = function (app) {
-  var controller = new app.src.controller.acesso.AcessoController(app)
+  var controller = new app.controller.acesso.AcessoController(app)
 
   app.get("/login", async function (req, res) {
     res.status(401).json({mensagem: `${req.i18n_texts.method_invalid}`})
