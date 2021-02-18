@@ -1,4 +1,4 @@
-const { Usuario, Pessoa } = require("../models")
+const { Usuario } = require("../models")
 const criptor = require('../../app/util/Cryptography');
 const { getUUIDV4 } = require('../../app/util/UUIDGenerator')
 const pessoaRepository = require('./PessoaRepository')
