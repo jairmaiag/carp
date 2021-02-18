@@ -1,6 +1,4 @@
-'use strict'
-
-const BaseModel = require('./basemodel')
+const BaseModel = require('./basemodel');
 
 module.exports = (sequelize, DataTypes) => {
   class Usuario extends BaseModel { }
@@ -12,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.UUID,
       comment: 'UUID do usuario, utilizado para acessar os dados.',
       validate: {
-        notNull: true
+        notNull: true,
       },
     },
     id: {
@@ -53,38 +51,27 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       comment: 'Id da tabela Pessoa, onde este usuário pertence.',
     },
-    idPerfil: {
-      field: 'idPer',
-      allowNull: false,
-      type: DataTypes.INTEGER,
-      references:{
-        model:sequelize.model.Perfil,
-        key:'idPer'
-      },
-      comment: 'Id da tabela Perfil, onde este usuário pertence.',
-    },
     createdAt: {
       field: 'createAtUsu',
       allowNull: false,
       type: DataTypes.DATE,
-      comment: 'Data de ciração do registro.'
+      comment: 'Data de ciração do registro.',
     },
     updatedAt: {
       field: 'updatedAtUsu',
       allowNull: false,
       type: DataTypes.DATE,
-      comment: 'Data de atualização do registro.'
-    }
+      comment: 'Data de atualização do registro.',
+    },
   }, {
     sequelize,
     freezeTableName: true,
     timestamps: true,
     modelName: 'Usuario',
-    comment: 'Tabela utilizada para armazenar os dados do usuário para acesso ao sistema.'
-  })
+    comment: 'Tabela utilizada para armazenar os dados do usuário para acesso ao sistema.',
+  });
 
-  Usuario.associate = function (models) {
-    /* Usuário pertence a (belongsTo) Pessoa */
+  Usuario.associate = (models) => {
     Usuario.belongsTo(models.Pessoa, {
       as: 'Pessoa',
       foreignKey: 'idPes',
@@ -92,5 +79,5 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
-  return Usuario
-}
+  return Usuario;
+};
