@@ -68,15 +68,17 @@ const caminho = './src/';
 /* Configuração do consign para utilização
 * dos arquivos sem a necessidade de chamar a função require()
 */
-consign({
+const consignConfig = {
+  cwd: 'src',
   locale: 'pt-br',
   extensions: ['.js', '.json', '.node', '.mjs'],
-})
-  .include(`${caminho}db/models/index.js`)
-  .then(`${caminho}app/util`)
-  .then(`${caminho}db/repository`)
-  .then(`${caminho}controller`)
-  .then(`${caminho}app/route`)
+};
+consign(consignConfig)
+  .include('db/models/index.js')
+  .then('app/util')
+  .then('db/repository')
+  .then('controller')
+  .then('app/route')
   .into(app);
 
 /* Configuração para endereços não existentes na aplicação */
