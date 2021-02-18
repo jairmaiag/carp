@@ -30,9 +30,18 @@ class PessoaRepository {
 
   static async insert(dados) {
     try {
-      return await Pessoa.create(dados);
+      let { nome, nomemeio, sobrenome } = dados;
+      nomemeio = nomemeio || null;
+      sobrenome = sobrenome || null;
+      let objConsulta = { where: { nome, nomemeio, sobrenome } };
+      const pessoa = await Pessoa.findOne(objConsulta);
+      if (!pessoa) {
+        return await Pessoa.create(dados);
+      } else {
+        throw new Error("violates unique constraint");
+      }
     } catch (error) {
-      throw new Error(error.original);
+      throw new Error(error.message);
     }
   }
 
