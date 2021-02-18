@@ -28,7 +28,7 @@ module.exports = (sequelize, DataTypes) => {
     comment: 'Tabela utilizada para armazenar os dados de Recurso de dos perfis.',
   });
 
-  RecursoPerfil.associate = function (models) {
+  RecursoPerfil.associate = (models) => {
     RecursoPerfil.hasMany(models.Perfil, {
       as: 'Perfil',
       foreignKey: 'id',
