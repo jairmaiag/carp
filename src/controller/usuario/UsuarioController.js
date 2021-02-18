@@ -1,5 +1,5 @@
-const repository = require('../../db/repository/UsuarioRepository')
-const { serverError, ok, notFound } = require('../../app/helpers/http/HttpHelpers')
+const repository = require('../../db/repository/UsuarioRepository')();
+const { serverError, ok, notFound } = require('../../app/helpers/http/HttpHelpers');
 
 class UsuarioController {
 
@@ -53,7 +53,7 @@ class UsuarioController {
       if (error.stack.includes("violates unique constraint")) {
         error.stack = req.i18n_texts.record_already_exists;
       }
-      return this.serverError(error);
+      return serverError(error);
     }
   }
 
