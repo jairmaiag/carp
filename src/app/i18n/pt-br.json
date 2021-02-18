@@ -14,5 +14,7 @@
     "invalidParam": "É necessário filtrar a consulta.",
     "idFieldNumeric": "The Id field must be of the numeric type.",
     "UUId_required": "UUId é um campo obrigatório.",
-    "UUId_invalid_format": "Formato inválido para o campo UUId."
+    "UUId_invalid_format": "Formato inválido para o campo UUId.",
+    "path_not_found": "Caminho não encontrado.",
+    "error_on_ExpressRouteAdapter": "Erro no arquivo ExpressRouteAdapter."
 }
