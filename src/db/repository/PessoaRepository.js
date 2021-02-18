@@ -7,9 +7,7 @@ class PessoaRepository {
   static async findAll(attributes, filter, order) {
     const limitObj = filter ? null : 10;
     const orderObj = order || [['id', 'ASC']];
-    return Pessoa.findAll({
-      attributes, where: filter, limit: limitObj, order: orderObj, include: includeUsuario, raw: true,
-    });
+    return Pessoa.findAll({ attributes, where: filter, limit: limitObj, order: orderObj, raw: fasle });
   }
 
   static async findAndPaginate(attributes, filter, order, page) {
@@ -27,19 +25,21 @@ class PessoaRepository {
   static async findByUUId(UUId) {
     return Pessoa.findOne({ where: { UUId }, include: includeUsuario });
   }
+  static async findDuplicate(dados) {
+    let { nome, nomemeio, sobrenome } = dados;
+    nomemeio = nomemeio || null;
+    sobrenome = sobrenome || null;
+    let objConsulta = { where: { nome, nomemeio, sobrenome } };
+    const retorno = await Pessoa.findOne(objConsulta);
+    return retorno;
+  }
 
   static async insert(dados) {
     try {
-      let { nome, nomemeio, sobrenome } = dados;
-      nomemeio = nomemeio || null;
-      sobrenome = sobrenome || null;
-      let objConsulta = { where: { nome, nomemeio, sobrenome } };
-      const pessoa = await Pessoa.findOne(objConsulta);
-      if (!pessoa) {
-        return await Pessoa.create(dados);
-      } else {
+      if (await this.findDuplicate(dados)) {
         throw new Error("violates unique constraint");
       }
+      return await Pessoa.create(dados);
     } catch (error) {
       throw new Error(error.message);
     }
