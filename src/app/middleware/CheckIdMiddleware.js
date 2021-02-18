@@ -3,7 +3,7 @@ const InvalidParamError = require('../errors/InvalidParamError')
 const validator = require('validator')
 
 class CheckIdMiddleware {
-  async execute (req) {
+  async execute(req) {
     try {
       if (!validator.isInt(req.params.id)) {
         return forbidden(new InvalidParamError(`${req.i18n_texts.idFieldNumeric}`))

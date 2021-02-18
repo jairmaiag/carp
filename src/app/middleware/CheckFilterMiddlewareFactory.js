@@ -1,6 +1,6 @@
-const checkFilterMiddleware = require('./CheckFilterMiddleware')
-const adaptMiddleware = require('../adapters/express/ExpressMiddlewareAdapter')
+const CheckFilterMiddleware = require('./CheckFilterMiddleware');
+const adaptMiddleware = require('../adapters/express/ExpressMiddlewareAdapter');
 
-const checkFilter = adaptMiddleware(new checkFilterMiddleware())
+const checkFilter = adaptMiddleware(new CheckFilterMiddleware());
 
-module.exports = checkFilter
+module.exports = checkFilter;
