@@ -4,24 +4,26 @@ API para controle de clientes, usuários, funcionários, produtos, geração de 
 
 ## Índice
 
-- [Iniciando](#iniciando)
-  - [Pré-rquisito](#pré-rquisito)
-  - [Variáveis de ambiente](#variáveis-de-ambiente)
-  - [Executando](#executando)
-  - [Internacionalização](#Internacionalização)
-  - [Banco de dados](#banco-de-dados)
-  - [Migrations](#migrations)
-  - [Seed](#Seed)
-  - [Utilização](#utilização)
-    - [Filtro](#Filtro)
-    - [Paginação](#Paginação)
-    - [Pessoa](#pessoa)
-      - [Recursos](#recursos)
-      - [Exemplo JSON](#exemplo-json)
-    - [Usuário](#usuário)
-      - [Recursos](#recursos-1)
-      - [Exemplo JSON](#exemplo-json-1)
-- [Dúvidas](#dúvidas)
+- [Carp](#carp)
+  - [Índice](#índice)
+  - [Iniciando](#iniciando)
+    - [Pré-rquisito](#pré-rquisito)
+    - [Variáveis de ambiente](#variáveis-de-ambiente)
+    - [Executando](#executando)
+    - [Internacionalização](#internacionalização)
+    - [Banco de dados](#banco-de-dados)
+    - [Migrations](#migrations)
+    - [Seed](#seed)
+    - [Utilização](#utilização)
+      - [Filtro](#filtro)
+      - [Paginação](#paginação)
+      - [Pessoa](#pessoa)
+        - [Recursos](#recursos)
+        - [Exemplo JSON](#exemplo-json)
+      - [Usuário](#usuário)
+        - [Recursos](#recursos-1)
+        - [Exemplo JSON](#exemplo-json-1)
+  - [Dúvidas](#dúvidas)
 
 ## Iniciando
 
@@ -121,14 +123,14 @@ Já com o banco criado vamos criar o schema e as tabelas do sistema.
 Pare a aplicação, acesse a pasta da mesma e execute o comando
 
 ```
-sequelize-cli db:migrate
+npx sequelize db:migrate
 ```
 
 Para desfazer a Migrations (remover o schema e as tabelas).
 Isso não remove o banco de dados.
 
 ```
-sequelize-cli db:migrate:undo:all
+npx sequelize db:migrate:undo:all
 ```
 
 [Voltar ao Índice](#carp)
@@ -138,13 +140,13 @@ sequelize-cli db:migrate:undo:all
 Para semear, popular as tabelas utilize o comando abaixo:
 
 ```
-sequelize-cli db:seed:all
+npx sequelize db:seed:all
 ```
 
 Para desfazer o dados inseridos.
 
 ```
-sequelize-cli db:seed:undo:all
+npx sequelize db:seed:undo:all
 ```
 
 [Voltar ao Índice](#carp)
