@@ -30,19 +30,18 @@ class MainController {
     /* Criação do usuário de acesso ao banco */
     try {
       await cliente.query("select usename from pg_user", (errusu, usus) => {
-        let mensagem = null;
+        let mensagem = `Usuário de banco já existe. Saindo da criação do usuario. Aguarde a verificação do banco...`;
         let usubd = usus.rows.filter((usu) => usu.usename === "carp");
         if (usubd.length > 0) {
-          mensagem = `Usuário de banco já existe. Saindo da criação do usuario. Aguarde a verificação do banco...`;
           console.log(mensagem);
           return ok(mensagem);
         }
 
         const criarUsuario =
           `CREATE ROLE carp WITH LOGIN SUPERUSER CREATEDB CREATEROLE INHERIT NOREPLICATION CONNECTION LIMIT -1 PASSWORD 'carp'`;
-
+        mensagem = `Criando usuario...`;
         cliente.query(criarUsuario, (errusu, usu) => {
-          console.log(`Criando usuario...`);
+          console.log(mensagem);
         })
       })
     } catch (error) {
@@ -57,7 +56,10 @@ class MainController {
       const cliente = new Client(objetoConexao);
 
       cliente.connect();
-      await this.criarUsuario(cliente);
+      const retonoUsuario =  await this.criarUsuario(cliente);
+      if(retonoUsuario.statusCode !== 200){
+        return retonoUsuario;
+      }
       /* Criação do banco de dados */
       cliente.query("SELECT datname FROM pg_database", (err1, res1) => {
         let bd = res1.rows.filter((banco) => banco.datname == "carp");
