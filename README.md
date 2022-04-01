@@ -107,7 +107,9 @@ Onde:
 - usuario - Usuário de acesso ao banco com permissão de criar bancos.
 - senha - Senha do usuário de acesso ao banco padrão do postgres.
 
-Ao témino será criado um usuário com nome **carp** e um banco, também, de nome **carp**.
+Ao témino será criado um usuário com nome **carp** e um banco, também, de nome **carp**.  
+![Retorno da criação do banco](https://github.com/jairmaiag/carp/blob/master/assets/RetornoCriarBanco.png)
+
 
 [Voltar ao Índice](#carp)
 
