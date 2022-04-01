@@ -7,7 +7,7 @@ API para controle de clientes, usuários, funcionários, produtos, geração de 
 - [Carp](#carp)
   - [Índice](#índice)
   - [Iniciando](#iniciando)
-    - [Pré-rquisito](#pré-rquisito)
+    - [Pré-requisitos](#pré-requisitos)
     - [Variáveis de ambiente](#variáveis-de-ambiente)
     - [Executando](#executando)
     - [Internacionalização](#internacionalização)
@@ -31,12 +31,12 @@ Segue as instruções de utilização da API.
 
 [Voltar ao Índice](#carp)
 
-### Pré-rquisito
+### Pré-requisitos
 
 Ter os programas abaixo já instalados e rodando:
 
 1. Ter o **NodeJs** versão **14.15.4** ou superior.
-2. Ter o **SGBD (Sistema de Gestão de Banco de Dados) Postgres**.
+2. Ter o **SGBD (Sistema de Gestão de Banco de Dados) Postgres** versão **14.1** ou superior.
 3. Saber o usuário e senha padrão do Postgres.
 4. [sequelize-cli](https://www.npmjs.com/package/sequelize-cli).
 5. [postman](https://www.postman.com/)
@@ -46,7 +46,7 @@ Ter os programas abaixo já instalados e rodando:
 ### Variáveis de ambiente
 **EXTREMAMENTE IMPORTANTE**
 
-Para que funcione em modo de desenvolvimento devé-se crie um arquivo **.env** na raiz da aplicação com algumas variáveis configuradas.
+Para que o projeto, funcione em modo de desenvolvimento, devé-se crie um arquivo **.env** na raiz da aplicação com algumas variáveis configuradas.
 
 Veja o conteúdo do arquivo [.env.example](https://github.com/jairmaiag/carp/blob/master/.env.example) que contem as variáveis utilizadas no sistema.
 
@@ -58,16 +58,10 @@ Após baixar os fontes acesse a pasta da aplicação e execute o comando:
 
 `npm install`
 
-Utilize o **npm** para executar o mesmo com um dos comandos abaixo:
+Utilize o **npm** para executar um dos comandos abaixo:
 
-1. npm start
-2. npm run nodemon
-
-Na segunda opção, o **nodemon** deverá está instalado. Para isso use o comando:
-
-```
-npm i nodemon -g
-```
+1. `npm start` - Execução de produção.
+2. `npm run nodemon` - Execução de desenvolvimento.
 
 Ao executar será exibido, no conole, as mensagens:
 
