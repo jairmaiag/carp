@@ -108,6 +108,7 @@ Onde:
 - senha - Senha do usuário de acesso ao banco padrão do postgres.
 
 Ao témino será criado um usuário com nome **carp** e um banco, também, de nome **carp**.  
+Abaixo a imagem de retorno de uma requisição do tipo POST para criação do banco de dados.  
 ![Retorno da criação do banco](https://github.com/jairmaiag/carp/blob/master/assets/RetornoCriarBanco.png)
 
 
