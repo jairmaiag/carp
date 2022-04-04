@@ -61,7 +61,7 @@ Após baixar os fontes acesse a pasta da aplicação e execute o comando:
 Utilize o **npm** para executar um dos comandos abaixo:
 
 1. `npm start` - Execução de produção.
-2. `npm run nodemon` - Execução de desenvolvimento.
+2. `npm run dev` - Execução de desenvolvimento.
 
 Ao executar será exibido, no conole, as mensagens:
 
@@ -116,14 +116,14 @@ Abaixo a imagem de retorno de uma requisição do tipo POST para criação do ba
 
 ### Migrations
 
-Já com o banco criado vamos criar o schema e as tabelas do sistema.
+Já com o banco criado, vamos criar as tabelas do sistema.
 Pare a aplicação, acesse a pasta da mesma e execute o comando
 
 ```
 npx sequelize db:migrate
 ```
 
-Para desfazer a Migrations (remover o schema e as tabelas).
+Para desfazer a Migrations (remover as tabelas).  
 Isso não remove o banco de dados.
 
 ```
