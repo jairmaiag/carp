@@ -5,7 +5,7 @@ const checkLogin = require('../middleware/CheckLoginMiddleware');
 
 module.exports = (app) => {
   const model = '/:model/';
-  app.get(`${model}`, checkLogin, checkFilter, adaptRoute(app));
+  app.get(`${model}`, checkLogin, adaptRoute(app));
   app.get(`${model}paginacao`, checkLogin, adaptRoute(app));
   app.get(`${model}:UUId`, checkLogin, checkUUId, adaptRoute(app));
 
