@@ -7,7 +7,8 @@ class PessoaRepository {
   static async findAll(attributes, filter, order) {
     const limitObj = filter ? null : 10;
     const orderObj = order || [['id', 'ASC']];
-    return Pessoa.findAll({ attributes, where: filter, limit: limitObj, order: orderObj, raw: fasle });
+    const attriObj = attributes || { exclude: ['id','createdAt','updatedAt']};
+    return Pessoa.findAll({attributes: attriObj, where: filter, limit: limitObj, order: orderObj, raw: false});
   }
 
   static async findAndPaginate(attributes, filter, order, page) {
