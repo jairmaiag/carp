@@ -72,10 +72,10 @@ const consignConfig = {
   locale: 'pt-br',
   extensions: ['.js', '.json', '.node', '.mjs'],
 };
+// .then('db/repository')
 consign(consignConfig)
   .include('db/models/index.js')
   .then('app/util')
-  .then('db/repository')
   .then('controller')
   .then('app/route')
   .into(app);
