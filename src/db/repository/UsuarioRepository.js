@@ -69,7 +69,7 @@ class UsuarioRepository extends BaseRepository {
           login: filter.login,
           senha: filter.senha,
         },
-        include: includePessoa
+        include: this.includes
       },
       { raw: true }
     )

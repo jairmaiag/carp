@@ -25,7 +25,14 @@ class AcessoController {
     }
   }
 
-  async logout() { }
+  async logout(req) {
+    try {
+      req.session.destroy();
+      return ok(req.i18n_texts.user_logged_out);
+    } catch (error) {
+      return serverError(error);
+    }
+  }
 
 }
 
