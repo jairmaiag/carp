@@ -1,10 +1,10 @@
 const { Pessoa } = require('../models');
-const BaseRepository = require('../interfaces/BaseRepository');
-const includeUsuario = { association: 'Usuario', attributes: ['id', 'UUId', 'login', 'expira', 'ativo'] };
+const BaseRepository = require('../abstract/BaseRepository');
+const DbUtil = require('../DbUtil');
 
 class PessoaRepository extends BaseRepository {
   constructor() {
-    super(Pessoa,[includeUsuario]);
+    super(Pessoa,[DbUtil.getIncludeUsuario()]);
   }
 
   async findDuplicate(dados) {

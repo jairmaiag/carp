@@ -1,4 +1,4 @@
-const repository = require('../../db/repository/UsuarioRepository')();
+const repository = require('../../db/repository/UsuarioRepository');
 const { serverError, ok, notFound } = require('../../app/helpers/http/HttpHelpers');
 
 class UsuarioController {
