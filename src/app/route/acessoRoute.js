@@ -19,8 +19,8 @@ module.exports = function (app) {
     }
   })
 
-  app.post("/alterarsenha", async function (req, res) {
-    const httpResponse = await controller.login(req)
+  app.put("/alterarsenha", async function (req, res) {
+    const httpResponse = await controller.alterarsenha(req);
     if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
       req.session.usuario = httpResponse.body
       res.status(httpResponse.statusCode).json(httpResponse.body)
@@ -34,14 +34,5 @@ module.exports = function (app) {
   app.get("/logout", async function (req, res) {
     const httpResponse = await controller.logout(req);
     res.status(httpResponse.statusCode).json(httpResponse.body)
-    // if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-    //   req.session.usuario = httpResponse.body
-    //   res.status(httpResponse.statusCode).json(httpResponse.body)
-    // } else {
-    //   res.status(httpResponse.statusCode).json({
-    //     error: httpResponse.body
-    //   })
-    // }
-
   })
 }

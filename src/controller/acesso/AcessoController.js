@@ -34,6 +34,23 @@ class AcessoController {
     }
   }
 
+  async alterarsenha(req) {
+    try {
+      if(!req.body.UUId){
+        return badRequest(`${req.i18n_texts.UUId_required}`);
+      }
+      if(!req.body.login || !req.body.senha){
+        return badRequest(`${req.i18n_texts.field_login_password_required}`);
+      }
+      if(!req.body.senhaAntiga){
+        return badRequest(`${req.i18n_texts.field_login_oldpassword_required}`);
+      }
+      const entity = await repository.update(req.body);
+      return ok(entity)
+    } catch (error) {
+      return serverError(error);
+    }
+  }
 }
 
 module.exports = () => AcessoController

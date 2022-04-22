@@ -16,5 +16,6 @@
     "UUId_required": "UUId é um campo obrigatório.",
     "UUId_invalid_format": "Formato inválido para o campo UUId.",
     "path_not_found": "Caminho não encontrado.",
-    "error_on_ExpressRouteAdapter": "Erro no arquivo ExpressRouteAdapter."
+    "error_on_ExpressRouteAdapter": "Erro no arquivo ExpressRouteAdapter.",
+    "field_login_oldpassword_required": "Campo senhaAntiga é obrigatório."
 }

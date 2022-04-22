@@ -57,6 +57,9 @@ class UsuarioRepository extends BaseRepository {
     if (dados.Pessoa) {
       dados.Pessoa = await PessoaRepository.update(dados.Pessoa);
     }
+    if(dados.senha){
+      dados.senha = criptor.cryptor(dados.senha.trim());
+    }
     return dados;
   }
 
