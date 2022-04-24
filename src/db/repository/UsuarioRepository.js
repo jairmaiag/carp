@@ -22,7 +22,6 @@ class UsuarioRepository extends BaseRepository {
     dados.idPessoa = dados.Pessoa.id;
     dados.ativo = dados.ativo || true;
     dados.senha = criptor.cryptor(dados.senha.trim());
-    console.log(dados);
     return dados;
   }
 
