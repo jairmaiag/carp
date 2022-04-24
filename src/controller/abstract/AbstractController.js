@@ -3,8 +3,7 @@
 const { serverError, ok, notFound } = require('../../app/helpers/http/HttpHelpers');
 
 class AbstractController {
-    constructor(app, repository) {
-        this.app = app;
+    constructor(repository) {
         this.repository = repository;
     }
 
