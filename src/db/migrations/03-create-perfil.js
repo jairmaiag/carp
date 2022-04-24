@@ -54,5 +54,8 @@ module.exports = {
     },
   ),
 
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Perfil'),
+  down: (queryInterface, Sequelize) => queryInterface.sequelize.transaction((t) => Promise.all([
+    queryInterface.removeConstraint('RecursoPerfil','RecursoPerfil_PerfilId_fkey'),
+    queryInterface.dropTable('Perfil')
+  ])),
 };

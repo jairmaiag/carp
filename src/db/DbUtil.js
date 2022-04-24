@@ -6,6 +6,11 @@ class DbUtil {
     getIncludeUsuario(){
         return { association: 'Usuario', attributes: ['UUId', 'login', 'expira', 'ativo'] };
     }
+
+    getIncludePerfis(){
+        return { association: 'Perfis', through: { attributes: [] } };
+
+    }
 }
 
 module.exports = new DbUtil();
