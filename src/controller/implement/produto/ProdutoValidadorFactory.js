@@ -1,5 +1,5 @@
-const ValidacaoComposite = require('../../app/validators/ValidacaoComposite')
-const CampoObrigatorioValidador = require('../../app/validators/CampoObrigatorioValidador')
+const ValidacaoComposite = require('../../../app/validators/ValidacaoComposite')
+const CampoObrigatorioValidador = require('../../../app/validators/CampoObrigatorioValidador')
 
 const produtoValidador = () => {
   const validadores = []

@@ -1,5 +1,5 @@
-const Conection  = require("../../db/config/conection");
-const { serverError, ok } = require('../../app/helpers/http/HttpHelpers')
+const Conection  = require("../../../db/config/conection");
+const { serverError, ok } = require('../../../app/helpers/http/HttpHelpers')
 
 class MainController {
   constructor(app) {

@@ -1,5 +1,5 @@
 module.exports = (app) => {
-  const controller = new app.controller.main.MainController(app);
+  const controller = new app.controller.implement.main.MainController(app);
 
   function validaCampos(dados) {
     if (dados.host === undefined) {

@@ -8,4 +8,4 @@ class RecursoRepository extends BaseRepository {
   }
 }
 
-module.exports = () => RecursoRepository;
+module.exports = new RecursoRepository();

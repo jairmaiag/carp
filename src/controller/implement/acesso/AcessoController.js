@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const repository = require('../../db/repository/UsuarioRepository')
-const { serverError, badRequest, ok } = require('../../app/helpers/http/HttpHelpers')
+const repository = require('../../../db/repository/UsuarioRepository');
+const { serverError, badRequest, ok } = require('../../../app/helpers/http/HttpHelpers');
 
 class AcessoController {
 

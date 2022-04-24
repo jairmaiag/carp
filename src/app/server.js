@@ -76,7 +76,7 @@ const consignConfig = {
 consign(consignConfig)
   .include('db/models/index.js')
   .then('app/util')
-  .then('controller')
+  .then('controller/implement')
   .then('app/route')
   .into(app);
 

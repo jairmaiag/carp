@@ -10,7 +10,7 @@ module.exports = (app) => {
       const { id, UUId, model } = req.params;
 
       const modelName = model.charAt(0).toUpperCase() + model.slice(1);
-      const controller = eval(`new app.controller.${modelName.toLowerCase()}.${modelName}Controller(app)`);
+      const controller = eval(`new app.controller.implement.${modelName.toLowerCase()}.${modelName}Controller(app)`);
 
       if (method === 'GET') {
         if (UUId) {
