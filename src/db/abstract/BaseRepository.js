@@ -18,6 +18,9 @@ class BaseRepository {
             this.fieldsExcludes.push(field);
         });
     }
+    setObjectExcludes(objectExcludes){
+        this.objectExcludes = objectExcludes;
+    }
     
     getObjectExcludes(){
         return this.objectExcludes;

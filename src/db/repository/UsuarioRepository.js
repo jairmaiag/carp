@@ -22,6 +22,7 @@ class UsuarioRepository extends BaseRepository {
     dados.idPessoa = dados.Pessoa.id;
     dados.ativo = dados.ativo || true;
     dados.senha = criptor.cryptor(dados.senha.trim());
+    console.log(dados);
     return dados;
   }
 
@@ -33,7 +34,10 @@ class UsuarioRepository extends BaseRepository {
     if (!pessoa) {
       const uuid = getUUIDV4();
       if (!dados.Pessoa) {
+        const excludes = PessoaRepository.getObjectExcludes();
+        PessoaRepository.setObjectExcludes({});
         pessoa = await PessoaRepository.insert({ nome: dados.login, UUId: uuid, ativo: true });
+        PessoaRepository.setObjectExcludes(excludes);
       } else {
         dados.Pessoa.UUId = dados.Pessoa.UUId || uuid;
         dados.Pessoa.nome = dados.Pessoa.nome || dados.login;
