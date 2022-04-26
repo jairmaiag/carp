@@ -1,53 +1,47 @@
-const { Perfil, RecursoPerfil } = require('../models');
+const BaseRepository = require('../abstract/BaseRepository');
+const { Perfil, Recurso, RecursoPerfil } = require('../models');
 const util = require('../../app/util/Util');
+const DbUtil = require('../DbUtil');
+const RecursoRepository = require('./RecursoRepository');
+const RecursoPerfilRepository = require('./RecursoPerfilRepository');
 
-const include = { association: 'Recursos', through: { attributes: [] } };
-
-class PerfilRepository {
-
-  static async findAll(attributes, filter, order) {
-    const limitObj = filter ? null : 10;
-    const orderObj = order || [['id', 'ASC']];
-    return Perfil.findAll({ attributes, where: filter, limit: limitObj, order: orderObj, raw: false, });;
+class PerfilRepository extends BaseRepository {
+  constructor() {
+    super(Perfil, [DbUtil.getIncludeRecursos()]);
+    super.addModelsHasMany([Recurso, RecursoPerfil]);
+    this.recursos = [];
   }
 
-  static async findAndPaginate(attributes, filter, order, page) {
-    return Perfil.findAndPaginate(attributes, filter, order, page);
+  async findDuplicate(dados) {
+    let { nome } = dados;
+    let objConsulta = { where: { nome } };
+    return await this.model.findOne(objConsulta);
   }
 
-  static async findById(id) {
-    return Perfil.findByPk(id, include);
+  async beforeInsert(dados) {
+    this.recursos = dados.recursos || [];
+    return dados;
   }
 
-  static async findByUUId(UUId) {
-    return Perfil.findOne({ where: { UUId, }, include, });
-  }
+  async afterInsert(dados) {
+    const UUIdRecursos = this.recursos.map(u => u.UUId);
+    const recurosBanco = await RecursoRepository.findIdsByUUIds(UUIdRecursos);
+    const perfilBanco = await this.findIdsByUUIds([dados.UUId]);
+    const recursosDoPerfil = recurosBanco.map(rb => { return { "RecursoId": rb.id, "PerfilId": perfilBanco[0].id } });
 
-  static async insert(dados) {
-    try {
-      const perfil = await Perfil.create(dados);
-      return this.manutencaoRecursos(dados.Recursos || [], perfil);
-    } catch (error) {
-      throw new Error(error.original);
-    }
-  }
+    await RecursoPerfilRepository.insertBulk(recursosDoPerfil);
+    console.log(recursosDoPerfil);
 
-  static async update(dados) {
-    const result = await Perfil.update(dados, { where: { UUId: dados.UUId, }, });
-    if (result[0] === 1) {
-      const perfil = await this.findByUUId(dados.UUId);
-      return this.manutencaoRecursos(dados.Recursos, perfil);
-    }
-    return null;
+    return dados;
+    // return this.manutencaoRecursos(dados.Recursos, dados);
   }
-
-  static async delete(UUId) {
-    return Perfil.destroy({ where: { UUId, }, });
+  async afterUpdate(dados) {
+    console.log(dados);
+    return dados;
   }
-
-  static async manutencaoRecursos(dados, perfil) {
+  async manutencaoRecursos(dados, perfil) {
     const recursosBack = perfil.Recursos ? perfil.Recursos.map((r) => r.dataValues) : [];
-    const recursosFron = dados || [];
+    const recursosFron = this.recursos || [];
     if (recursosBack.length === 0 && recursosFron.length === 0) {
       return this.findByUUId(perfil.UUId);
     }
@@ -70,4 +64,4 @@ class PerfilRepository {
   }
 }
 
-module.exports = () => PerfilRepository;
+module.exports = new PerfilRepository();

@@ -1,19 +1,12 @@
 const Conection  = require("../../../db/config/conection");
-const { serverError, ok } = require('../../../app/helpers/http/HttpHelpers')
+const { serverError, ok } = require('../../../app/helpers/http/HttpHelpers');
+const DbUtil = require("../../../db/DbUtil");
 
 class MainController {
   constructor(app) {
     this.app = app
-    this.bancoCarp = { 
-      usuario: process.env.DATABASEUSERNAME,
-      senha:process.env.DATABASEPASSWORD,
-      host:process.env.DATABASEHOST,
-      porta: process.env.DATABASPORT,
-      banco:process.env.DATABASENAME,
-      esquema: process.env.DATABASESCHEMA
-    }
- 
-  }
+    this.bancoCarp = DbUtil.getDadosConexao();
+   }
 
   index(req, res) {
     try {
@@ -66,7 +59,7 @@ class MainController {
   async criarBanco(dadosConexao) {
     try {
       let mensagem = `Banco já existe. Consultando o schema.`;
-      const conexao = new Conection(this.montarStringConexao(dadosConexao));
+      const conexao = new Conection(DbUtil.getStringConexao(dadosConexao));
       await this.criarUsuario(conexao);
       /* Criação do banco de dados */
       const dataBases = await conexao.query('SELECT datname FROM pg_database');
@@ -80,7 +73,7 @@ class MainController {
       }else{
         console.info(mensagem);
       }
-      const conexaoCarp = new Conection(this.montarStringConexao(this.bancoCarp));
+      const conexaoCarp = new Conection(DbUtil.getStringConexao(this.bancoCarp));
 
       const schemas =  await conexaoCarp.showAllSchemas();
       if(schemas.length === 0){

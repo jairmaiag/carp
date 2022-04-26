@@ -78,7 +78,7 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: 'RecursoId',
       through: models.RecursoPerfil,
       uniqueKey: 'recurco_perfil_unique',
-      as: 'Recursos'
+      as: 'recursos'
     });
   };
 

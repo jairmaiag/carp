@@ -25,19 +25,19 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: false,
     modelName: 'RecursoPerfil',
-    comment: 'Tabela utilizada para armazenar os dados de Recurso de dos perfis.',
+    comment: 'Tabela utilizada para armazenar os perfis do Recurso.',
   });
 
   RecursoPerfil.associate = (models) => {
     RecursoPerfil.hasMany(models.Perfil, {
-      as: 'Perfil',
+      as: 'perfil',
       foreignKey: 'id',
-      otherKey: 'PerfilId',
+      otherKey: 'PerfilId'
     });
     RecursoPerfil.hasMany(models.Recurso, {
-      as: 'Recurso',
+      as: 'recurso',
       foreignKey: 'id',
-      otherKey: 'RecursoId',
+      otherKey: 'RecursoId'
     });
   };
 

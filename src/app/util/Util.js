@@ -35,6 +35,11 @@ class Util {
     return retorno;
   }
 
+  capitular(palavra) {
+    return palavra.charAt(0).toUpperCase() + palavra.slice(1);
+
+  }
+
   montarMensagemJson(mensagem) {
     return { mensagem };
   }

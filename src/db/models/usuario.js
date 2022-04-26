@@ -73,7 +73,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Usuario.associate = (models) => {
     Usuario.belongsTo(models.Pessoa, {
-      as: 'Pessoa',
+      as: 'pessoa',
       foreignKey: 'idPes',
       allowNull: false,
     });

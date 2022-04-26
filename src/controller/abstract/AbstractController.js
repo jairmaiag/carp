@@ -6,11 +6,10 @@ class AbstractController {
     constructor(repository) {
         this.repository = repository;
     }
-
     async index(req) {
         try {
-            const { attributes, filter, order } = req.body;
-            const entities = await this.repository.findAll(attributes, filter, order);
+            const { attributes, filter, order, withoutIncludes } = req.body;
+            const entities = await this.repository.findAll(attributes, filter, order, withoutIncludes);
             return entities.length > 0 ? ok(entities) : ok(req.i18n_texts.empty_table);
         } catch (error) {
             return serverError(error)
@@ -23,16 +22,16 @@ class AbstractController {
             const entities = await this.repository.findAndPaginate(attributes, filter, order, page);
             return entities.rows.length > 0 ? ok(entities) : ok(req.i18n_texts.empty_table);
         } catch (error) {
-            return serverError(error)
+            return serverError(error);
         }
     }
 
     async findByUUId(req) {
         try {
-            const entity = await this.repository.findByUUId(req.params.UUId)
-            return entity ? ok(entity) : ok(req.i18n_texts.record_not_found)
+            const entity = await this.repository.findByUUId(req.params.UUId);
+            return entity ? ok(entity) : ok(req.i18n_texts.record_not_found);
         } catch (error) {
-            return serverError(error)
+            return serverError(error);
         }
     }
 
@@ -47,6 +46,7 @@ class AbstractController {
 
     async insert(req) {
         try {
+            // const entity = null;
             const entity = await this.repository.insert(req.body)
             return entity ? ok(entity) : notFound(req.i18n_texts.error_insert_record)
         } catch (error) {
@@ -73,6 +73,9 @@ class AbstractController {
         } catch (error) {
             return serverError(error)
         }
+    }
+    montarOk(entrada){
+        return ok(entrada);
     }
 }
 module.exports = AbstractController;

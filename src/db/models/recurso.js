@@ -55,7 +55,7 @@ module.exports = (sequelize, DataTypes) => {
     freezeTableName: true,
     timestamps: true,
     modelName: 'Recurso',
-    comment: 'Tabela utilizada para armazenar os dados de Recurso do sistema.',
+    comment: 'Tabela utilizada para armazenar os dados de Recursos do sistema.',
   });
 
   Recurso.associate = function (models) {
@@ -64,7 +64,7 @@ module.exports = (sequelize, DataTypes) => {
       otherKey: 'PerfilId',
       through: models.RecursoPerfil,
       uniqueKey: 'recurco_perfil_unique',
-      as: 'Perfis',
+      as: 'perfis',
     });
   };
 

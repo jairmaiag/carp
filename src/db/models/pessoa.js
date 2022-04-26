@@ -89,7 +89,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Pessoa.associate = function (models) {
     Pessoa.hasOne(models.Usuario, {
-      as: 'Usuario',
+      as: 'usuario',
       foreignKey: 'idPes',
       targetKey: 'idPes',
       allowNull: false,
