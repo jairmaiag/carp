@@ -1,11 +1,11 @@
-const BaseRepository = require('../abstract/BaseRepository');
+const AbstractRepository = require('../abstract/AbstractRepository');
 const { Perfil, Recurso, RecursoPerfil } = require('../models');
 const util = require('../../app/util/Util');
 const DbUtil = require('../DbUtil');
 const RecursoRepository = require('./RecursoRepository');
 const RecursoPerfilRepository = require('./RecursoPerfilRepository');
 
-class PerfilRepository extends BaseRepository {
+class PerfilRepository extends AbstractRepository {
   constructor() {
     super(Perfil, [DbUtil.getIncludeRecursos()]);
     super.addModelsHasMany([Recurso, RecursoPerfil]);

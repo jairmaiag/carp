@@ -2,7 +2,7 @@
 const Sequelize = require('sequelize');
 const { in: opIn } = Sequelize.Op;
 
-class BaseRepository {
+class AbstractRepository {
     constructor(model, includes) {
         this.model = model;
         this.includes = includes;
@@ -144,4 +144,4 @@ class BaseRepository {
 
 }
 
-module.exports = BaseRepository;
+module.exports = AbstractRepository;

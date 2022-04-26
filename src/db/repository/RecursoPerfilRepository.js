@@ -1,7 +1,7 @@
+const AbstractRepository = require('../abstract/AbstractRepository');
 const { RecursoPerfil } = require('../models');
-const BaseRepository = require('../abstract/BaseRepository');
 
-class RecursoPerfilRepository extends BaseRepository {
+class RecursoPerfilRepository extends AbstractRepository {
     constructor() {
       super(RecursoPerfil ,[]);
     }

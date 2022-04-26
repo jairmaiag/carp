@@ -1,8 +1,8 @@
+const AbstractRepository = require('../abstract/AbstractRepository');
 const { Pessoa } = require('../models');
-const BaseRepository = require('../abstract/BaseRepository');
 const DbUtil = require('../DbUtil');
 
-class PessoaRepository extends BaseRepository {
+class PessoaRepository extends AbstractRepository {
   constructor() {
     super(Pessoa,[DbUtil.getIncludeUsuario()]);
   }
@@ -17,4 +17,4 @@ class PessoaRepository extends BaseRepository {
 
 }
 
-module.exports = () => new PessoaRepository();
+module.exports = new PessoaRepository();

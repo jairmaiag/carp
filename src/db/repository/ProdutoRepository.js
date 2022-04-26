@@ -1,3 +1,4 @@
+const AbstractRepository = require('../abstract/AbstractRepository');
 const { Produto } = require('../models')
 
 var ProdutoRepository = function () { }

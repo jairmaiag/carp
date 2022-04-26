@@ -1,12 +1,12 @@
-const BaseRepository = require('../abstract/BaseRepository');
+const AbstractRepository = require('../abstract/AbstractRepository');
 const { Usuario } = require("../models");
 const { getUUIDV4 } = require('../../app/util/UUIDGenerator');
 const DbUtil = require('../DbUtil');
 const criptor = require('../../app/util/Cryptography');
-const PessoaRepository = require('./PessoaRepository')();
+const PessoaRepository = require('./PessoaRepository');
 const fieldsExcludes = ['idPessoa', 'idPes', 'senha'];
 
-class UsuarioRepository extends BaseRepository {
+class UsuarioRepository extends AbstractRepository {
   constructor() {
     super(Usuario,[DbUtil.getIncludePessoa()]);
     this.addFieldExcludes(fieldsExcludes);
@@ -18,14 +18,14 @@ class UsuarioRepository extends BaseRepository {
   }
 
   async beforeInsert(dados) {
-    dados.Pessoa = await this.dadosPessoa(dados);
+    dados.Pessoa = await this.extrairDadosPessoa(dados);
     dados.idPessoa = dados.Pessoa.id;
     dados.ativo = dados.ativo || true;
     dados.senha = criptor.cryptor(dados.senha.trim());
     return dados;
   }
 
-  async dadosPessoa(dados) {
+  async extrairDadosPessoa(dados) {
     let pessoa = null;
     if (dados.idPessoa) {
       pessoa = await PessoaRepository.findById(dados.idPessoa);
