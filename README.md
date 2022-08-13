@@ -6,7 +6,6 @@ API para controle de clientes, usuários, funcionários, produtos, geração de 
 ## Índice
 
 - [Carp](#carp)
-  - [Índice](#índice)
   - [Iniciando](#iniciando)
     - [Pré-requisitos](#pré-requisitos)
     - [Variáveis de ambiente](#variáveis-de-ambiente)
@@ -93,20 +92,21 @@ Utilizando uma requisição POST passando no body da mesma, com o formato JSON a
 
 ```
 {
-"host":"enderecoBanco",
-"porta":5432,
-"banco":"postgres",
-"usuario":"postgres",
-"senha":"senhaBanco"
+	"host": "IP_Do_Banco",
+	"port": 5432,
+	"database": "postgres",
+	"username": "postgres",
+	"password": "senhaBancoPostgres",
+	"dialect": "postgres"
 }
 ```
 Onde:
 
 - host - É o endereço ou IP de acesso ao banco padrão postgres.
-- porta - Porta de acesso ao banco (padrão 5432).
-- banco - Nome do banco padrão do postgres.
-- usuario - Usuário de acesso ao banco com permissão de criar bancos.
-- senha - Senha do usuário de acesso ao banco padrão do postgres.
+- port - Porta de acesso ao banco (padrão 5432).
+- database - Nome do banco padrão do postgres.
+- username - Usuário de acesso ao banco com permissão de criar bancos.
+- password - Senha do usuário de acesso ao banco padrão do postgres.
 
 Ao témino será criado um usuário com nome **carp** e um banco, também, de nome **carp**.  
 Abaixo a imagem de retorno de uma requisição do tipo POST para criação do banco de dados.  
