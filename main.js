@@ -1,5 +1,6 @@
 /* importar as configurações do servidor */
 const app = require('./src/app/server');
+
 /* Captura da passgem de parâmetros via linha de comando */
 const param = process.argv;
 if(param.length > 2){
@@ -10,9 +11,9 @@ if(param.length > 2){
 }
 
 /* parametrizar a porta de escuta */
-let port = process.env.PORT || 80
+const port = process.env.PORT || 80;
 app.listen(port, function () {
-  let acesso = "http://localhost" + (port == 80 ? "" : ":" + port)
-  console.log(acesso)
-  console.log(`Para criar o banco acesse ${acesso}/criarbanco e siga as instruções.\n`)
+  const acesso = `http://localhost${port === 80 ? "" : ":" + port}`;
+  console.log(acesso);
+  console.log(`Para criar o banco acesse ${acesso}/criarbanco e siga as instruções.\n`);
 });

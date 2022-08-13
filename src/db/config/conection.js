@@ -1,12 +1,23 @@
 const { Sequelize, QueryTypes } = require('sequelize');
-
+const DbUtil = require("../DbUtil");
 class Conection {
     constructor(stringConexao) {
-        this.stringConexao = stringConexao;
-        this.acesso = new Sequelize(this.stringConexao);
+        const conexao = stringConexao || DbUtil.getObjectConnection();
+        this.acesso = new Sequelize(conexao);
     }
+
     async getConection() {
         return this.acesso;
+    }
+
+    async testConection() {
+        try {
+            const retorno = await this.acesso.authenticate()
+            process.env.DATABASEUP = retorno === undefined;
+            return retorno
+        } catch (error) {
+            return error;
+        }
     }
 
     async query(comandoSql) {

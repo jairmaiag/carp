@@ -1,4 +1,4 @@
-const repository = require('../../../db/repository/PessoaRepository')();
+const repository = require('../../../db/repository/PessoaRepository');
 const AbstractController = require('../../abstract/AbstractController');
 
 class PessoaController extends AbstractController {

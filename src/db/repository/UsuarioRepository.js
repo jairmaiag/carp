@@ -1,17 +1,17 @@
 const AbstractRepository = require('../abstract/AbstractRepository');
 const { Usuario } = require("../models");
 const { getUUIDV4 } = require('../../app/util/UUIDGenerator');
-const DbUtil = require('../DbUtil');
-const criptor = require('../../app/util/Cryptography');
+const { getIncludePessoa } = require('../DbUtil');
+const { cryptor } = require('../../app/util/Cryptography');
 const PessoaRepository = require('./PessoaRepository');
 const fieldsExcludes = ['idPessoa', 'idPes', 'senha'];
 
 class UsuarioRepository extends AbstractRepository {
   constructor() {
-    super(Usuario,[DbUtil.getIncludePessoa()]);
+    super(Usuario, [getIncludePessoa()]);
     this.addFieldExcludes(fieldsExcludes);
   }
-  
+
   async findDuplicate(dados) {
     let { login, senha } = dados;
     return await this.model.findOne({ where: { login, senha } });
@@ -21,7 +21,7 @@ class UsuarioRepository extends AbstractRepository {
     dados.Pessoa = await this.extrairDadosPessoa(dados);
     dados.idPessoa = dados.Pessoa.id;
     dados.ativo = dados.ativo || true;
-    dados.senha = criptor.cryptor(dados.senha.trim());
+    dados.senha = cryptor(dados.senha.trim());
     return dados;
   }
 
@@ -60,7 +60,7 @@ class UsuarioRepository extends AbstractRepository {
     if (dados.Pessoa) {
       dados.Pessoa = await PessoaRepository.update(dados.Pessoa);
     }
-    if(dados.senha){
+    if (dados.senha) {
       dados.senha = criptor.cryptor(dados.senha.trim());
     }
     return dados;

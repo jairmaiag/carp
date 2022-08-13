@@ -12,7 +12,7 @@ class AbstractController {
             const entities = await this.repository.findAll(attributes, filter, order, withoutIncludes);
             return entities.length > 0 ? ok(entities) : ok(req.i18n_texts.empty_table);
         } catch (error) {
-            return serverError(error)
+            return serverError(error);
         }
     }
 
@@ -37,18 +37,17 @@ class AbstractController {
 
     async findById(req) {
         try {
-            const entity = await this.repository.findById(req.params.id)
-            return entity ? ok(entity) : ok(req.i18n_texts.record_not_found)
+            const entity = await this.repository.findById(req.params.id);
+            return entity ? ok(entity) : ok(req.i18n_texts.record_not_found);
         } catch (error) {
-            return serverError(error)
+            return serverError(error);
         }
     }
 
     async insert(req) {
         try {
-            // const entity = null;
-            const entity = await this.repository.insert(req.body)
-            return entity ? ok(entity) : notFound(req.i18n_texts.error_insert_record)
+            const entity = await this.repository.insert(req.body);
+            return entity ? ok(entity) : notFound(req.i18n_texts.error_insert_record);
         } catch (error) {
             if (error.stack.includes("violates unique constraint")) {
                 error.stack = req.i18n_texts.record_already_exists;
@@ -59,22 +58,22 @@ class AbstractController {
 
     async update(req) {
         try {
-            const entity = await this.repository.update(req.body)
-            return entity ? ok(entity) : notFound(req.i18n_texts.record_not_found)
+            const entity = await this.repository.update(req.body);
+            return entity ? ok(entity) : notFound(req.i18n_texts.record_not_found);
         } catch (error) {
-            return serverError(error)
+            return serverError(error);
         }
     }
 
     async delete(req) {
         try {
-            const quantidadeDeletada = await this.repository.delete(req.params.UUId)
-            return quantidadeDeletada > 0 ? ok(quantidadeDeletada) : notFound(req.i18n_texts.record_not_found)
+            const quantidadeDeletada = await this.repository.delete({ "UUId": `${req.params.UUId}` });
+            return quantidadeDeletada > 0 ? ok(quantidadeDeletada) : notFound(req.i18n_texts.record_not_found);
         } catch (error) {
-            return serverError(error)
+            return serverError(error);
         }
     }
-    montarOk(entrada){
+    montarOk(entrada) {
         return ok(entrada);
     }
 }

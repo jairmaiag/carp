@@ -1,5 +1,6 @@
 const ServerError = require('../../errors/ServerError');
 const UnauthorizedError = require('../../errors/UnauthorizedError');
+const ReturnRequest = require('./ReturnRequest');
 const util = require('../../util/Util');
 
 class httpHelpers {
@@ -7,53 +8,31 @@ class httpHelpers {
     if (!(data instanceof Object)) {
       data = util.montarMensagemJson(data);
     }
-
-    return {
-      statusCode: 200,
-      body: data,
-    };
+    return new ReturnRequest(200, data).getInstance();
   }
 
   noContent() {
-    return {
-      statusCode: 204,
-      body: null,
-    };
+    return new ReturnRequest(204).getInstance();
   }
 
   badRequest(error) {
-    return {
-      statusCode: 400,
-      body: error,
-    };
+    return new ReturnRequest(400, error).getInstance();
   }
 
   unauthorized() {
-    return {
-      statusCode: 401,
-      body: new UnauthorizedError(),
-    };
+    return new ReturnRequest(401, new UnauthorizedError()).getInstance();
   }
 
   forbidden(error) {
-    return {
-      statusCode: 403,
-      body: error,
-    };
+    return new ReturnRequest(403, error).getInstance();
   }
 
   notFound(error) {
-    return {
-      statusCode: 404,
-      body: error,
-    };
+    return new ReturnRequest(404, error).getInstance();
   }
 
   serverError(error) {
-    return {
-      statusCode: 500,
-      body: new ServerError(error.stack),
-    };
+    return new ReturnRequest(500, new ServerError(error.stack)).getInstance();
   }
 }
 

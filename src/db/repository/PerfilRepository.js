@@ -8,7 +8,6 @@ const RecursoPerfilRepository = require('./RecursoPerfilRepository');
 class PerfilRepository extends AbstractRepository {
   constructor() {
     super(Perfil, [DbUtil.getIncludeRecursos()]);
-    super.addModelsHasMany([Recurso, RecursoPerfil]);
     this.recursos = [];
   }
 
@@ -25,42 +24,36 @@ class PerfilRepository extends AbstractRepository {
 
   async afterInsert(dados) {
     const UUIdRecursos = this.recursos.map(u => u.UUId);
-    const recurosBanco = await RecursoRepository.findIdsByUUIds(UUIdRecursos);
-    const perfilBanco = await this.findIdsByUUIds([dados.UUId]);
-    const recursosDoPerfil = recurosBanco.map(rb => { return { "RecursoId": rb.id, "PerfilId": perfilBanco[0].id } });
-
-    await RecursoPerfilRepository.insertBulk(recursosDoPerfil);
-    console.log(recursosDoPerfil);
-
+    const idRecurosBanco = await RecursoRepository.findIdsByUUIds(UUIdRecursos);
+    const idPerfilBanco = await this.findIdByUUId(dados.UUId);
+    const listaRecursosDoPerfil = idRecurosBanco.map(rb => { return { "RecursoId": rb.id, "PerfilId": idPerfilBanco.id } });
+    await RecursoPerfilRepository.insertBulk(listaRecursosDoPerfil);
     return dados;
-    // return this.manutencaoRecursos(dados.Recursos, dados);
   }
+
+  async beforeUpdate(dados) {
+    this.recursos = dados.recursos || [];
+    return dados;
+  }
+
   async afterUpdate(dados) {
-    console.log(dados);
-    return dados;
+    let perfilBanco = await this.findByUUId(dados.UUId);
+    const idPerfilBanco = await this.findIdByUUId(dados.UUId);
+    perfilBanco.PeriflId = idPerfilBanco.id;
+    await RecursoPerfilRepository.update(await montarListas(perfilBanco));
+    perfilBanco.PeriflId = null;
+    return perfilBanco;
   }
-  async manutencaoRecursos(dados, perfil) {
-    const recursosBack = perfil.Recursos ? perfil.Recursos.map((r) => r.dataValues) : [];
+  async montarListas(perfilBanco) {
+    const recursosBack = perfilBanco.recursos ? perfilBanco.recursos.map((r) => r.dataValues) : [];
     const recursosFron = this.recursos || [];
     if (recursosBack.length === 0 && recursosFron.length === 0) {
-      return this.findByUUId(perfil.UUId);
+      return perfilBanco;
     }
     const listas = await util.montarListasExclusaoInclusao(recursosFron, recursosBack);
-    if (listas.listaIncluir.length !== 0) {
-      const litaIncluir = listas.listaIncluir.map((rec) => ({
-        RecursoId: rec.id, PerfilId: perfil.id,
-      }));
-      await RecursoPerfil.bulkCreate(litaIncluir);
-    }
-    if (listas.listaExcluir.length !== 0) {
-      const litaExcluir = listas.listaExcluir.map((rec) => rec.id);
-      await RecursoPerfil.destroy({
-        where: {
-          PerfilId: perfil.id, RecursoId: litaExcluir,
-        },
-      });
-    }
-    return this.findByUUId(perfil.UUId);
+    perfilBanco.listaIncluir = listas.listaIncluir;
+    perfilBanco.listaExcluir = listas.listaExcluir;
+    return perfilBanco;
   }
 }
 

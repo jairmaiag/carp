@@ -8,7 +8,6 @@ class AbstractRepository {
         this.includes = includes;
         this.fieldsExcludes = ['id', 'createdAt', 'updatedAt'];
         this.objectExcludes = { exclude: this.fieldsExcludes };
-        this.objectExcludesTemp = {};
         this.modelsHasMany = [];
     }
     addModelsHasMany(models) {
@@ -62,10 +61,16 @@ class AbstractRepository {
         return this.model.findByPk(id, { include: this.includes });
     }
 
+    async findIdByUUId(UUId) {
+        // const logar = console.log;
+        const logar = null;
+        return await this.model.findAll({ logging: logar, attributes: ["id"], where: { UUId }, raw: false });
+    }
+
     async findIdsByUUIds(UUIds) {
         // const logar = console.log;
         const logar = null;
-        return await this.model.findAll({logging: logar, attributes: ["id"], where : { "UUId": { [opIn]: UUIds }}, raw: false });
+        return await this.model.findAll({ logging: logar, attributes: ["id"], where: { "UUId": { [opIn]: UUIds } }, raw: false });
     }
 
     async findByUUId(UUId) {
@@ -86,13 +91,6 @@ class AbstractRepository {
         return dados;
     }
 
-    /**
-     * Método será chamado depois da inclusão.
-     */
-    async afterInsert(dados) {
-        return dados;
-    }
-
     async insert(dados) {
         try {
             if (await this.findDuplicate(dados)) {
@@ -110,21 +108,22 @@ class AbstractRepository {
             }
         }
     }
+
+    /**
+     * Método será chamado depois da inclusão.
+     */
+    async afterInsert(dados) {
+        return dados;
+    }
+
     async insertBulk(dados) {
-        return await this.model.bulkCreate(dados);
+        return this.model.bulkCreate(dados);
     }
 
     /**
      * Método será chamado antes da atulização.
      */
     async beforeUpdate(dados) {
-        return dados;
-    }
-
-    /**
-     * Método será chamado depois da atulização.
-     */
-     async afterUpdate(dados) {
         return dados;
     }
 
@@ -138,8 +137,23 @@ class AbstractRepository {
         return result[0] === 1 ? this.findByUUId(dados.UUId) : null;
     }
 
-    async delete(UUId) {
-        return this.model.destroy({ where: { UUId } });
+    /**
+     * Método será chamado depois da atulização.
+     */
+    async afterUpdate(dados) {
+        return dados;
+    }
+
+    /**
+     * Método será chamado antes da exclusão.
+     */
+    async beforeDelete(filter) {
+        return filter;
+    }
+
+    async delete(filter) {
+        filter = await this.beforeDelete(filter);
+        return await this.model.destroy({ where: filter });
     }
 
 }

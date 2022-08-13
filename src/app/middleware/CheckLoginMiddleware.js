@@ -17,12 +17,14 @@ const forJWT = (req, res) => {
     return req;
   });
 }
+
 const forSession = (req, res) => {
   if (req.session.usuario === undefined) {
     res.status(401).json({ mensagem: `${req.i18n_texts.user_not_logged_in} ${req.i18n_texts.please_do_login}` });
   }
   return res;
 }
+
 const CheckLoginMiddleware = (req, res, next) => {
   if (process.env.NODE_ENV === 'production') {
     const { originalUrl } = req;

@@ -1,3 +1,5 @@
+const { serverError } = require('../app/helpers/http/HttpHelpers');
+const { development , production } = require('../db/config/config');
 class DbUtil {
     getIncludePessoa() {
         return { association: 'pessoa', attributes: ['UUId', 'nome', 'nomemeio', 'sobrenome', 'nascimento', 'sexo', 'cpf', 'rg', 'ativo'] };
@@ -12,25 +14,61 @@ class DbUtil {
 
     }
     getIncludeRecursos() {
-        return { association: 'recursos', attributes: ['UUId', 'nome', 'descricao', 'ativo']};
+        return { association: 'recursos', attributes: ['UUId', 'nome', 'descricao', 'ativo'] };
+    }
+
+    validarCamposConexao(dados) {
+        if (dados.host === undefined) {
+            return false;
+        }
+        if (dados.port === undefined) {
+            return false;
+        }
+        if (dados.database === undefined) {
+            return false;
+        }
+        if (dados.username === undefined) {
+            return false;
+        }
+        if (dados.password === undefined) {
+            return false;
+        }
+        if (dados.dialect === undefined) {
+            return false;
+        }
+        return true;
     }
 
     getDadosConexao() {
-        return {
-            usuario: process.env.DATABASEUSERNAME,
-            senha: process.env.DATABASEPASSWORD,
+        const dados = {
+            username: process.env.DATABASEUSERNAME,
+            password: process.env.DATABASEPASSWORD,
             host: process.env.DATABASEHOST,
-            porta: process.env.DATABASPORT,
-            banco: process.env.DATABASENAME,
-            esquema: process.env.DATABASESCHEMA
+            port: process.env.DATABASPORT,
+            database: process.env.DATABASENAME,
+            esquema: process.env.DATABASESCHEMA,
+            dialect: 'postgres'
         }
+        return dados;
     }
+
+    getObjectConnection(){
+        if(process.env.NODE_ENV === 'development'){
+            return development;
+        }
+        return production;
+    }
+    
     getStringConexao(dadosConexaoPadrao) {
         try {
-            const { usuario, senha, host, porta, banco } = dadosConexaoPadrao;
-            return `postgres://${usuario}:${senha}@${host}:${porta}/${banco}`;
+            const dados = dadosConexaoPadrao || this.getDadosConexao();
+            if (!this.validarCamposConexao(dados)) {
+                return serverError({"error":{"stack":"Campos de conexão estão fora do esperado."}});
+            }
+            const { username, password, host, port, database } = dados;
+            return `postgres://${username}:${password}@${host}:${port}/${database}`;
         } catch (error) {
-            return serverError(error)
+            return serverError(error);
         }
     }
 }
